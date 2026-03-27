@@ -15,7 +15,7 @@ async function connectDB() {
   isConnected = true;
 }
 
-// Middleware
+// Middleware 
 app.use(async (req, res, next) => {
   try {
     await connectDB();
