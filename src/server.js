@@ -1,5 +1,5 @@
-import { app } from "./app.js";
-import { connectToDatabase } from "./config/database.js";
+import app from './app.js';
+import { connectToDatabase } from './config/database.js';
 
 const PORT = process.env.PORT ?? 3000;
 
@@ -10,7 +10,7 @@ const startServer = async () => {
       console.log(`Server running on http://localhost:${PORT}`);
     });
   } catch (err) {
-    console.error("Failed to start server:", err);
+    console.error('Failed to start server:', err);
     process.exit(1);
   }
 };
