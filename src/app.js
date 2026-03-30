@@ -24,7 +24,7 @@ app.get('/health', (req, res) => {
   res.json({ status: 'ok' });
 });
 
-app.use('/auth', authRouter);
+app.use('/api/auth', authRouter);
 app.use('/api/events', eventRouter);
 //TODO: Add more routes as needed
 
