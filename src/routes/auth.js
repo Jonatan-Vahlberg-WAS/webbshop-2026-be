@@ -74,4 +74,25 @@ router.post('/logout', (req, res) => {
   res.json({ success: true });
 });
 
+router.get('/me', (req, res) => {
+  const accessToken = req.cookies.accessToken;
+
+  if (!accessToken) {
+    return res.json({ loggedIn: false });
+  }
+
+  try {
+    const decoded = jwtService.verifyAccess(accessToken);
+
+    if (!decoded) {
+      return res.json({ loggedIn: false });
+    }
+
+    res.json({ loggedIn: true });
+  } catch (error) {
+    console.error('Error verifying access token:', error);
+    res.status(401).json({ error: 'Invalid token' });
+  }
+});
+
 export default router;
