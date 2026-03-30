@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import express from 'express';
-// import productsRouter from './routes/products.js';
+import eventRouter from './routes/Event.js';
 import authRouter from './routes/auth.js';
 import cors from 'cors';
 const app = express();
@@ -23,6 +23,7 @@ app.get('/health', (req, res) => {
 });
 
 app.use('/auth', authRouter);
+app.use('/api/events', eventRouter);
 //TODO: Add more routes as needed
 
 export default app;
