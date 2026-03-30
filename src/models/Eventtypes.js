@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const EvnettypesSchema = new mongoose.Schema({
+const EventTypesSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -14,11 +14,11 @@ const EvnettypesSchema = new mongoose.Schema({
 });
 
 //Validate slug to only contain lowercase letters, numbers and hyphens
-EvnettypesSchema.path('slug').validate(function (slug) {
+EventTypesSchema.path('slug').validate(function (slug) {
   const slugRegex = /^[a-z0-9-]+$/;
   return slugRegex.test(slug);
 }, 'Invalid slug format. Only lowercase letters, numbers and hyphens are allowed.');
 
-const Eventtypes = mongoose.model('Eventtypes', EvnettypesSchema);
+const Eventtypes = mongoose.model('Eventtypes', EventTypesSchema);
 
 export default Eventtypes;

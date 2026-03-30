@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 
-const userSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema({
   firstname: {
     type: String,
     required: true,
@@ -25,13 +25,13 @@ const userSchema = new mongoose.Schema({
 });
 
 // Email validation
-userSchema.path('email').validate(function (email) {
+UserSchema.path('email').validate(function (email) {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 }, 'Invalid email format');
 
 // Password hashing
-userSchema.pre('save', async function (next) {
+UserSchema.pre('save', async function (next) {
   if (!this.isModified('password')) {
     return next();
   }
@@ -41,6 +41,6 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model('User', UserSchema);
 
 export default User;
