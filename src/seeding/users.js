@@ -63,5 +63,5 @@ export default async function seedingUsers() {
   await User.deleteMany();
   const users = await User.create(usersData);
   console.log(`Seeded db with ${users.length} users`);
-  return;
+  return users;
 }

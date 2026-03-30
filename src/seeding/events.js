@@ -86,5 +86,5 @@ export default async function seedingEvents() {
   await Event.deleteMany();
   const events = await Event.create(eventsData);
   console.log(`Seeded db with ${events.length} events`);
-  return;
+  return events;
 }

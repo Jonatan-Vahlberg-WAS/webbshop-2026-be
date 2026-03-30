@@ -13,5 +13,5 @@ export default async function seedingEventTypes() {
   await Eventtypes.deleteMany();
   const types = await Eventtypes.create(eventTypesData);
   console.log(`Seeded db with ${types.length} event types`);
-  return;
+  return types;
 }
