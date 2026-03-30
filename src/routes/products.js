@@ -9,7 +9,10 @@ router.get("/", async (req, res) => {
 });
 
 //TODO: Add more routes as needed
-
+router.get("/", async (req, res) => {
+  const products = await getProducts();
+  res.json(products);
+});
 //TODO GET /products/:slug
 
 router.post("/", validateProduct, validateProductResult, async (req, res) => {
