@@ -51,15 +51,13 @@ router.post('/login', async (req, res) => {
       return res.status(403).json({ error: 'Access denied' });
     }
 
-    console.log('User found:', user);
-
     const isMatch = await validatePassword(password, user.password);
     if (!isMatch) {
       return res.status(401).json({ error: 'Invalid email or password' });
     }
 
     // This sets the refreshToken cookie automatically
-    const accessToken = jwtService.generateTokensAndSetCookie(res, user._id);
+    jwtService.generateTokensAndSetCookie(res, user._id);
 
     return res.json({ success: true });
   } catch (error) {
