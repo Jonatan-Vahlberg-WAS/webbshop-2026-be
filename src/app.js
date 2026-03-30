@@ -1,7 +1,10 @@
 import 'dotenv/config';
 import express from 'express';
+import { connectToDatabase } from './config/database.js';
+
 import eventRouter from './routes/Event.js';
 import authRouter from './routes/auth.js';
+
 import cors from 'cors';
 const app = express();
 
@@ -9,6 +12,8 @@ const app = express();
 app.use(cors('*'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+await connectToDatabase();
 
 // Routes
 app.get('/', (req, res) => {
