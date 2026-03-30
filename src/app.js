@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import express from 'express';
-import productsRouter from './routes/products.js';
+// import productsRouter from './routes/products.js';
 import authRouter from './routes/auth.js';
 import cors from 'cors';
 const app = express();
@@ -22,7 +22,6 @@ app.get('/health', (req, res) => {
   res.json({ status: 'ok' });
 });
 
-app.use('/products', productsRouter);
 app.use('/auth', authRouter);
 //TODO: Add more routes as needed
 
