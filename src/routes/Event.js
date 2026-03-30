@@ -40,4 +40,23 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.get('/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const events = await getAllEvents();
+    const event = events.find((e) => e._id.toString() === id);
+
+    if (!event) {
+      console.log(`Event with ID ${id} not found`);
+      return res.status(404).json({ message: 'Event not found' });
+    }
+
+    res.status(200).json(event);
+  } catch (error) {
+    console.error('Error fetching event by ID:', error);
+    res.status(500).json({ error: 'Failed to fetch event' });
+  }
+});
+
 export default router;
