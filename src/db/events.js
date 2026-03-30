@@ -32,10 +32,8 @@ async function getAllEvents() {
 
 async function findEventsByType(eventType, Events) {
   try {
-    console.log('Finding events by type:', eventType);
     const eventTypeDoc = await Eventtypes.findOne({ slug: eventType });
     if (!eventTypeDoc) {
-      console.log(`Event type "${eventType}" does not exist`);
       return [];
     }
 
@@ -49,9 +47,6 @@ async function findEventsByType(eventType, Events) {
       eventIds.some((id) => id.equals(event._id))
     );
 
-    console.log(
-      `Found ${filteredEvents.length} events for type "${eventType}"`
-    );
     return filteredEvents;
   } catch (error) {
     console.error('Error fetching events by type:', error);
@@ -71,9 +66,6 @@ async function searchInEvents(searchTerm, Events) {
     return titleMatch || descriptionMatch;
   });
 
-  console.log(
-    `Found ${filteredEvents.length} events for search term "${searchTerm}"`
-  );
   return filteredEvents;
 }
 

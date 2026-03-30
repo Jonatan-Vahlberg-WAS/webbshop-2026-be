@@ -1,18 +1,12 @@
 import 'dotenv/config';
 import express from 'express';
 import { connectToDatabase } from './config/database.js';
-
 import eventRouter from './routes/Event.js';
 import authRouter from './routes/auth.js';
-
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import "dotenv/config";
-import express from "express";
-import mongoose from "mongoose";
-import productsRouter from "./routes/products.js";
-import authRouter from "./routes/auth.js";
-import cors from "cors";
+import 'dotenv/config';
+import mongoose from 'mongoose';
 
 const app = express();
 
@@ -34,7 +28,7 @@ app.use(async (req, res, next) => {
     next(err);
   }
 });
-app.use(cors("*"));
+app.use(cors('*'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
