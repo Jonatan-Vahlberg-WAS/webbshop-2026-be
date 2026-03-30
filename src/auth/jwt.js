@@ -65,17 +65,25 @@ const jwtService = {
     const accessToken = this.signAccess({ userId });
     const refreshToken = this.signRefresh({ userId });
 
-    // Auto-switch secure flag based on environment
-    const isProd = process.env.NODE_ENV || true;
+    const isProd = process.env.NODE_ENV === 'production';
 
-    res.cookie('refreshToken', refreshToken, {
+    // Access token cookie
+    res.cookie('accessToken', accessToken, {
       httpOnly: true,
-      secure: isProd, // true in prod, false in dev
-      sameSite: isProd ? 'none' : 'lax', // dev-friendly
-      expires: this.getRefreshTokenExpiry(),
+      secure: isProd,
+      sameSite: isProd ? 'none' : 'lax',
+      maxAge: this.getAccessTokenExpiry(), // millisekunder
     });
 
-    return accessToken;
+    // Refresh token cookie
+    res.cookie('refreshToken', refreshToken, {
+      httpOnly: true,
+      secure: isProd,
+      sameSite: isProd ? 'none' : 'lax',
+      expires: this.getRefreshTokenExpiry(), // datum
+    });
+
+    return accessToken; // om du vill returnera den också
   },
 
   /**
