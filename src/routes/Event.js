@@ -1,5 +1,9 @@
 import { Router } from 'express';
-import { getAllEvents, findEventsByType } from '../db/events.js';
+import {
+  getAllEvents,
+  findEventsByType,
+  searchInEvents,
+} from '../db/events.js';
 
 const router = Router();
 
@@ -23,6 +27,10 @@ router.get('/', async (req, res) => {
 
     if (kategori) {
       events = await findEventsByType(kategori, events);
+    }
+
+    if (search) {
+      events = await searchInEvents(search, events);
     }
 
     res.status(200).json({ count: events.length, events });

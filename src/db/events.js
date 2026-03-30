@@ -59,4 +59,22 @@ async function findEventsByType(eventType, Events) {
   }
 }
 
-export { getAllEvents, findEventsByType };
+async function searchInEvents(searchTerm, Events) {
+  const lowerSearchTerm = searchTerm.toLowerCase();
+
+  // Filtrera events där title eller description innehåller sökordet (case-insensitive)
+  const filteredEvents = Events.filter((event) => {
+    const titleMatch = event.title.toLowerCase().includes(lowerSearchTerm);
+    const descriptionMatch = event.description
+      .toLowerCase()
+      .includes(lowerSearchTerm);
+    return titleMatch || descriptionMatch;
+  });
+
+  console.log(
+    `Found ${filteredEvents.length} events for search term "${searchTerm}"`
+  );
+  return filteredEvents;
+}
+
+export { getAllEvents, findEventsByType, searchInEvents };
