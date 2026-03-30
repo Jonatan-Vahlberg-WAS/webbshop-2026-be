@@ -2,12 +2,6 @@ import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 
 const userSchema = new mongoose.Schema({
-  id: {
-    type: UUID,
-    required: true,
-    unique: true,
-    default: () => uuidv4(),
-  },
   firstname: {
     type: String,
     required: true,

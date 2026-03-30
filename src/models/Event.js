@@ -1,13 +1,6 @@
 import mongoose from "mongoose";
 
 const eventSchema = new mongoose.Schema({
-    id: {
-        type: UUID,
-        required: true,
-        unique: true,
-        default: () => uuidv4(),
-    },
-
     title: {
         type: String,
         required: true,

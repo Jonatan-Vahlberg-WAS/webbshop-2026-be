@@ -1,13 +1,6 @@
 import mongoose from "mongoose";
 
 const EvnettypesSchema = new mongoose.Schema({
-    id: {
-        type: UUID,
-        required: true,
-        unique: true,
-        default: () => uuidv4(),
-    },
-
     name: {
         type: String,
         required: true,
