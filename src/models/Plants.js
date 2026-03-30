@@ -20,8 +20,10 @@ const plantSchema = new mongoose.Schema(
     },
 
     imageUrl: {
-      type: String, // URL to a hosted image (e.g. Cloudinary or similar)
+      type: String,
+      required: true,
       trim: true,
+
     },
 
     lightLevel: {
