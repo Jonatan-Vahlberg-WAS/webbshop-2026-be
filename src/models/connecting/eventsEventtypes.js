@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const EventsEventTypesSchema = new mongoose.Schema({
+const evnetsEventtypesSchema = new mongoose.Schema({
   eventId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Event',
@@ -13,9 +13,9 @@ const EventsEventTypesSchema = new mongoose.Schema({
   },
 });
 
-const EventsEventTypes = mongoose.model(
-  'EventsEventTypes',
-  EventsEventTypesSchema
+const EventsEventtypes = mongoose.model(
+  'EventsEventtypes',
+  evnetsEventtypesSchema
 );
 
-export default EventsEventTypes;
+export default EventsEventtypes;
