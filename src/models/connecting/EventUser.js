@@ -2,14 +2,17 @@ import mongoose from "mongoose";
 
 const eventUserSchema = new mongoose.Schema({
   eventId: {
-    type: UUID,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Event",
     required: true,
   },
   userId: {
-    type: UUID,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
     required: true,
   },
 });
+
 
 const EventUser = mongoose.model("EventUser", eventUserSchema);
 
