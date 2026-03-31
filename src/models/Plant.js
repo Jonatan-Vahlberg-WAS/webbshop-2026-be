@@ -33,7 +33,7 @@ const plantSchema = new mongoose.Schema({
   ownerId: {
     type: mongoose.SchemaTypes.ObjectId,
     ref: "User",
-    required: false //Change to true later
+    required: true 
   },
   coordinates: {
     type: [Number],
