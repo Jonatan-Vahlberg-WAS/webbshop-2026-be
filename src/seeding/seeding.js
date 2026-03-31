@@ -58,60 +58,68 @@ export default async function seeding() {
 
   await EventUser.deleteMany();
   const eventUser = await EventUser.create([
-    // Tech Summit 2026
+    // Morning Yoga Flow
     { eventId: events[0]._id, userId: users[1]._id },
-    { eventId: events[0]._id, userId: users[2]._id },
     { eventId: events[0]._id, userId: users[3]._id },
-    // Summer Music Festival
+    { eventId: events[0]._id, userId: users[5]._id },
+    { eventId: events[0]._id, userId: users[9]._id },
+    // HIIT Power Session
+    { eventId: events[1]._id, userId: users[2]._id },
     { eventId: events[1]._id, userId: users[4]._id },
-    { eventId: events[1]._id, userId: users[5]._id },
     { eventId: events[1]._id, userId: users[6]._id },
-    { eventId: events[1]._id, userId: users[7]._id },
-    // JavaScript Workshop
-    { eventId: events[2]._id, userId: users[2]._id },
-    { eventId: events[2]._id, userId: users[6]._id },
-    // Malmö Marathon
-    { eventId: events[3]._id, userId: users[3]._id },
+    { eventId: events[1]._id, userId: users[8]._id },
+    // Deep Relaxation Spa Day
+    { eventId: events[2]._id, userId: users[1]._id },
+    { eventId: events[2]._id, userId: users[3]._id },
+    { eventId: events[2]._id, userId: users[7]._id },
+    { eventId: events[2]._id, userId: users[9]._id },
+    // Outdoor Bootcamp
+    { eventId: events[3]._id, userId: users[2]._id },
     { eventId: events[3]._id, userId: users[4]._id },
-    // Startup Networking Evening
-    { eventId: events[4]._id, userId: users[1]._id },
-    { eventId: events[4]._id, userId: users[2]._id },
+    { eventId: events[3]._id, userId: users[6]._id },
+    { eventId: events[3]._id, userId: users[8]._id },
+    // Hot Yoga Detox
     { eventId: events[4]._id, userId: users[5]._id },
-    // UX Design Conference
+    { eventId: events[4]._id, userId: users[7]._id },
+    { eventId: events[4]._id, userId: users[9]._id },
+    // Pilates Core Strength
+    { eventId: events[5]._id, userId: users[1]._id },
     { eventId: events[5]._id, userId: users[3]._id },
-    { eventId: events[5]._id, userId: users[7]._id },
-    // Midsommar Celebration
+    { eventId: events[5]._id, userId: users[5]._id },
+    // Mindfulness & Meditation Workshop
     { eventId: events[6]._id, userId: users[1]._id },
-    { eventId: events[6]._id, userId: users[4]._id },
-    { eventId: events[6]._id, userId: users[5]._id },
-    { eventId: events[6]._id, userId: users[6]._id },
+    { eventId: events[6]._id, userId: users[3]._id },
     { eventId: events[6]._id, userId: users[7]._id },
-    // Cybersecurity Bootcamp
+    { eventId: events[6]._id, userId: users[9]._id },
+    // Strength Training Fundamentals
     { eventId: events[7]._id, userId: users[2]._id },
-    { eventId: events[7]._id, userId: users[6]._id },
-    // Food & Wine Festival
+    { eventId: events[7]._id, userId: users[4]._id },
+    { eventId: events[7]._id, userId: users[8]._id },
+    // Spa & Wellness Evening
     { eventId: events[8]._id, userId: users[1]._id },
-    { eventId: events[8]._id, userId: users[3]._id },
-    { eventId: events[8]._id, userId: users[4]._id },
+    { eventId: events[8]._id, userId: users[5]._id },
     { eventId: events[8]._id, userId: users[7]._id },
-    // AI & Machine Learning Seminar
-    { eventId: events[9]._id, userId: users[2]._id },
+    { eventId: events[8]._id, userId: users[9]._id },
+    // Sunrise Beach Yoga
+    { eventId: events[9]._id, userId: users[1]._id },
+    { eventId: events[9]._id, userId: users[3]._id },
     { eventId: events[9]._id, userId: users[5]._id },
-    { eventId: events[9]._id, userId: users[6]._id },
+    { eventId: events[9]._id, userId: users[7]._id },
+    { eventId: events[9]._id, userId: users[9]._id },
   ]);
   console.log(`Seeded db with ${eventUser.length} user -> event`);
 
   const rolesUsers = await RolesUsers.create([
-    { roleId: roles[0]._id, userId: users[0]._id }, // Admin
-    { roleId: roles[1]._id, userId: users[1]._id }, // User
-    { roleId: roles[1]._id, userId: users[2]._id }, // User
-    { roleId: roles[1]._id, userId: users[3]._id }, // User
-    { roleId: roles[1]._id, userId: users[4]._id }, // User
-    { roleId: roles[1]._id, userId: users[5]._id }, // User
-    { roleId: roles[1]._id, userId: users[6]._id }, // User
-    { roleId: roles[1]._id, userId: users[7]._id }, // User
-    { roleId: roles[1]._id, userId: users[8]._id }, // User
-    { roleId: roles[1]._id, userId: users[9]._id }, // User
+    { roleId: roles[2]._id, userId: users[0]._id }, // Admin
+    { roleId: roles[0]._id, userId: users[1]._id }, // Anna - Customer
+    { roleId: roles[1]._id, userId: users[2]._id }, // Erik - Trainer
+    { roleId: roles[0]._id, userId: users[3]._id }, // Maria - Customer
+    { roleId: roles[1]._id, userId: users[4]._id }, // Lars - Trainer
+    { roleId: roles[0]._id, userId: users[5]._id }, // Sofia - Customer
+    { roleId: roles[1]._id, userId: users[6]._id }, // Johan - Trainer
+    { roleId: roles[0]._id, userId: users[7]._id }, // Emma - Customer
+    { roleId: roles[0]._id, userId: users[8]._id }, // Patrik - Customer
+    { roleId: roles[0]._id, userId: users[9]._id }, // Linda - Customer
   ]);
   console.log(`Seeded db with ${rolesUsers.length} user -> role`);
 
