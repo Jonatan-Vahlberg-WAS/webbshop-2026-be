@@ -8,9 +8,11 @@ router.get('/', EventController.eventsGet);
 
 router.post('/', isAuth, EventController.eventPost);
 
-router.put('/:id', isAuth, EventController.editEventPut);
+router.get('/archive', EventController.getArchivedEvents);
 
 router.get('/:id', EventController.eventGet);
+
+router.put('/:id', isAuth, EventController.editEventPut);
 
 router.delete('/:id', isAuth, EventController.eventDelete);
 

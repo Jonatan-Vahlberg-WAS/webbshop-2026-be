@@ -216,6 +216,31 @@ class EventController {
       }
     },
   ];
+
+  getArchivedEvents = [
+    async (req, res) => {
+      try {
+        const events = await getAllEvents();
+
+        if (events.length === 0) {
+          console.log('No events found');
+          return res.status(404).json({ message: 'No events found' });
+        }
+        const archivedEvents = events.filter((event) => {
+          const eventDate = new Date(event.date);
+          const now = new Date();
+          return eventDate < now;
+        });
+
+        res
+          .status(200)
+          .json({ count: archivedEvents.length, events: archivedEvents });
+      } catch (error) {
+        console.error('Error fetching archived events:', error);
+        res.status(500).json({ error: 'Failed to fetch archived events' });
+      }
+    },
+  ];
 }
 
 export default new EventController();
