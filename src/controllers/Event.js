@@ -177,11 +177,28 @@ class EventController {
         if (location) event.location = location;
 
         if (type) {
-          const eventtype = await findEventtype(type);
-          if (!eventtype) {
-            return res.status(400).json({ error: 'Invalid event type' });
+          if (type.isArray()) {
+            for (const t of type) {
+              if (typeof t !== 'string') {
+                return res
+                  .status(400)
+                  .json({ error: 'Each event type must be a string' });
+              }
+              const eventtype = await findEventtype(t);
+              if (!eventtype) {
+                return res
+                  .status(400)
+                  .json({ error: `Invalid event type: ${t}` });
+              }
+              await addEventtypeToEvent(t, event._id);
+            }
+          } else {
+            const eventtype = await findEventtype(type);
+            if (!eventtype) {
+              return res.status(400).json({ error: 'Invalid event type' });
+            }
+            await addEventtypeToEvent(type, event._id);
           }
-          await addEventtypeToEvent(type, event._id);
         }
 
         await event.save();
