@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 
-const EventUserSchema = new mongoose.Schema({
-  eventId: {
+const RolesUsersSchema = new mongoose.Schema({
+  roleId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Event',
+    ref: 'Roles',
     required: true,
   },
   userId: {
@@ -13,6 +13,6 @@ const EventUserSchema = new mongoose.Schema({
   },
 });
 
-const EventUser = mongoose.model('EventUser', EventUserSchema);
+const RolesUsers = mongoose.model('RolesUsers', RolesUsersSchema);
 
-export default EventUser;
+export default RolesUsers;
