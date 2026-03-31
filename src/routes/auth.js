@@ -2,9 +2,9 @@ import { Router } from "express";
 import { validateRegister, validateAuthResult } from "../middleware/authValidation.js";
 import { createUser, findUserByEmail } from "../db/users.js";
 
-const router = Router();
+const authRouter = Router();
 
-router.post(
+authRouter.post(
   "/register",
   validateRegister,
   validateAuthResult,
@@ -33,4 +33,4 @@ router.post(
 // isSamePassword - comparison
 // reset password
 
-export default router;
+export default authRouter;
