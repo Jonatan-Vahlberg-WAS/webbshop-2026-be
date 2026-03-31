@@ -21,4 +21,11 @@ router.post('/:id/bookings', BookingController.bookingPost);
 
 router.get('/:id/bookings', isAuth, isAdmin, BookingController.bookingGet);
 
+router.delete(
+  '/:id/bookings',
+  isAuth,
+  isAdmin,
+  BookingController.bookingDelete
+);
+
 export default router;

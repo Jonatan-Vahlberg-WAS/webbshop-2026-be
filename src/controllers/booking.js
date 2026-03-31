@@ -100,6 +100,51 @@ class BookingController {
       }
     },
   ];
+
+  bookingDelete = [
+    async (req, res) => {
+      const { id } = req.params;
+      const { email } = req.body;
+
+      try {
+        if (!id) {
+          return res.status(400).json({ error: 'Event ID is required' });
+        }
+
+        if (!email) {
+          return res.status(400).json({ error: 'Email is required' });
+        }
+
+        const event = await findEventById(id);
+        if (!event) {
+          return res.status(404).json({ error: 'Event not found' });
+        }
+
+        const user = await findUserByEmail(email);
+        if (!user) {
+          return res.status(404).json({ error: 'User not found' });
+        }
+
+        const existingBooking = await EventUser.findOne({
+          userId: user._id,
+          eventId: id,
+        });
+
+        if (!existingBooking) {
+          return res
+            .status(400)
+            .json({ error: 'User is not booked for this event' });
+        }
+
+        await EventUser.deleteOne({ eventId: id, userId: user._id });
+
+        res.status(200).json({ message: 'Booking cancelled successfully' });
+      } catch (error) {
+        console.error('Error cancelling booking:', error);
+        res.status(500).json({ error: 'Failed to cancel booking' });
+      }
+    },
+  ];
 }
 
 export default new BookingController();
