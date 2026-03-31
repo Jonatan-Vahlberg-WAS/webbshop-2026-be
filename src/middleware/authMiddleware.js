@@ -1,5 +1,4 @@
 import jwtService from '../auth/jwt.js';
-import { findUserById } from '../db/users.js';
 
 export function isAuth(req, res, next) {
   const { accessToken, refreshToken } = req.cookies;
