@@ -92,10 +92,21 @@ async function findEventByName(eventName) {
   }
 }
 
+async function findEventById(eventId) {
+  try {
+    const event = await Event.findById(eventId);
+    return event;
+  } catch (error) {
+    console.error('Error fetching event by ID:', error);
+    throw error;
+  }
+}
+
 export {
   getAllEvents,
   findEventsByType,
   searchInEvents,
   createEvent,
   findEventByName,
+  findEventById,
 };

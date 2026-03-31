@@ -4,6 +4,7 @@ import {
   searchInEvents,
   createEvent,
   findEventByName,
+  findEventById,
 } from '../db/events.js';
 import { findEventtype, addEventtypeToEvent } from '../db/types.js';
 import mongoose from 'mongoose';
@@ -125,6 +126,69 @@ class EventController {
         res.status(500).json({ error: 'Failed to create event' });
       } finally {
         session.endSession();
+      }
+    },
+  ];
+
+  editEventPut = [
+    async (req, res) => {
+      const { id } = req.params;
+
+      try {
+        if (!id) {
+          return res.status(400).json({ error: 'Event ID is required' });
+        }
+
+        const { title, description, date, type, maxseats, location } = req.body;
+
+        if (
+          !title &&
+          !description &&
+          !date &&
+          !type &&
+          !maxseats &&
+          !location
+        ) {
+          return res
+            .status(400)
+            .json({ error: 'At least one field must be provided for update' });
+        }
+
+        const event = await findEventById(id);
+
+        if (!event) {
+          return res.status(404).json({ error: 'Event not found' });
+        }
+
+        if (title) event.title = title;
+        if (description) event.description = description;
+        if (date) {
+          if (isNaN(Date.parse(date))) {
+            return res.status(400).json({ error: 'Invalid date format' });
+          }
+          event.date = date;
+        }
+        if (maxseats) {
+          if (isNaN(maxseats) || maxseats <= 0 || !Number.isInteger(maxseats)) {
+            return res.status(400).json({ error: 'Invalid maxseats value' });
+          }
+          event.maxseats = maxseats;
+        }
+        if (location) event.location = location;
+
+        if (type) {
+          const eventtype = await findEventtype(type);
+          if (!eventtype) {
+            return res.status(400).json({ error: 'Invalid event type' });
+          }
+          await addEventtypeToEvent(type, event._id);
+        }
+
+        await event.save();
+        res.status(200).json(event);
+      } catch (error) {
+        console.error('Error editing event:', error);
+        res.status(500).json({ error: 'Failed to edit event' });
       }
     },
   ];

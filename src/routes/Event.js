@@ -8,6 +8,8 @@ router.get('/', EventController.eventsGet);
 
 router.post('/', isAuth, EventController.eventPost);
 
+router.put('/:id', isAuth, EventController.editEventPut);
+
 router.get('/:id', EventController.eventGet);
 
 export default router;
