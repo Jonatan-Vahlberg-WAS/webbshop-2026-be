@@ -14,6 +14,9 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  phone: {
+    type: String,
+  },
   password: {
     type: String,
     required: true,
@@ -41,6 +44,13 @@ UserSchema.pre('save', async function (next) {
   this.password = await bcrypt.hash(this.password, salt);
   next();
 });
+
+// Phone number validation
+UserSchema.path('phone').validate(function (phone) {
+  if (!phone) return true; // Allow empty phone number
+  const phoneRegex = /^\+?[1-9]\d{1,14}$/; // E.164 format
+  return phoneRegex.test(phone);
+}, 'Invalid phone number format');
 
 const User = mongoose.model('User', UserSchema);
 

@@ -50,7 +50,6 @@ app.get('/health', (req, res) => {
 
 app.use('/api/auth', authRouter);
 app.use('/api/events', eventRouter);
-//TODO: Add more routes as needed
 
 export default app;
 
