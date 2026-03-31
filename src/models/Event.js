@@ -30,6 +30,11 @@ const EventSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+
+  trainerid: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+  },
 });
 
 const Event = mongoose.model('Event', EventSchema);
