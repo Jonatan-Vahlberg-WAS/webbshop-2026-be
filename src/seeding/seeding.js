@@ -19,29 +19,41 @@ export default async function seeding() {
 
   await EventsEventtypes.deleteMany();
   const eventEventTypes = await EventsEventtypes.create([
-    // Tech Summit 2026 → Conference
-    { eventId: events[0]._id, eventtypesId: types[1]._id },
-    // Summer Music Festival → Concert, Festival
-    { eventId: events[1]._id, eventtypesId: types[0]._id },
-    { eventId: events[1]._id, eventtypesId: types[4]._id },
-    // JavaScript Workshop → Workshop
+    // Morning Yoga Flow → Yoga
+    { eventId: events[0]._id, eventtypesId: types[0]._id },
+
+    // HIIT Power Session → Fitness
+    { eventId: events[1]._id, eventtypesId: types[1]._id },
+
+    // Deep Relaxation Spa Day → Spa & Wellness
     { eventId: events[2]._id, eventtypesId: types[2]._id },
-    // Malmö Marathon → Sports
-    { eventId: events[3]._id, eventtypesId: types[3]._id },
-    // Startup Networking Evening → Networking
-    { eventId: events[4]._id, eventtypesId: types[5]._id },
-    // UX Design Conference → Conference
-    { eventId: events[5]._id, eventtypesId: types[1]._id },
-    // Midsommar Celebration → Festival
-    { eventId: events[6]._id, eventtypesId: types[4]._id },
-    // Cybersecurity Bootcamp → Workshop
-    { eventId: events[7]._id, eventtypesId: types[2]._id },
-    // Food & Wine Festival → Festival
-    { eventId: events[8]._id, eventtypesId: types[4]._id },
-    // AI & Machine Learning Seminar → Conference, Networking
-    { eventId: events[9]._id, eventtypesId: types[1]._id },
-    { eventId: events[9]._id, eventtypesId: types[5]._id },
+
+    // Outdoor Bootcamp → Bootcamp + Outdoor Training
+    { eventId: events[3]._id, eventtypesId: types[4]._id },
+    { eventId: events[3]._id, eventtypesId: types[8]._id },
+
+    // Hot Yoga Detox → Yoga + Detox & Recovery
+    { eventId: events[4]._id, eventtypesId: types[0]._id },
+    { eventId: events[4]._id, eventtypesId: types[9]._id },
+
+    // Pilates Core Strength → Pilates
+    { eventId: events[5]._id, eventtypesId: types[5]._id },
+
+    // Mindfulness & Meditation Workshop → Mindfulness + Meditation
+    { eventId: events[6]._id, eventtypesId: types[6]._id },
+    { eventId: events[6]._id, eventtypesId: types[3]._id },
+
+    // Strength Training Fundamentals → Strength Training
+    { eventId: events[7]._id, eventtypesId: types[7]._id },
+
+    // Spa & Wellness Evening → Spa & Wellness
+    { eventId: events[8]._id, eventtypesId: types[2]._id },
+
+    // Sunrise Beach Yoga → Yoga + Outdoor Training
+    { eventId: events[9]._id, eventtypesId: types[0]._id },
+    { eventId: events[9]._id, eventtypesId: types[8]._id },
   ]);
+
   console.log(`Seeded db with ${eventEventTypes.length} event types -> event `);
 
   await EventUser.deleteMany();

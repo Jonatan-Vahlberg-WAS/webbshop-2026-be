@@ -1,12 +1,16 @@
 import Eventtypes from '../models/Eventtypes.js';
 
 const eventTypesData = [
-  { name: 'Concert', slug: 'concert' },
-  { name: 'Conference', slug: 'conference' },
-  { name: 'Workshop', slug: 'workshop' },
-  { name: 'Sports', slug: 'sports' },
-  { name: 'Festival', slug: 'festival' },
-  { name: 'Networking', slug: 'networking' },
+  { name: 'Yoga', slug: 'yoga' },
+  { name: 'Fitness', slug: 'fitness' },
+  { name: 'Spa & Wellness', slug: 'spa-wellness' },
+  { name: 'Meditation', slug: 'meditation' },
+  { name: 'Bootcamp', slug: 'bootcamp' },
+  { name: 'Pilates', slug: 'pilates' },
+  { name: 'Mindfulness', slug: 'mindfulness' },
+  { name: 'Strength Training', slug: 'strength-training' },
+  { name: 'Outdoor Training', slug: 'outdoor-training' },
+  { name: 'Detox & Recovery', slug: 'detox-recovery' },
 ];
 
 export default async function seedingEventTypes() {
