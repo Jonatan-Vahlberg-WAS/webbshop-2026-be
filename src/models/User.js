@@ -30,9 +30,10 @@ const userSchema = new mongoose.Schema({
     required: true,
     default: "user",
   },
-  address: {
-    type: String,
-    trim: true,
+  location: {
+    type: [Number],
+    default: [0, 0],
+    required: true
   },
   plants: [
     {
