@@ -1,11 +1,6 @@
 import mongoose from 'mongoose';
 
 const RolesSchema = new mongoose.Schema({
-  id: {
-    type: UUID,
-    required: true,
-    unique: true,
-  },
   name: {
     type: String,
     required: true,

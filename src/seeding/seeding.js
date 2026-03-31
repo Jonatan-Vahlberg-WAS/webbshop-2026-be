@@ -2,9 +2,11 @@ import 'dotenv/config';
 import { connectToDatabase } from '../config/database.js';
 import seedingUsers from './users.js';
 import seedingEvents from './events.js';
+import seedingRoles from './roles.js';
 import seedingEventTypes from './event-types.js';
 import EventsEventtypes from '../models/connecting/eventsEventtypes.js';
 import EventUser from '../models/connecting/EventUser.js';
+import RolesUsers from '../models/connecting/rolesUsers.js';
 
 export default async function seeding() {
   await connectToDatabase();
@@ -13,6 +15,7 @@ export default async function seeding() {
   const events = await seedingEvents();
   const users = await seedingUsers();
   const types = await seedingEventTypes();
+  const roles = await seedingRoles();
 
   await EventsEventtypes.deleteMany();
   const eventEventTypes = await EventsEventtypes.create([
@@ -85,6 +88,20 @@ export default async function seeding() {
     { eventId: events[9]._id, userId: users[6]._id },
   ]);
   console.log(`Seeded db with ${eventUser.length} user -> event`);
+
+  const rolesUsers = await RolesUsers.create([
+    { roleId: roles[0]._id, userId: users[0]._id }, // Admin
+    { roleId: roles[1]._id, userId: users[1]._id }, // User
+    { roleId: roles[1]._id, userId: users[2]._id }, // User
+    { roleId: roles[1]._id, userId: users[3]._id }, // User
+    { roleId: roles[1]._id, userId: users[4]._id }, // User
+    { roleId: roles[1]._id, userId: users[5]._id }, // User
+    { roleId: roles[1]._id, userId: users[6]._id }, // User
+    { roleId: roles[1]._id, userId: users[7]._id }, // User
+    { roleId: roles[1]._id, userId: users[8]._id }, // User
+    { roleId: roles[1]._id, userId: users[9]._id }, // User
+  ]);
+  console.log(`Seeded db with ${rolesUsers.length} user -> role`);
 
   console.log('Seeding finished');
   process.exit();
