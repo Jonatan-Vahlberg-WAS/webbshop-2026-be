@@ -1,9 +1,9 @@
 import { Router } from "express";
 import { validatePlant, validatePlantResult } from "../middleware/plantValidation.js";
 import { createPlant, getPlants } from "../db/plant.js";
-const router = Router();
+const plantRouter = Router();
 
-router.get("/", async (req, res) => {
+plantRouter.get("/", async (req, res) => {
   const plants = await getPlants();
   res.json(plants);
 });
@@ -12,7 +12,7 @@ router.get("/", async (req, res) => {
 
 //TODO GET /plants/:slug
 
-router.post("/", validatePlant, validatePlantResult, async (req, res) => {
+plantRouter.post("/", validatePlant, validatePlantResult, async (req, res) => {
   const plant = await createPlant(req.body);
   res.status(201).json(plant);
 });
@@ -20,4 +20,4 @@ router.post("/", validatePlant, validatePlantResult, async (req, res) => {
 //TODO PUT /plants/:slug
 
 //TODO DELETE /plants/:slug
-export default router;
+export default plantRouter;
