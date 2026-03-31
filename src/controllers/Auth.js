@@ -1,4 +1,9 @@
-import { createUser, findUserByEmail, validatePassword } from '../db/users.js';
+import {
+  createUser,
+  findUserByEmail,
+  findUserById,
+  validatePassword,
+} from '../db/users.js';
 import jwtService from '../auth/jwt.js';
 import AppError from '../utils/AppError.js';
 
@@ -41,11 +46,9 @@ class AuthController {
           return next(new AppError('Invalid email or password', 401));
         }
 
-        if (!user.admin) {
-          return next(new AppError('Access denied', 403));
-        }
-
-        console.log('User found:', user);
+        // if (!user.admin) {
+        //   return res.status(403).json({ error: 'Access denied' });
+        // }
 
         const isMatch = await validatePassword(password, user.password);
         if (!isMatch) {
@@ -71,21 +74,15 @@ class AuthController {
   ];
 
   meGet = [
-    (req, res, next) => {
-      const accessToken = req.cookies.accessToken;
-
-      if (!accessToken) {
-        return res.json({ loggedIn: false });
-      }
-
+    async (req, res) => {
+      const { id: userId } = req.user;
       try {
-        const decoded = jwtService.verifyAccess(accessToken);
-
-        if (!decoded) {
-          return res.json({ loggedIn: false });
+        if (req.user?.userId) {
+          return res.status(401).json({ loggedIn: false });
         }
 
-        res.json({ loggedIn: true });
+        const user = await findUserById(userId);
+        res.json(user);
       } catch (error) {
         next(new AppError('Invalid token', 401));
       }

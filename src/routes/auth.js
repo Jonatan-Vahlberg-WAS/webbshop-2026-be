@@ -4,6 +4,7 @@ import {
   validateAuthResult,
 } from '../middleware/authValidation.js';
 import AuthController from '../controllers/Auth.js';
+import { isAuth } from '../middleware/authMiddleware.js';
 
 const router = Router();
 
@@ -18,6 +19,6 @@ router.post('/login', AuthController.loginPost);
 
 router.post('/logout', AuthController.logoutPost);
 
-router.get('/me', AuthController.meGet);
+router.get('/me', isAuth, AuthController.meGet);
 
 export default router;

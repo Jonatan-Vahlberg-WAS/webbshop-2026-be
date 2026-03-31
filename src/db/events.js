@@ -2,6 +2,8 @@ import Event from '../models/Event.js';
 import EventUser from '../models/connecting/EventUser.js';
 import EventsEventtypes from '../models/connecting/eventsEventtypes.js';
 import Eventtypes from '../models/Eventtypes.js';
+import nodemailer from 'nodemailer';
+import 'dotenv/config';
 
 async function getAllEvents() {
   try {
@@ -69,4 +71,69 @@ async function searchInEvents(searchTerm, Events) {
   return filteredEvents;
 }
 
-export { getAllEvents, findEventsByType, searchInEvents };
+async function createEvent(eventData, options = {}) {
+  const { session } = options;
+
+  try {
+    const newEvent = new Event(eventData);
+    const savedEvent = await newEvent.save({ session });
+    return savedEvent;
+  } catch (error) {
+    console.error('Error creating event:', error);
+    throw error;
+  }
+}
+
+async function findEventByName(eventName) {
+  try {
+    const event = await Event.findOne({ title: eventName });
+    return event;
+  } catch (error) {
+    console.error('Error fetching event by name:', error);
+    throw error;
+  }
+}
+
+async function findEventById(eventId) {
+  try {
+    const event = await Event.findById(eventId);
+    return event;
+  } catch (error) {
+    console.error('Error fetching event by ID:', error);
+    throw error;
+  }
+}
+
+async function mailCust(message) {
+  try {
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL_ADRESS,
+        pass: process.env.GOOGLE_APP_PASSWORD,
+      },
+    });
+
+    await transporter.verify();
+
+    const info = await transporter.sendMail({
+      to: 'ludvig.g.dahl@gmail.com',
+      subject: 'hello world!',
+      text: 'Bye bye world!',
+    });
+
+    console.log('Message sent: %s', info.messageId);
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
+export {
+  getAllEvents,
+  findEventsByType,
+  searchInEvents,
+  createEvent,
+  findEventByName,
+  findEventById,
+  mailCust,
+};
