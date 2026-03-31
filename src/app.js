@@ -7,6 +7,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import 'dotenv/config';
 import mongoose from 'mongoose';
+import errorHandler from './middleware/errorHandler.js';
 
 const app = express();
 
@@ -52,3 +53,5 @@ app.use('/api/events', eventRouter);
 //TODO: Add more routes as needed
 
 export default app;
+
+app.use(errorHandler);
