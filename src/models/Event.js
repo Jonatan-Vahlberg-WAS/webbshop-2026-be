@@ -12,8 +12,19 @@ const EventSchema = new mongoose.Schema({
   },
 
   time: {
-    type: Object,
-    required: true,
+    date: {
+      type: Date,
+      require: true,
+      default: Date.now,
+    },
+    startTime: {
+      type: String,
+      require: true,
+    },
+    endTime: {
+      type: String,
+      require: true,
+    },
   },
 
   maxseats: {
