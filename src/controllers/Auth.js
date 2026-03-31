@@ -1,9 +1,10 @@
 import { createUser, findUserByEmail, validatePassword } from '../db/users.js';
 import jwtService from '../auth/jwt.js';
+import AppError from '../utils/AppError.js';
 
 class AuthController {
   registerPost = [
-    async (req, res) => {
+    async (req, res, next) => {
       try {
         const { name, email, password } = req.body;
 
@@ -19,14 +20,13 @@ class AuthController {
           email: user.email,
         });
       } catch (error) {
-        console.error('Registration error:', error);
-        res.status(500).json({ error: 'Registration failed' });
+        next(error);
       }
     },
   ];
 
   loginPost = [
-    async (req, res) => {
+    async (req, res, next) => {
       try {
         const { email, password } = req.body;
 
@@ -38,18 +38,18 @@ class AuthController {
 
         const user = await findUserByEmail(email);
         if (!user) {
-          return res.status(401).json({ error: 'Invalid email or password' });
+          return next(new AppError('Invalid email or password', 401));
         }
 
         if (!user.admin) {
-          return res.status(403).json({ error: 'Access denied' });
+          return next(new AppError('Access denied', 403));
         }
 
         console.log('User found:', user);
 
         const isMatch = await validatePassword(password, user.password);
         if (!isMatch) {
-          return res.status(401).json({ error: 'Invalid email or password' });
+          return next(new AppError('Invalid email or password', 401));
         }
 
         // This sets the refreshToken cookie automatically
@@ -57,8 +57,7 @@ class AuthController {
 
         return res.json({ success: true });
       } catch (error) {
-        console.error('Login error:', error);
-        return res.status(500).json({ error: 'Login failed' });
+        next(error);
       }
     },
   ];
@@ -72,7 +71,7 @@ class AuthController {
   ];
 
   meGet = [
-    (req, res) => {
+    (req, res, next) => {
       const accessToken = req.cookies.accessToken;
 
       if (!accessToken) {
@@ -88,8 +87,7 @@ class AuthController {
 
         res.json({ loggedIn: true });
       } catch (error) {
-        console.error('Error verifying access token:', error);
-        res.status(401).json({ error: 'Invalid token' });
+        next(new AppError('Invalid token', 401));
       }
     },
   ];
