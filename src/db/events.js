@@ -4,6 +4,7 @@ import EventsEventtypes from '../models/connecting/eventsEventtypes.js';
 import Eventtypes from '../models/Eventtypes.js';
 import nodemailer from 'nodemailer';
 import 'dotenv/config';
+import AppError from '../utils/AppError.js';
 
 async function getAllEvents() {
   try {
@@ -96,17 +97,18 @@ async function findEventByName(eventName) {
 
 async function findEventById(eventId) {
   try {
+    if (eventId.length != 24) throw new AppError('Bad Request', 400);
     const event = await Event.findById(eventId);
 
-    const eventWithParticipants = async () => {
-      const participantCount = await EventUser.countDocuments({
-        eventId: event._id,
-      });
-      return {
-        ...event.toObject(),
-        participants: participantCount,
-        seatsLeft: event.maxseats - participantCount,
-      };
+    if (!event) throw new AppError('No event found', 404);
+
+    const participantCount = await EventUser.countDocuments({
+      eventId: event._id,
+    });
+    const eventWithParticipants = {
+      ...event.toObject(),
+      participants: participantCount,
+      seatsLeft: event.maxseats - participantCount,
     };
 
     return eventWithParticipants;
@@ -136,7 +138,7 @@ async function mailCust(message, subject, reciver) {
 
     console.log('Message sent: %s', info.messageId);
   } catch (error) {
-    throw new Error(error);
+    throw error;
   }
 }
 

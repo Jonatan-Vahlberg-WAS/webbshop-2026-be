@@ -50,7 +50,6 @@ app.get('/health', (req, res) => {
 
 app.use('/api/auth', authRouter);
 app.use('/api/events', eventRouter);
+app.use(errorHandler);
 
 export default app;
-
-app.use(errorHandler);
