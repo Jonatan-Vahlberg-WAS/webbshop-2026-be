@@ -2,6 +2,7 @@ import { Router } from 'express';
 import EventController from '../controllers/Event.js';
 import { isAdmin, isAuth } from '../middleware/authMiddleware.js';
 import BookingController from '../controllers/booking.js';
+import capacityMiddleware from '../middleware/capacityMiddleware.js';
 
 const router = Router();
 
@@ -17,7 +18,7 @@ router.put('/:id', isAuth, isAdmin, EventController.editEventPut);
 
 router.delete('/:id', isAuth, isAdmin, EventController.eventDelete);
 
-router.post('/:id/bookings', BookingController.bookingPost);
+router.post('/:id/bookings', capacityMiddleware, BookingController.bookingPost);
 
 router.get('/:id/bookings', isAuth, isAdmin, BookingController.bookingGet);
 

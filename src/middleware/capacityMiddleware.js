@@ -1,11 +1,17 @@
-//validera att booking inte inner håller fel datum
+import { findEventById } from '../db/events.js';
 
-import Event from '../models/Event.js';
+export default async function capacityMiddleware(req, res, next) {
+  const { id: eventId } = req.params;
+  const { persons } = req.body;
 
-export default async function capacityMiddleWare(req, res, next) {
-  const { seats, bookingId } = req.body; //seats är hur många sätten kunden bokar typ lite osäker på hur bookningen kommer se ut
+  try {
+    const event = await findEventById(eventId);
 
-  const event = Event.findById(bookingId);
+    if (event.seatsLeft - persons.length < 0)
+      return next(new Error('Event full', 409));
 
-  if (seats < event.maxseats) return;
+    next();
+  } catch (error) {
+    next(error);
+  }
 }
