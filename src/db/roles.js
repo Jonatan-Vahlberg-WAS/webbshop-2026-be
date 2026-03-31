@@ -1,5 +1,5 @@
 import Roles from '../models/Roles.js';
-import RolesUser from '../models/connecting/RolesUsers.js';
+import RolesUser from '../models/connecting/rolesUsers.js';
 
 export async function assignRoleToUser(userId, roleSlug) {
   try {

@@ -2,7 +2,6 @@ import Event from '../models/Event.js';
 import EventUser from '../models/connecting/EventUser.js';
 import EventsEventtypes from '../models/connecting/eventsEventtypes.js';
 import Eventtypes from '../models/Eventtypes.js';
-import nodemailer from 'nodemailer';
 import 'dotenv/config';
 import AppError from '../utils/AppError.js';
 
@@ -118,30 +117,6 @@ async function findEventById(eventId) {
   }
 }
 
-async function mailCust(message, subject, reciver) {
-  try {
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.EMAIL_ADRESS,
-        pass: process.env.GOOGLE_APP_PASSWORD,
-      },
-    });
-
-    await transporter.verify();
-
-    const info = await transporter.sendMail({
-      to: reciver,
-      subject: subject,
-      text: message,
-    });
-
-    console.log('Message sent: %s', info.messageId);
-  } catch (error) {
-    throw error;
-  }
-}
-
 export {
   getAllEvents,
   findEventsByType,
@@ -149,5 +124,4 @@ export {
   createEvent,
   findEventByName,
   findEventById,
-  mailCust,
 };

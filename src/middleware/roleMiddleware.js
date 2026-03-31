@@ -1,4 +1,4 @@
-import RolesUsers from '../models/connecting/RolesUsers.js';
+import RolesUsers from '../models/connecting/rolesUsers.js';
 
 const requiredRole = (requiredRole) => {
   return async (req, res, next) => {
