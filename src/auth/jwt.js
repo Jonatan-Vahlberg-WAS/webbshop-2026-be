@@ -14,11 +14,29 @@ const jwtService = {
   },
 
   verifyAccess(token) {
-    return jwt.verify(token, process.env.JWT_ACCESS_SECRET);
+    return jwt.verify(
+      token,
+      process.env.JWT_ACCESS_SECRET,
+      function (err, decoded) {
+        if (err) {
+          if (err?.message == 'jwt expired') return false;
+        }
+        return decoded;
+      }
+    );
   },
 
   verifyRefresh(token) {
-    return jwt.verify(token, process.env.JWT_REFRESH_SECRET);
+    return jwt.verify(
+      token,
+      process.env.JWT_REFRESH_SECRET,
+      function (err, decoded) {
+        if (err) {
+          if (err?.message == 'jwt expired') return false;
+        }
+        return decoded;
+      }
+    );
   },
 
   getRefreshTokenExpiry() {

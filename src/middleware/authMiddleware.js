@@ -8,11 +8,14 @@ export function isAuth(req, res, next) {
     if (!accessToken && !refreshToken)
       return res.status(401).json({ msg: 'User needs to login' });
 
-    if (!accessToken) {
+    const verifyAccessToken = jwtService.verifyAccess(accessToken);
+    let newAccessToken;
+
+    if (!verifyAccessToken) {
       if (!jwtService.verifyRefresh(refreshToken)) {
         return res.status(401).json({ error: 'User needs to login' });
       }
-      const newAccessToken = jwtService.refreshAccessToken(refreshToken);
+      newAccessToken = jwtService.refreshAccessToken(refreshToken);
       res.cookie('accessToken', newAccessToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
@@ -21,9 +24,10 @@ export function isAuth(req, res, next) {
       });
     }
 
-    const verifyAccessToken = jwtService.verifyAccess(accessToken);
+    const AccessToken = verifyAccessToken || newAccessToken;
 
-    req.user = { id: verifyAccessToken.userId };
+    req.user = { id: AccessToken.userId };
+
     next();
   } catch (error) {
     next(error);
