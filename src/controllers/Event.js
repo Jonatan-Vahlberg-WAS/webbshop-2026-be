@@ -192,6 +192,30 @@ class EventController {
       }
     },
   ];
+
+  eventDelete = [
+    async (req, res) => {
+      const { id } = req.params;
+
+      try {
+        if (!id) {
+          return res.status(400).json({ error: 'Event ID is required' });
+        }
+
+        const event = await findEventById(id);
+
+        if (!event) {
+          return res.status(404).json({ error: 'Event not found' });
+        }
+
+        await event.deleteOne();
+        res.status(200).json({ message: 'Event deleted successfully' });
+      } catch (error) {
+        console.error('Error deleting event:', error);
+        res.status(500).json({ error: 'Failed to delete event' });
+      }
+    },
+  ];
 }
 
 export default new EventController();

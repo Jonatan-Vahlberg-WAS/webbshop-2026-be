@@ -12,4 +12,6 @@ router.put('/:id', isAuth, EventController.editEventPut);
 
 router.get('/:id', EventController.eventGet);
 
+router.delete('/:id', isAuth, EventController.eventDelete);
+
 export default router;
