@@ -8,7 +8,11 @@ export async function createUser(userData) {
 }
 
 export async function findUserByEmail(email) {
-  return await User.findOne({ email });
+  return await User.findOne({ email }, '+password');
+}
+
+export async function findUserById(id) {
+  return await User.findById(id);
 }
 
 export async function validatePassword(password, userPassword) {
