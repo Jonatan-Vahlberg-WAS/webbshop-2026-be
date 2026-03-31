@@ -69,4 +69,33 @@ async function searchInEvents(searchTerm, Events) {
   return filteredEvents;
 }
 
-export { getAllEvents, findEventsByType, searchInEvents };
+async function createEvent(eventData, options = {}) {
+  const { session } = options;
+
+  try {
+    const newEvent = new Event(eventData);
+    const savedEvent = await newEvent.save({ session });
+    return savedEvent;
+  } catch (error) {
+    console.error('Error creating event:', error);
+    throw error;
+  }
+}
+
+async function findEventByName(eventName) {
+  try {
+    const event = await Event.findOne({ title: eventName });
+    return event;
+  } catch (error) {
+    console.error('Error fetching event by name:', error);
+    throw error;
+  }
+}
+
+export {
+  getAllEvents,
+  findEventsByType,
+  searchInEvents,
+  createEvent,
+  findEventByName,
+};

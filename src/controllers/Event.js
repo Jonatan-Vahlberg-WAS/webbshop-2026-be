@@ -2,7 +2,10 @@ import {
   getAllEvents,
   findEventsByType,
   searchInEvents,
+  createEvent,
+  findEventByName,
 } from '../db/events.js';
+import { findEventtype, addEventtypeToEvent } from '../db/types.js';
 
 class EventController {
   eventsGet = [
@@ -57,6 +60,62 @@ class EventController {
       } catch (error) {
         console.error('Error fetching event by ID:', error);
         res.status(500).json({ error: 'Failed to fetch event' });
+      }
+    },
+  ];
+
+  eventPost = [
+    async (req, res) => {
+      const { title, description, date, type, maxseats, location } = req.body;
+
+      if (!title || !description || !date || !type || !maxseats || !location) {
+        return res.status(400).json({ error: 'All fields are required' });
+      }
+
+      const session = await mongoose.startSession();
+      session.startTransaction();
+
+      try {
+        const existingEvent = await findEventByName(title);
+        if (existingEvent) {
+          await session.abortTransaction();
+          return res
+            .status(400)
+            .json({ error: 'Event with this title already exists' });
+        }
+
+        const eventtype = await findEventtype(type);
+        if (!eventtype) {
+          await session.abortTransaction();
+          return res.status(400).json({ error: 'Invalid event type' });
+        }
+
+        const newEvent = await createEvent(
+          { title, description, date, maxseats, location },
+          { session }
+        );
+
+        if (!newEvent) {
+          await session.abortTransaction();
+          return res.status(500).json({ error: 'Failed to create event' });
+        }
+
+        const updated = await addEventtypeToEvent(type, newEvent._id, {
+          session,
+        });
+        if (!updated) {
+          await session.abortTransaction();
+          return res.status(500).json({ error: 'Failed to link event type' });
+        }
+
+        await session.commitTransaction();
+        res.status(201).json(newEvent);
+      } catch (error) {
+        await session.abortTransaction();
+        console.error('Error creating event:', error);
+        res.status(500).json({ error: 'Failed to create event' });
+      } finally {
+        session.endSession();
       }
     },
   ];
