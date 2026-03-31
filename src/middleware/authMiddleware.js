@@ -33,13 +33,3 @@ export function isAuth(req, res, next) {
     next(error);
   }
 }
-
-export async function isAdmin(req, res, next) {
-  const { id: userId } = req.user;
-
-  const user = await findUserById(userId);
-
-  if (!user?.admin) return res.status(403).json({ error: 'Access denied' });
-
-  next();
-}
