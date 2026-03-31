@@ -46,12 +46,11 @@ class EventController {
   ];
 
   eventGet = [
-    async (req, res) => {
+    async (req, res, next) => {
       const { id } = req.params;
 
       try {
-        const events = await getAllEvents();
-        const event = events.find((e) => e._id.toString() === id);
+        const event = await findEventById(id);
 
         if (!event) {
           console.log(`Event with ID ${id} not found`);
@@ -61,7 +60,7 @@ class EventController {
         res.status(200).json(event);
       } catch (error) {
         console.error('Error fetching event by ID:', error);
-        res.status(500).json({ error: 'Failed to fetch event' });
+        next(error);
       }
     },
   ];
