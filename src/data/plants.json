@@ -1,5 +1,6 @@
 [
   {
+    "_id": "65f1a2b3c4d5e6f7a8b9c101",
     "name": "Stickling av Gullranka",
     "image": "https://images.unsplash.com/photo-1637967886160-fd78df3eda36",
     "slug": "stickling-av-gullranka-01",
@@ -11,6 +12,7 @@
     "available": true
   },
   {
+    "_id": "65f1a2b3c4d5e6f7a8b9c102",
     "name": "辣椒 Chili 'Apache'",
     "image": "https://images.unsplash.com/photo-1588252303782-cb80119abd6d",
     "slug": "chili-apache-outdoor-02",
@@ -22,6 +24,7 @@
     "available": true
   },
   {
+    "_id": "65f1a2b3c4d5e6f7a8b9c103",
     "name": "Värmeälskande Ormbunke",
     "image": "https://images.unsplash.com/photo-1509223197845-458d87318761",
     "slug": "varmealskande-ormbunke-03",
@@ -33,6 +36,7 @@
     "available": true
   },
   {
+    "_id": "65f1a2b3c4d5e6f7a8b9c104",
     "name": "Stor Fiolfikus",
     "image": "https://images.unsplash.com/photo-1597055181300-e3633a207519",
     "slug": "stor-fiolfikus-indoor-04",
@@ -44,6 +48,7 @@
     "available": false
   },
   {
+    "_id": "65f1a2b3c4d5e6f7a8b9c105",
     "name": "Ökenros (Adenium)",
     "image": "https://images.unsplash.com/photo-1613533203991-036109968846",
     "slug": "okenros-adenium-05",
