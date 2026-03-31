@@ -1,0 +1,39 @@
+[
+  {
+    "name": "Amara Okafor",
+    "email": "amara.okafor@example.com",
+    "password": "SafePassword789!",
+    "resetPasswordCode": null,
+    "role": "admin",
+    "location": [59.3293, 18.0686],
+    "plants": [],
+    "history": []
+  },
+  {
+    "name": "Kim Nguyen",
+    "email": "kim.n@gardenmail.com",
+    "password": "GreenThumb2024",
+    "resetPasswordCode": null,
+    "role": "user",
+    "location": [55.6050, 13.0038],
+    "plants": [
+      "65f1a2b3c4d5e6f7a8b9c101",
+      "65f1a2b3c4d5e6f7a8b9c102"
+    ],
+    "history": [
+      "65f1a2b3c4d5e6f7a8b9c201"
+    ]
+  },
+  {
+    "name": "Mateo Rossi",
+    "email": "mateo.rossi@provider.se",
+    "password": "CactusLife456",
+    "resetPasswordCode": "987654",
+    "role": "user",
+    "location": [57.7089, 11.9746],
+    "plants": [
+      "65f1a2b3c4d5e6f7a8b9c103"
+    ],
+    "history": []
+  }
+]
