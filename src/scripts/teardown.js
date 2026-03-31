@@ -1,17 +1,15 @@
-import Artist from "../models/Artist.js";
-import Album from "../models/Album.js";
-import Song from "../models/Song.js";
-import Playlist from "../models/Playlist.js";
-import { connectToDb, disconnectFromDb } from "../config/db.js";
+import User from "../models/User.js";
+import Plant from "../models/Plant.js";
+import Trade from "../models/Trade.js"
+import { connectToDatabase, disconnectFromDatabase } from "../config/database.js";
 
 async function teardown() {
-    await connectToDb("sqotifyv2");
-    await Playlist.deleteMany();  // Playlists first (reference songs)
-    await Song.deleteMany();
-    await Album.deleteMany();
-    await Artist.deleteMany();
+    await connectToDatabase("webshop");
+    await Trade.deleteMany(); // Trade first (reference plant and user)
+    await Plant.deleteMany();
+    await User.deleteMany();  
     console.info("Database cleared");
-    await disconnectFromDb();  // Disconnect so process can exit
+    await disconnectFromDatabase();  // Disconnect so process can exit
 }
 
 teardown().catch((err) => {
