@@ -97,14 +97,26 @@ async function findEventByName(eventName) {
 async function findEventById(eventId) {
   try {
     const event = await Event.findById(eventId);
-    return event;
+
+    const eventWithParticipants = async () => {
+      const participantCount = await EventUser.countDocuments({
+        eventId: event._id,
+      });
+      return {
+        ...event.toObject(),
+        participants: participantCount,
+        seatsLeft: event.maxseats - participantCount,
+      };
+    };
+
+    return eventWithParticipants;
   } catch (error) {
     console.error('Error fetching event by ID:', error);
     throw error;
   }
 }
 
-async function mailCust(message) {
+async function mailCust(message, subject, reciver) {
   try {
     const transporter = nodemailer.createTransport({
       service: 'gmail',
@@ -117,9 +129,9 @@ async function mailCust(message) {
     await transporter.verify();
 
     const info = await transporter.sendMail({
-      to: 'ludvig.g.dahl@gmail.com',
-      subject: 'hello world!',
-      text: 'Bye bye world!',
+      to: reciver,
+      subject: subject,
+      text: message,
     });
 
     console.log('Message sent: %s', info.messageId);
