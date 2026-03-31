@@ -133,9 +133,30 @@ const eventsData = [
   },
 ];
 
-export default async function seedingEvents() {
+// trainers: [erik, lars, johan]
+export default async function seedingEvents(trainers = []) {
+  const [erik, lars, johan] = trainers;
+
+  const trainerAssignments = [
+    lars, // Morning Yoga Flow
+    erik, // HIIT Power Session
+    johan, // Deep Relaxation Spa Day
+    lars, // Outdoor Bootcamp
+    johan, // Hot Yoga Detox
+    johan, // Pilates Core Strength
+    lars, // Mindfulness & Meditation Workshop
+    erik, // Strength Training Fundamentals
+    johan, // Spa & Wellness Evening
+    lars, // Sunrise Beach Yoga
+  ];
+
+  const dataWithTrainers = eventsData.map((event, i) => ({
+    ...event,
+    trainerid: trainerAssignments[i]?._id,
+  }));
+
   await Event.deleteMany();
-  const events = await Event.create(eventsData);
+  const events = await Event.create(dataWithTrainers);
   console.log(`Seeded db with ${events.length} events`);
   return events;
 }
