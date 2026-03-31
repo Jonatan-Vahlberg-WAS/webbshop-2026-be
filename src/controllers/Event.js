@@ -6,6 +6,7 @@ import {
   findEventByName,
 } from '../db/events.js';
 import { findEventtype, addEventtypeToEvent } from '../db/types.js';
+import mongoose from 'mongoose';
 
 class EventController {
   eventsGet = [
@@ -70,6 +71,14 @@ class EventController {
 
       if (!title || !description || !date || !type || !maxseats || !location) {
         return res.status(400).json({ error: 'All fields are required' });
+      }
+
+      if (isNaN(maxseats) || maxseats <= 0 || !Number.isInteger(maxseats)) {
+        return res.status(400).json({ error: 'Invalid maxseats value' });
+      }
+
+      if (typeof date !== 'string' || isNaN(Date.parse(date))) {
+        return res.status(400).json({ error: 'Invalid date format' });
       }
 
       const session = await mongoose.startSession();
