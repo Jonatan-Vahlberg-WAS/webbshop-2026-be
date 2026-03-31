@@ -11,17 +11,17 @@ const tradeSchema = new mongoose.Schema(
     plantId: {
       type: mongoose.SchemaTypes.ObjectId,
       ref: "Plants",
-      required: false, //Change to true later
+      required: true, //Change to true later
     },
     requesterId: {
       type: mongoose.SchemaTypes.ObjectId,
       ref: "User",
-      required: false, //Change to true later
+      required: true, //Change to true later
     },
     ownerId: {
       type: mongoose.SchemaTypes.ObjectId,
       ref: "User",
-      required: false, //Change to true later
+      required: true, //Change to true later
     },
     status: {
       type: String,

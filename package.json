@@ -7,6 +7,9 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "node --watch src/server.js",
+    "teardown": "node src/scripts/teardown.js",
+    "seed": "node src/scripts/seed.js",
+    "dev:clean": "npm run teardown && npm run seed && npm run start",
     "test": "vitest",
     "test:watch": "vitest --watch",
     "test:coverage": "vitest run --coverage"
