@@ -72,6 +72,34 @@ class BookingController {
       }
     },
   ];
+
+  bookingGet = [
+    async (req, res) => {
+      const { id } = req.params;
+
+      try {
+        if (!id) {
+          return res.status(400).json({ error: 'Event ID is required' });
+        }
+
+        const event = await findEventById(id);
+        if (!event) {
+          return res.status(404).json({ error: 'Event not found' });
+        }
+
+        const bookings = await EventUser.find({ eventId: id }).populate(
+          'userId',
+          'firstname lastname email'
+        );
+
+        const structuredBookings = { users: bookings.map((b) => b.userId) };
+        res.status(200).json(structuredBookings);
+      } catch (error) {
+        console.error('Error fetching bookings:', error);
+        res.status(500).json({ error: 'Failed to fetch bookings' });
+      }
+    },
+  ];
 }
 
 export default new BookingController();

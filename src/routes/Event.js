@@ -19,4 +19,6 @@ router.delete('/:id', isAuth, isAdmin, EventController.eventDelete);
 
 router.post('/:id/bookings', BookingController.bookingPost);
 
+router.get('/:id/bookings', isAuth, isAdmin, BookingController.bookingGet);
+
 export default router;
