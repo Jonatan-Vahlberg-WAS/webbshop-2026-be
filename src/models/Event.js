@@ -11,8 +11,8 @@ const EventSchema = new mongoose.Schema({
     required: false,
   },
 
-  date: {
-    type: Date,
+  time: {
+    type: Object,
     required: true,
   },
 
@@ -24,6 +24,16 @@ const EventSchema = new mongoose.Schema({
   location: {
     type: String,
     required: true,
+  },
+
+  price: {
+    type: Number,
+    required: true,
+  },
+
+  trainerid: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
   },
 });
 

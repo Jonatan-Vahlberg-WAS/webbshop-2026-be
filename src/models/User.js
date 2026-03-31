@@ -22,10 +22,6 @@ const UserSchema = new mongoose.Schema({
     required: true,
     select: false,
   },
-  admin: {
-    type: Boolean,
-    default: false,
-  },
 });
 
 // Email validation
