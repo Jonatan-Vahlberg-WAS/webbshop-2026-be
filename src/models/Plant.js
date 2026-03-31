@@ -43,6 +43,11 @@ const plantSchema = new mongoose.Schema({
   meetingTime: {
     type: Date,
     required: true
+  },
+  available: {
+    type: Boolean,
+    default: true,
+    required: true
   }
 }, 
 {
