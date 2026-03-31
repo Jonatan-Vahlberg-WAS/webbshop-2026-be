@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import EventController from '../controllers/Event.js';
 import { isAdmin, isAuth } from '../middleware/authMiddleware.js';
+import BookingController from '../controllers/booking.js';
 
 const router = Router();
 
@@ -15,5 +16,7 @@ router.get('/:id', EventController.eventGet);
 router.put('/:id', isAuth, isAdmin, EventController.editEventPut);
 
 router.delete('/:id', isAuth, isAdmin, EventController.eventDelete);
+
+router.post('/:id/bookings', BookingController.bookingPost);
 
 export default router;
