@@ -1,0 +1,57 @@
+[
+  {
+    "name": "Stickling av Gullranka",
+    "image": "https://images.unsplash.com/photo-1637967886160-fd78df3eda36",
+    "slug": "stickling-av-gullranka-01",
+    "species": "Epipremnum aureum",
+    "lighting": "indoor",
+    "ownerId": "65f1a2b3c4d5e6f7a8b9c001",
+    "coordinates": [59.3326, 18.0649],
+    "meetingTime": "2026-04-05T14:00:00.000Z",
+    "available": true
+  },
+  {
+    "name": "辣椒 Chili 'Apache'",
+    "image": "https://images.unsplash.com/photo-1588252303782-cb80119abd6d",
+    "slug": "chili-apache-outdoor-02",
+    "species": "Capsicum annuum",
+    "lighting": "outdoor",
+    "ownerId": "65f1a2b3c4d5e6f7a8b9c002",
+    "coordinates": [59.3185, 18.0760],
+    "meetingTime": "2026-04-10T18:30:00.000Z",
+    "available": true
+  },
+  {
+    "name": "Värmeälskande Ormbunke",
+    "image": "https://images.unsplash.com/photo-1509223197845-458d87318761",
+    "slug": "varmealskande-ormbunke-03",
+    "species": "Nephrolepis exaltata",
+    "lighting": "heatlamp",
+    "ownerId": "65f1a2b3c4d5e6f7a8b9c003",
+    "coordinates": [59.3225, 18.0590],
+    "meetingTime": "2026-04-12T09:00:00.000Z",
+    "available": true
+  },
+  {
+    "name": "Stor Fiolfikus",
+    "image": "https://images.unsplash.com/photo-1597055181300-e3633a207519",
+    "slug": "stor-fiolfikus-indoor-04",
+    "species": "Ficus lyrata",
+    "lighting": "indoor",
+    "ownerId": "65f1a2b3c4d5e6f7a8b9c001",
+    "coordinates": [59.3290, 18.0690],
+    "meetingTime": "2026-04-22T11:00:00.000Z",
+    "available": false
+  },
+  {
+    "name": "Ökenros (Adenium)",
+    "image": "https://images.unsplash.com/photo-1613533203991-036109968846",
+    "slug": "okenros-adenium-05",
+    "species": "Adenium obesum",
+    "lighting": "heatlamp",
+    "ownerId": "65f1a2b3c4d5e6f7a8b9c003",
+    "coordinates": [59.3200, 18.0550],
+    "meetingTime": "2026-05-01T15:00:00.000Z",
+    "available": true
+  }
+]
