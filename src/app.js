@@ -1,7 +1,7 @@
 import "dotenv/config";
 import express from "express";
 import mongoose from "mongoose";
-import productsRouter from "./routes/products.js";
+import plantRouter from "./routes/plants.js";
 import authRouter from "./routes/auth.js";
 import cors from "cors";
 
@@ -15,7 +15,7 @@ async function connectDB() {
   isConnected = true;
 }
 
-// Middleware
+// Middleware 
 app.use(async (req, res, next) => {
   try {
     await connectDB();
@@ -37,7 +37,7 @@ app.get("/health", (req, res) => {
   res.json({ status: "ok" });
 });
 
-app.use("/products", productsRouter);
+app.use("/plants", plantRouter);
 app.use("/auth", authRouter);
 //TODO: Add more routes as needed
 
