@@ -3,7 +3,9 @@ import {
   getPlants, 
   getPlantById, 
   createPlant,
-  deletePlant
+  deletePlant,
+  getPlantsByOwner,
+  updatePlant
 } from "../db/plants.js";
 
 const router = Router();
@@ -54,6 +56,27 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
+router.get('/owner/:ownerId', async (req, res) => {
+    try {
+        const plants = await getPlantsByOwner(req.params.ownerId);          
+        res.json(plants);
+    } catch (error) {
+        console.error("Error fetching plants by owner:", error);
+        res.status(500).json({ error: "Failed to fetch plants by owner" });
+    }   
+});
 
+router.put('/:id', async (req, res) => {
+    try {
+        const updatedPlant = await updatePlant(req.params.id, req.body);    
+        if (!updatedPlant) {
+            return res.status(404).json({ error: "Plant not found" });
+        }
+        res.json(updatedPlant);
+    } catch (error) {
+        console.error("Error updating plant:", error);
+        res.status(500).json({ error: "Failed to update plant" });
+    }
+});
 
 export default router;
