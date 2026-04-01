@@ -6,7 +6,7 @@ const plantRouter = Router();
 plantRouter.get("/", async (req, res) => {
   const plants = await getPlants();
   res.json(plants);
-});
+}); 
 
 //TODO: Add more routes as needed
 
