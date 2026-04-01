@@ -42,9 +42,17 @@ plantRouter.get("/:slug", async (req, res) => {
 //TODO PUT /plants/:slug
 plantRouter.put("/:slug", async (req, res) => {
   const slug = req.params.slug
-  const { name, image, species, lightLevels, meetingTime } = req.body
+  const { name, image, species, lightLevels, coordinates, meetingTime } =
+    req.body
 
-  if (!name || !image || !species || !lightLevels || !meetingTime) {
+  if (
+    !name ||
+    !image ||
+    !species ||
+    !lightLevels ||
+    !coordinates ||
+    !meetingTime
+  ) {
     return res.status(400).json({
       message:
         "All fields (name, image, species, lightLevels, and meetingTime) are required",
@@ -55,6 +63,7 @@ plantRouter.put("/:slug", async (req, res) => {
     image,
     species,
     lightLevels,
+    coordinates,
     meetingTime,
   })
   if (!updatedPlant) {
@@ -62,7 +71,6 @@ plantRouter.put("/:slug", async (req, res) => {
       message: "Plant does not exist",
     })
   }
-
   return res.status(200).json(updatedPlant)
 })
 
