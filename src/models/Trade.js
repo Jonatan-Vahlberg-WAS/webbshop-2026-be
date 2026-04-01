@@ -10,7 +10,7 @@ const tradeSchema = new mongoose.Schema(
   {
     plantId: {
       type: mongoose.SchemaTypes.ObjectId,
-      ref: "Plants",
+      ref: "Plant",
       required: true, //Change to true later
     },
     requesterId: {

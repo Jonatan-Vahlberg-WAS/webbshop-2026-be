@@ -20,7 +20,7 @@ async function seedUser(){
 async function seedPlants(){
   if((await Plant.countDocuments()) > 0) return;
   const plantsFromFile = JSON.parse(await readFile(PLANTS_PATH, "utf8"))
-  const toInsert = plantsFromFile.map(p => ({_id: p._id, image: p.image, name: p.name, slug: p.slug, species: p.species, lighting: p.lighting, ownerId: p.ownerId, coordinates: p.coordinates, meetingTime: p.meetingTime, available: p.available}))
+  const toInsert = plantsFromFile.map(p => ({_id: p._id, image: p.image, name: p.name, slug: p.slug, species: p.species, lightLevels: p.lightLevels, ownerId: p.ownerId, coordinates: p.coordinates, meetingTime: p.meetingTime, available: p.available}))
   await Plant.insertMany(toInsert)
   console.info("Plants seeded")
 }

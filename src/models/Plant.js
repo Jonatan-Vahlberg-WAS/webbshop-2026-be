@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import slugify from "slugify";
 
 export const LIGHT_LEVELS = {
   directSun: "directSun",
@@ -53,9 +54,16 @@ const plantSchema = new mongoose.Schema({
 }, 
 {
   timestamps: true,
-  toJSON: { virtuals: true },
-  toObject: { virtuals: true },
 });
+
+plantSchema.pre("validate", function(next){
+  if(this.isModified("name")){
+    this.slug = slugify(this.name, {
+      lower: true
+    })
+  }
+  return next()
+})
 
 const Plant = mongoose.model("Plant", plantSchema);
 
