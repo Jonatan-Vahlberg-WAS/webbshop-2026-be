@@ -1,9 +1,10 @@
 import mongoose from "mongoose";
 
 export const LIGHT_LEVELS = {
-  outdoor: "outdoor",
-  indoor: "indoor",
-  heatlamp: "heatlamp"
+  directSun: "directSun",
+  bright: "bright",
+  partial: "partial",
+  low: "low"
 }
 
 const plantSchema = new mongoose.Schema({
@@ -25,10 +26,10 @@ const plantSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  lighting: {
+  lightLevels: {
     type: String,
     required: true,
-    enum: [LIGHT_LEVELS.outdoor, LIGHT_LEVELS.indoor, LIGHT_LEVELS.heatlamp]
+    enum: [LIGHT_LEVELS.directSun, LIGHT_LEVELS.bright, LIGHT_LEVELS.partial, LIGHT_LEVELS.low]
   },
   ownerId: {
     type: mongoose.SchemaTypes.ObjectId,
@@ -41,7 +42,7 @@ const plantSchema = new mongoose.Schema({
     required: true
   },
   meetingTime: {
-    type: Date,
+    type: String,       //Change to date later
     required: true
   },
   available: {
