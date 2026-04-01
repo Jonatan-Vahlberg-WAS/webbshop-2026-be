@@ -1,8 +1,8 @@
 [
   {
     "_id": "65f1a2b3c4d5e6f7a8b9c201",
-    "plantId": "65f1a2b3c4d5e6f7a8b9c101", 
-    "requesterId": "65f1a2b3c4d5e6f7a8b9c002", 
+    "plantId": "65f1a2b3c4d5e6f7a8b9c101",
+    "requesterId": "65f1a2b3c4d5e6f7a8b9c002",
     "ownerId": "65f1a2b3c4d5e6f7a8b9c001",
     "status": "pending"
   },
@@ -19,19 +19,5 @@
     "requesterId": "65f1a2b3c4d5e6f7a8b9c001",
     "ownerId": "65f1a2b3c4d5e6f7a8b9c003",
     "status": "completed"
-  },
-  {
-    "_id": "65f1a2b3c4d5e6f7a8b9c204",
-    "plantId": "65f1a2b3c4d5e6f7a8b9c104",
-    "requesterId": "65f1a2b3c4d5e6f7a8b9c002",
-    "ownerId": "65f1a2b3c4d5e6f7a8b9c001",
-    "status": "pending"
-  },
-  {
-    "_id": "65f1a2b3c4d5e6f7a8b9c205",
-    "plantId": "65f1a2b3c4d5e6f7a8b9c105",
-    "requesterId": "65f1a2b3c4d5e6f7a8b9c001",
-    "ownerId": "65f1a2b3c4d5e6f7a8b9c003",
-    "status": "approved"
   }
 ]
