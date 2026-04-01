@@ -2,7 +2,8 @@ import { Router } from "express";
 import { 
   getPlants, 
   getPlantById, 
-  createPlant 
+  createPlant,
+  deletePlant
 } from "../db/plants.js";
 
 const router = Router();
@@ -39,6 +40,20 @@ router.post('/', async (req, res) => {
         res.status(500).json({ error: "Failed to create plant" }) 
     }
 });
+
+router.delete('/:id', async (req, res) => {
+    try {
+        const deletedPlant = await deletePlant(req.params.id);  
+        if (!deletedPlant) {
+            return res.status(404).json({ error: "Plant not found" });
+        }
+        res.json({ message: "Plant deleted successfully" });
+    } catch (error) {
+        console.error("Error deleting plant:", error);
+        res.status(500).json({ error: "Failed to delete plant" });
+    }
+});
+
 
 
 export default router;
