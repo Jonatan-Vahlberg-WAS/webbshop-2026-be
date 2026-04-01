@@ -1,8 +1,8 @@
 import "dotenv/config";
 import express from "express";
 import mongoose from "mongoose";
-import productsRouter from "./routes/products.js";
 import authRouter from "./routes/auth.js";
+import userRouter from "./routes/user.js";
 import cors from "cors";
 
 const app = express();
@@ -37,8 +37,8 @@ app.get("/health", (req, res) => {
   res.json({ status: "ok" });
 });
 
-app.use("/products", productsRouter);
 app.use("/auth", authRouter);
+app.use("/user", userRouter);
 //TODO: Add more routes as needed
 
 export default app;
