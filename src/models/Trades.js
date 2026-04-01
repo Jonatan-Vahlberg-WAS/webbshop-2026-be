@@ -48,10 +48,10 @@ const tradeSchema = new mongoose.Schema(
 
     // Optional message the requester can send with the trade request,
     // e.g. "Hi! I'd love to trade my monstera for your cactus :)"
-    message: {
-      type: String,
-      trim: true,
-    },
+    //message: {
+    //  type: String,
+    //  trim: true,
+    //},
   },
   {
     timestamps: true, // createdAt tells you when the request was sent
