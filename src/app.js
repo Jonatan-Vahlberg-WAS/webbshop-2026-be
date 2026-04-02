@@ -3,9 +3,9 @@ import express from 'express';
 import { connectToDatabase } from './config/database.js';
 import eventRouter from './routes/Event.js';
 import authRouter from './routes/auth.js';
+import typesRouter from './routes/types.js';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import 'dotenv/config';
 import mongoose from 'mongoose';
 import errorHandler from './middleware/errorHandler.js';
 
@@ -50,6 +50,7 @@ app.get('/health', (req, res) => {
 
 app.use('/api/auth', authRouter);
 app.use('/api/events', eventRouter);
+app.use('/api/types', typesRouter);
 app.use(errorHandler);
 
 export default app;
