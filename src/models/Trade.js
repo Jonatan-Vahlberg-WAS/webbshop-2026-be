@@ -62,37 +62,18 @@ tradeSchema.pre("save", async function (next) {
 }) */
 
 tradeSchema.post("save", async function () {
-  // Only act when status is completed
-  if (this.status === "completed") {
+  if (this.status === STATUS_LEVEL.completed) {
     try {
-      // Add trade to owner's history
-      await User.findByIdAndUpdate(
-        this.ownerId,
-        { $addToSet: { history: this._id } }, // prevents duplicates
-      )
+      await User.findByIdAndUpdate(this.ownerId, {
+        $addToSet: { history: this._id },
+      })
 
-      // Add trade to requester’s history (optional but likely desired)
       await User.findByIdAndUpdate(this.requesterId, {
         $addToSet: { history: this._id },
       })
     } catch (error) {
       console.error("Error updating user history:", error)
     }
-  }
-})
-
-tradeSchema.post("save", async function () {
-  if (this.status === STATUS_LEVEL.completed) {
-    const User = mongoose.model("User")
-
-    await Promise.all([
-      User.findByIdAndUpdate(this.requesterId, {
-        $addToSet: { history: this._id },
-      }),
-      User.findByIdAndUpdate(this.ownerId, {
-        $addToSet: { history: this._id },
-      }),
-    ])
   }
 })
 
