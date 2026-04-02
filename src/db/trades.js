@@ -33,3 +33,27 @@ export async function createTrade(tradeData){
     console.error("Unable to create 'Trade'", error)
   }
 }
+
+export async function updateTrade(id, tradeData){
+  try{
+    const updatedTrade = await Trade.findById(id)
+    updatedTrade.plantId = tradeData.plantId ?? updatedTrade.plantId
+    updatedTrade.requesterId = tradeData.requesterId ?? updatedTrade.requesterId
+    updatedTrade.ownerId = tradeData.ownerId ?? updatedTrade.ownerId
+    updatedTrade.status = tradeData.status ?? updatedTrade.status
+    await updatedTrade.save()
+
+    return await Trade.populate(updatedTrade, "plantId requesterId ownerId")
+
+  }catch(error){
+    console.error("Unable to update 'Trade'", error)
+  }
+}
+
+export async function deleteTrade(id){
+  try{
+    return !!(await Trade.findByIdAndDelete(id))
+  }catch(error){
+    console.error("Unable to delete 'Trade'", error)
+  }
+}
