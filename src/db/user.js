@@ -10,7 +10,9 @@ export async function getUsers(q) {
     }
   }
   try {
-    return await User.find(filter) /* .populate("plants").populate("history") */
+    return await User.find(
+      filter,
+    ) /* .populate("plants").populate("history") Frontend får ett helt plant objekt istället för bara ett ID - undviker extra request*/
   } catch (err) {
     console.error("Unable to find based on query in 'Users'", err)
     return []
@@ -19,7 +21,7 @@ export async function getUsers(q) {
 
 export async function getUserById(id) {
   try {
-    return await User.findById(id).populate("plants").populate("history")
+    return await User.findById(id).populate("plants") /* .populate("history") */
   } catch (err) {
     console.error("Unable to read from 'Users'", err)
     return null
