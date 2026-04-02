@@ -31,6 +31,7 @@ const tradeSchema = new mongoose.Schema(
         STATUS_LEVEL.approved,
         STATUS_LEVEL.completed,
       ],
+      default: STATUS_LEVEL.pending,
     },
   },
   {
