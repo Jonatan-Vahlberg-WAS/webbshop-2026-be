@@ -15,7 +15,8 @@ import {
 const plantRouter = Router()
 
 plantRouter.get("/", async (req, res) => {
-  const plants = await getPlants()
+  const { q } = req.query
+  const plants = await getPlants(q)
   res.json(plants)
 })
 

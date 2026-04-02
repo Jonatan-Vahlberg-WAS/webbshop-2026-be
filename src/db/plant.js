@@ -1,7 +1,20 @@
 import Plant from "../models/Plant.js"
+import { getFullTextSearch } from "../utils/fullTextSearch.js"
 
-export async function getPlants() {
-  return await Plant.find()
+export async function getPlants(q) {
+  let filter = {}
+  if (q) {
+    filter = {
+      ...filter,
+      ...getFullTextSearch(q, true, "name"),
+    }
+  }
+  try {
+    return await Plant.find(filter)
+  } catch (err) {
+    console.error("Unable to find based on query in 'Plants'", err)
+    return []
+  }
 }
 
 export async function getPlantById(id) {
