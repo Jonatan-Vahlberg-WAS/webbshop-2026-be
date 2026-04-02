@@ -24,7 +24,12 @@ export async function getUsers(q) {
 
 export async function getUserById(id) {
   try {
-    return await User.findById(id).populate("plants") /* .populate("history") */
+    return await User.findById(id)
+      .populate("plants")
+      .populate({
+        path: "history",
+        match: { status: "completed" },
+      }) /* .populate("history") */
   } catch (err) {
     console.error("Unable to read from 'Users'", err)
     return null
