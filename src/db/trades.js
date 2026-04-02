@@ -24,3 +24,12 @@ export async function getTradeById(id){
   }
 }
 
+export async function createTrade(tradeData){
+  try{
+    const newTrade = new Trade(tradeData)
+    await newTrade.save()
+    return await Trade.populate(newTrade, "plantId requesterId ownerId")
+  }catch(error){
+    console.error("Unable to create 'Trade'", error)
+  }
+}

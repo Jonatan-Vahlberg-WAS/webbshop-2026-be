@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getAllTrades, getTradeById } from "../db/trades.js";
+import { getAllTrades, getTradeById, createTrade } from "../db/trades.js";
 
 const tradeRouter = Router();
 
@@ -20,5 +20,10 @@ tradeRouter.get("/:id", async (req, res) => {
 
   res.json(trade);
 });
+
+tradeRouter.post("/", async (req, res) => {
+    const trade = await createTrade(req.body);
+    res.status(201).json(trade);
+})
 
 export default tradeRouter;
