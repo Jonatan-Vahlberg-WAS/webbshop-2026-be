@@ -33,3 +33,11 @@ export async function createTrade(tradeData){
     console.error("Unable to create 'Trade'", error)
   }
 }
+
+export async function deleteTrade(id){
+  try{
+    return !!(await Trade.findByIdAndDelete(id))
+  }catch(error){
+    console.error("Unable to delete 'Trade'", error)
+  }
+}

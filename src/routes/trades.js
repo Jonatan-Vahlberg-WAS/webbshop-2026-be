@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getAllTrades, getTradeById, createTrade } from "../db/trades.js";
+import { getAllTrades, getTradeById, createTrade, deleteTrade } from "../db/trades.js";
 
 const tradeRouter = Router();
 
@@ -22,8 +22,20 @@ tradeRouter.get("/:id", async (req, res) => {
 });
 
 tradeRouter.post("/", async (req, res) => {
-    const trade = await createTrade(req.body);
-    res.status(201).json(trade);
+  const trade = await createTrade(req.body);
+  res.status(201).json(trade);
+})
+
+tradeRouter.delete("/:id", async (req, res) => {
+  const id = req.params.id
+  const deleted = await deleteTrade(id)
+  if (!deleted) {
+    return res.status(404).json({
+      message: "Trade does not exist"
+    })
+  }
+
+  return res.status(204).json()
 })
 
 export default tradeRouter;
