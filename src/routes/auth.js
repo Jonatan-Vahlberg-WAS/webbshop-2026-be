@@ -1,8 +1,11 @@
-import { Router } from "express";
-import { validateRegister, validateAuthResult } from "../middleware/authValidation.js";
-import { createUser, findUserByEmail } from "../db/users.js";
+import { Router } from "express"
+import {
+  validateRegister,
+  validateAuthResult,
+} from "../middleware/authValidation.js"
+import { createUser, findUserByEmail } from "../db/user.js"
 
-const authRouter = Router();
+const authRouter = Router()
 
 authRouter.post(
   "/register",
@@ -10,27 +13,27 @@ authRouter.post(
   validateAuthResult,
   async (req, res) => {
     try {
-      const { name, email, password } = req.body;
+      const { name, email, password } = req.body
 
-      const existingUser = await findUserByEmail(email);
+      const existingUser = await findUserByEmail(email)
       if (existingUser) {
-        return res.status(409).json({ error: "Email already registered" });
+        return res.status(409).json({ error: "Email already registered" })
       }
 
-      const user = await createUser({ name, email, password });
+      const user = await createUser({ name, email, password })
       res.status(201).json({
         id: user._id,
         name: user.name,
         email: user.email,
-      });
+      })
     } catch (error) {
-      console.error("Registration error:", error);
-      res.status(500).json({ error: "Registration failed" });
+      console.error("Registration error:", error)
+      res.status(500).json({ error: "Registration failed" })
     }
-  }
-);
+  },
+)
 
 // isSamePassword - comparison
 // reset password
 
-export default authRouter;
+export default authRouter
