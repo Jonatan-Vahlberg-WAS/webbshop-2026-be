@@ -12,3 +12,15 @@ export async function getAllTrades() {
   }
 }
 
+export async function getTradeById(id){
+  try{
+    return await Trade.findById(id)
+    .populate("plantId", "name image species meetingTime coordinates available")
+    .populate("requesterId", "name")
+    .populate("ownerId", "name")
+    .populate("status")
+  }catch(error){
+    console.error("Unable to read from 'Trades'", error)
+  }
+}
+
