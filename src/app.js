@@ -2,6 +2,7 @@ import "dotenv/config";
 import express from "express";
 import mongoose from "mongoose";
 import plantRouter from "./routes/plants.js";
+import tradeRouter from "./routes/trades.js";
 import authRouter from "./routes/auth.js";
 import cors from "cors";
 
@@ -38,6 +39,7 @@ app.get("/health", (req, res) => {
 });
 
 app.use("/plants", plantRouter);
+app.use("/trades", tradeRouter);
 app.use("/auth", authRouter);
 //TODO: Add more routes as needed
 
