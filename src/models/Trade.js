@@ -1,5 +1,7 @@
 import mongoose from "mongoose"
 import Plant from "./Plant.js"
+import User from "./User.js"
+
 export const STATUS_LEVEL = {
   pending: "pending",
   approved: "approved",
@@ -47,6 +49,32 @@ tradeSchema.pre("save", async function (next) {
     }
   }
   next()
+})
+
+/* tradeSchema.post("save", async function (next) {
+  if (this.isNew || this.isModified("status")) {
+    const user = await User.findById(this.ownerId).select("_id")
+    if (user) {
+      this.ownerId = user._id
+    }
+  }
+  next()
+}) */
+
+tradeSchema.post("save", async function () {
+  if (this.status === STATUS_LEVEL.completed) {
+    try {
+      await User.findByIdAndUpdate(this.ownerId, {
+        $addToSet: { history: this._id },
+      })
+
+      await User.findByIdAndUpdate(this.requesterId, {
+        $addToSet: { history: this._id },
+      })
+    } catch (error) {
+      console.error("Error updating user history:", error)
+    }
+  }
 })
 
 const Trade = mongoose.model("Trade", tradeSchema)
