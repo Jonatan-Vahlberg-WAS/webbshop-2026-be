@@ -11,10 +11,19 @@ export async function getUsers(q) {
   }
   try {
     return await User.find(filter)
-      .populate("plants")
+      .populate("plants", "name")
       .populate({
         path: "history",
         match: { status: "completed" },
+        populate: [
+          {
+            path: "plantId",
+            select: "name image species meetingTime coordinates available",
+          },
+          { path: "ownerId", select: "name email location" },
+          { path: "requesterId", select: "name email location" },
+        ],
+        options: { sort: { createdAt: -1 } },
       }) /*.populate("history") Frontend får ett helt plant objekt istället för bara ett ID - undviker extra request*/
   } catch (err) {
     console.error("Unable to find based on query in 'Users'", err)
@@ -29,6 +38,15 @@ export async function getUserById(id) {
       .populate({
         path: "history",
         match: { status: "completed" },
+        populate: [
+          {
+            path: "plantId",
+            select: "name image species meetingTime coordinates available",
+          },
+          { path: "ownerId", select: "name email location" },
+          { path: "requesterId", select: "name email location" },
+        ],
+        options: { sort: { createdAt: -1 } },
       }) /* .populate("history") */
   } catch (err) {
     console.error("Unable to read from 'Users'", err)
