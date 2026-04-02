@@ -1,10 +1,12 @@
 import User from '../models/User.js';
 import bcrypt from 'bcrypt';
 import EventUser from '../models/connecting/EventUser.js';
+import { assignRoleToUser } from './roles.js';
 
 export async function createUser(userData) {
   const user = new User(userData);
   await user.save();
+  await assignRoleToUser(user._id, 'customer');
   return user;
 }
 

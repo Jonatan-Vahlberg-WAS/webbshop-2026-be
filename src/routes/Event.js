@@ -1,30 +1,42 @@
 import { Router } from 'express';
 import EventController from '../controllers/Event.js';
-import { isAdmin, isAuth } from '../middleware/authMiddleware.js';
+import { isAuth } from '../middleware/authMiddleware.js';
 import BookingController from '../controllers/booking.js';
+import capacityMiddleware from '../middleware/capacityMiddleware.js';
+import requiredRole from '../middleware/roleMiddleware.js';
 
 const router = Router();
 
 router.get('/', EventController.eventsGet);
 
-router.post('/', isAuth, isAdmin, EventController.eventPost);
+router.post('/', isAuth, requiredRole('admin'), EventController.eventPost);
 
 router.get('/archive', EventController.getArchivedEvents);
 
 router.get('/:id', EventController.eventGet);
 
-router.put('/:id', isAuth, isAdmin, EventController.editEventPut);
+router.put('/:id', isAuth, requiredRole('admin'), EventController.editEventPut);
 
-router.delete('/:id', isAuth, isAdmin, EventController.eventDelete);
+router.delete(
+  '/:id',
+  isAuth,
+  requiredRole('admin'),
+  EventController.eventDelete
+);
 
-router.post('/:id/bookings', BookingController.bookingPost);
+router.post('/:id/bookings', capacityMiddleware, BookingController.bookingPost);
 
-router.get('/:id/bookings', isAuth, isAdmin, BookingController.bookingGet);
+router.get(
+  '/:id/bookings',
+  isAuth,
+  requiredRole('admin'),
+  BookingController.bookingGet
+);
 
 router.delete(
   '/:id/bookings',
   isAuth,
-  isAdmin,
+  requiredRole('admin'),
   BookingController.bookingDelete
 );
 

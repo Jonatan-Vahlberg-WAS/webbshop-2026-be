@@ -11,9 +11,20 @@ const EventSchema = new mongoose.Schema({
     required: false,
   },
 
-  date: {
-    type: Date,
-    required: true,
+  time: {
+    date: {
+      type: Date,
+      require: true,
+      default: Date.now,
+    },
+    startTime: {
+      type: String,
+      require: true,
+    },
+    endTime: {
+      type: String,
+      require: true,
+    },
   },
 
   maxseats: {
@@ -24,6 +35,16 @@ const EventSchema = new mongoose.Schema({
   location: {
     type: String,
     required: true,
+  },
+
+  price: {
+    type: Number,
+    required: true,
+  },
+
+  trainerid: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
   },
 });
 

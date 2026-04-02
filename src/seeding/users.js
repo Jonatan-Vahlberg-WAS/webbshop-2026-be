@@ -6,7 +6,6 @@ const usersData = [
     lastname: 'User',
     email: 'admin@example.com',
     password: 'Admin123!',
-    admin: true,
     phone: '+46700000001',
   },
   {
@@ -14,7 +13,6 @@ const usersData = [
     lastname: 'Lindqvist',
     email: 'anna.lindqvist@example.com',
     password: 'Password123!',
-    admin: false,
     phone: '+46700000002',
   },
   {
@@ -22,7 +20,6 @@ const usersData = [
     lastname: 'Johansson',
     email: 'erik.johansson@example.com',
     password: 'Password123!',
-    admin: false,
     phone: '+46700000003',
   },
   {
@@ -30,7 +27,6 @@ const usersData = [
     lastname: 'Svensson',
     email: 'maria.svensson@example.com',
     password: 'Password123!',
-    admin: false,
     phone: '+46700000004',
   },
   {
@@ -38,7 +34,6 @@ const usersData = [
     lastname: 'Petersson',
     email: 'lars.petersson@example.com',
     password: 'Password123!',
-    admin: false,
     phone: '+46700000005',
   },
   {
@@ -46,7 +41,6 @@ const usersData = [
     lastname: 'Nilsson',
     email: 'sofia.nilsson@example.com',
     password: 'Password123!',
-    admin: false,
     phone: '+46700000006',
   },
   {
@@ -54,7 +48,6 @@ const usersData = [
     lastname: 'Bergström',
     email: 'johan.bergstrom@example.com',
     password: 'Password123!',
-    admin: false,
     phone: '+46700000007',
   },
   {
@@ -62,7 +55,6 @@ const usersData = [
     lastname: 'Karlsson',
     email: 'emma.karlsson@example.com',
     password: 'Password123!',
-    admin: false,
     phone: '+46700000008',
   },
   {
@@ -70,7 +62,6 @@ const usersData = [
     lastname: 'Holm',
     email: 'patrik.holm@example.com',
     password: 'Password123!',
-    admin: false,
     phone: '+46700000009',
   },
   {
@@ -78,7 +69,6 @@ const usersData = [
     lastname: 'Ekström',
     email: 'linda.ekstrom@example.com',
     password: 'Password123!',
-    admin: false,
     phone: '+46700000010',
   },
 ];

@@ -1,5 +1,4 @@
 import jwtService from '../auth/jwt.js';
-import { findUserById } from '../db/users.js';
 
 export function isAuth(req, res, next) {
   const { accessToken, refreshToken } = req.cookies;
@@ -32,14 +31,4 @@ export function isAuth(req, res, next) {
   } catch (error) {
     next(error);
   }
-}
-
-export async function isAdmin(req, res, next) {
-  const { id: userId } = req.user;
-
-  const user = await findUserById(userId);
-
-  if (!user?.admin) return res.status(403).json({ error: 'Access denied' });
-
-  next();
 }
