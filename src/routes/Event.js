@@ -24,7 +24,12 @@ router.delete(
   EventController.eventDelete
 );
 
-router.post('/:id/bookings', capacityMiddleware, BookingController.bookingPost);
+router.post(
+  '/:id/bookings',
+  capacityMiddleware,
+  requiredRole('customer'),
+  BookingController.bookingPost
+);
 
 router.get(
   '/:id/bookings',
