@@ -17,7 +17,7 @@ async function connectDB() {
   isConnected = true;
 }
 
-// Middleware 
+// Middleware
 app.use(async (req, res, next) => {
   try {
     await connectDB();
@@ -32,17 +32,19 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.get("/", (req, res) => {
-  res.json({ message: "Webbshop API", stack: "MEN (MongoDB, Express, Node.js)" });
+  res.json({
+    message: "Webbshop API",
+    stack: "MEN (MongoDB, Express, Node.js)",
+  });
 });
 
 app.get("/health", (req, res) => {
   res.json({ status: "ok" });
 });
 
+app.use("/auth", authRouter);
 app.use("/plants", plantRouter);
 app.use("/trades", tradeRouter);
-app.use("/auth", authRouter);
 app.use("/users", userRouter);
-//TODO: Add more routes as needed
 
 export default app;

@@ -1,65 +1,60 @@
-import Trade from "../models/Trade.js"
+import Trade from "../models/Trade.js";
 
 export async function getAllTrades() {
   try {
     return await Trade.find()
-      .populate(
-        "plantId",
-        "name image species meetingTime coordinates available",
-      )
+      .populate("plantId", "name image species meetingTime coordinates available")
       .populate("requesterId", "name")
       .populate("ownerId", "name")
-      .populate("status")
-  } catch (error) {
-    console.error("Unable to read from 'Trades'", error)
+      .populate("status");
+  } catch (err) {
+    console.error("Unable to read from 'Trades'", err);
   }
 }
 
 export async function getTradeById(id) {
   try {
     return await Trade.findById(id)
-      .populate(
-        "plantId",
-        "name image species meetingTime coordinates available",
-      )
+      .populate("plantId", "name image species meetingTime coordinates available")
       .populate("requesterId", "name")
       .populate("ownerId", "name")
-      .populate("status")
-  } catch (error) {
-    console.error("Unable to read from 'Trades'", error)
+      .populate("status");
+  } catch (err) {
+    console.error("Unable to read from 'Trades'", err);
   }
 }
 
 export async function createTrade(tradeData) {
   try {
-    const newTrade = new Trade(tradeData)
-    await newTrade.save()
-    return await Trade.populate(newTrade, "plantId requesterId ownerId")
-  } catch (error) {
-    console.error("Unable to create 'Trade'", error)
+    const newTrade = new Trade(tradeData);
+    await newTrade.save();
+    return await Trade.populate(newTrade, "plantId requesterId ownerId");
+  } catch (err) {
+    console.error("Unable to create 'Trade'", err);
   }
 }
 
-export async function updateTrade(id, tradeData){
-  try{
-    const updatedTrade = await Trade.findById(id)
-    updatedTrade.plantId = tradeData.plantId ?? updatedTrade.plantId
-    updatedTrade.requesterId = tradeData.requesterId ?? updatedTrade.requesterId
-    updatedTrade.ownerId = tradeData.ownerId ?? updatedTrade.ownerId
-    updatedTrade.status = tradeData.status ?? updatedTrade.status
-    await updatedTrade.save()
+export async function updateTrade(id, tradeData) {
+  try {
+    const updatedTrade = await Trade.findById(id);
 
-    return await Trade.populate(updatedTrade, "plantId requesterId ownerId")
+    updatedTrade.plantId = tradeData.plantId ?? updatedTrade.plantId;
+    updatedTrade.requesterId = tradeData.requesterId ?? updatedTrade.requesterId;
+    updatedTrade.ownerId = tradeData.ownerId ?? updatedTrade.ownerId;
+    updatedTrade.status = tradeData.status ?? updatedTrade.status;
+    
+    await updatedTrade.save();
 
-  }catch(error){
-    console.error("Unable to update 'Trade'", error)
+    return await Trade.populate(updatedTrade, "plantId requesterId ownerId");
+  } catch (err) {
+    console.error("Unable to update 'Trade'", err);
   }
 }
 
-export async function deleteTrade(id){
-  try{
-    return !!(await Trade.findByIdAndDelete(id))
-  }catch(error){
-    console.error("Unable to delete 'Trade'", error)
+export async function deleteTrade(id) {
+  try {
+    return !!(await Trade.findByIdAndDelete(id));
+  } catch (err) {
+    console.error("Unable to delete 'Trade'", err);
   }
 }

@@ -1,8 +1,8 @@
-import { Router } from "express"
+import { Router } from "express";
 import {
   validatePlant,
   validatePlantResult,
-} from "../middleware/plantValidation.js"
+} from "../middleware/plantValidation.js";
 import {
   createPlant,
   getPlants,
@@ -11,54 +11,61 @@ import {
   getPlantBySlug,
   deletePlantBySlug,
   updatePlantBySlug,
-} from "../db/plant.js"
-const plantRouter = Router()
+} from "../db/plants.js";
 
+const plantRouter = Router();
+
+// GET /plants with search
 plantRouter.get("/", async (req, res) => {
-  const { q } = req.query
-  const plants = await getPlants(q)
-  res.json(plants)
-})
+  // TODO "available: true" filter
+  const { q } = req.query;
 
-//TODO: Add more routes as needed
+  const plants = await getPlants(q);
 
-plantRouter.post("/", async (req, res) => {
-  //kommer ha validering för user och admin
-  //validatePlant, validatePlantResult,
-  const plant = await createPlant(req.body)
-  res.status(201).json(plant)
-})
+  res.json(plants);
+});
 
-//TODO GET /plants/:slug
+// GET /plants/:slug
 plantRouter.get("/:slug", async (req, res) => {
-  const slug = req.params.slug
-  const foundPlant = await getPlantBySlug(slug)
-  if (!foundPlant) {
+  const slug = req.params.slug;
+
+  const plant = await getPlantBySlug(slug);
+
+  if (!plant) {
     return res.status(404).json({
       message: "Plant not found",
-    })
+    });
   }
-  res.json(foundPlant)
-})
-//TODO PUT /plants/:slug
-plantRouter.put("/:slug", async (req, res) => {
-  const slug = req.params.slug
-  const { name, image, species, lightLevels, coordinates, meetingTime } =
-    req.body
 
-  if (
-    !name ||
-    !image ||
-    !species ||
-    !lightLevels ||
-    !coordinates ||
-    !meetingTime
-  ) {
+  res.json(plant);
+});
+
+// POST /plants
+plantRouter.post("/", async (req, res) => {
+  // TODO Validation for User and Admin
+  // validatePlant, validatePlantResult,
+
+  const plant = await createPlant(req.body);
+
+  res.status(201).json(plant);
+});
+
+// TODO PATCH /plants/:id or :slug
+// TODO Validation for User (owner) and Admin
+
+// PUT /plants/:slug
+plantRouter.put("/:slug", async (req, res) => {
+  // TODO Validation for User (owner) and Admin
+
+  const slug = req.params.slug;
+  const { name, image, species, lightLevels, coordinates, meetingTime } = req.body;
+
+  if (!name || !image || !species || !lightLevels || !coordinates || !meetingTime) {
     return res.status(400).json({
-      message:
-        "All fields (name, image, species, lightLevels, and meetingTime) are required",
-    })
+      message: "All fields (name, image, species, lightLevels, and meetingTime) are required",
+    });
   }
+
   const updatedPlant = await updatePlantBySlug(slug, {
     name,
     image,
@@ -66,27 +73,33 @@ plantRouter.put("/:slug", async (req, res) => {
     lightLevels,
     coordinates,
     meetingTime,
-  })
+  });
+
   if (!updatedPlant) {
     return res.status(404).json({
       message: "Plant does not exist",
-    })
+    });
   }
-  return res.status(200).json(updatedPlant)
-})
 
-//TODO DELETE /plants/:slug
+  return res.status(200).json(updatedPlant);
+});
+
+// DELETE /plants/:slug
 plantRouter.delete("/:slug", async (req, res) => {
-  //kommer ha validering för user och admin
-  const slug = req.params.slug
-  const plant = await deletePlantBySlug(slug)
+  // TODO Validation for User (owner) and Admin
+
+  const slug = req.params.slug;
+
+  const plant = await deletePlantBySlug(slug);
+
   if (!plant) {
     return res.status(400).json({
       message: "Plant does not exist",
-    })
+    });
   }
-  return res.status(204).json()
-})
+  
+  return res.status(204).json();
+});
 
 // plantRouter.get("/:id", async (req, res) => {
 //   const id = req.params.id
@@ -111,4 +124,4 @@ plantRouter.delete("/:slug", async (req, res) => {
 //   return res.status(204).json()
 // })
 
-export default plantRouter
+export default plantRouter;

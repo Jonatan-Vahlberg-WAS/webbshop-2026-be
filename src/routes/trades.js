@@ -1,46 +1,65 @@
-import { Router } from "express"
+import { Router } from "express";
 import {
   getAllTrades,
   getTradeById,
   createTrade,
   deleteTrade,
   updateTrade,
-} from "../db/trades.js"
+} from "../db/trades.js";
 
-const tradeRouter = Router()
+const tradeRouter = Router();
 
+// GET /trades
 tradeRouter.get("/", async (req, res) => {
-  const trades = await getAllTrades()
-  res.json(trades)
-})
+  // TODO Validation for Admin
+  const trades = await getAllTrades();
 
+  res.json(trades);
+});
+
+// GET /trades/:id
 tradeRouter.get("/:id", async (req, res) => {
-  const id = req.params.id
-  const trade = await getTradeById(id)
+  // TODO Validation for Admin
+
+  const id = req.params.id;
+  const trade = await getTradeById(id);
 
   if (!trade) {
     return res.status(404).json({
       message: "Trade not found",
-    })
+    });
   }
 
-  res.json(trade)
-})
+  res.json(trade);
+});
 
+// TODO GET /trades/mine
+// TODO Validation for User and Admin
+
+// POST /trades
 tradeRouter.post("/", async (req, res) => {
-  const trade = await createTrade(req.body)
-  res.status(201).json(trade)
-})
+  // TODO Validation for User (ownerId !== requesterId) and Admin
 
+  const trade = await createTrade(req.body);
+
+  res.status(201).json(trade);
+});
+
+// TODO PATCH /trades/:id/status
+// TODO Validation for User (owner) and Admin
+
+// PUT /trades/:id
 tradeRouter.put("/:id", async (req, res) => {
-  const id = req.params.id
+  // TODO Validation for User and Admin
 
-  const { ownerId, requesterId, plantId, status } = req.body
+  const id = req.params.id;
+
+  const { ownerId, requesterId, plantId, status } = req.body;
 
   if (!ownerId || !requesterId || !plantId || !status) {
     return res.status(400).json({
       message: "OwnerId, requesterId, plantId and status is required",
-    })
+    });
   }
 
   const updatedTrade = await updateTrade(id, {
@@ -48,26 +67,32 @@ tradeRouter.put("/:id", async (req, res) => {
     requesterId,
     plantId,
     status,
-  })
+  });
+
   if (!updatedTrade) {
     return res.status(404).json({
       message: "Trade does not exist",
-    })
+    });
   }
 
-  return res.status(200).json(updatedTrade)
-})
+  return res.status(200).json(updatedTrade);
+});
 
+// DELETE /trades/:id
 tradeRouter.delete("/:id", async (req, res) => {
-  const id = req.params.id
-  const deleted = await deleteTrade(id)
+  // TODO Validation for User (requester) and Admin
+
+  const id = req.params.id;
+
+  const deleted = await deleteTrade(id);
+  
   if (!deleted) {
     return res.status(404).json({
       message: "Trade does not exist",
-    })
+    });
   }
 
-  return res.status(204).json()
-})
+  return res.status(204).json();
+});
 
-export default tradeRouter
+export default tradeRouter;
