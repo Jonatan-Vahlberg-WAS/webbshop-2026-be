@@ -58,7 +58,7 @@ class AuthController {
         // This sets the refreshToken cookie automatically
         jwtService.generateTokensAndSetCookie(res, user._id);
 
-        return res.json({ success: true });
+        return res.status(200).json({ success: true });
       } catch (error) {
         next(error);
       }
@@ -82,7 +82,7 @@ class AuthController {
         }
 
         const user = await findUserById(userId);
-        res.json(user);
+        res.status(200).json(user);
       } catch (error) {
         next(new AppError('Invalid token', 401));
       }
