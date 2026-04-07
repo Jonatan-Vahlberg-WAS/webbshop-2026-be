@@ -48,6 +48,7 @@ tradeRouter.post("/", async (req, res) => {
   }
 
   const trade = await createTrade({ plantId, requesterId });
+  
   res.status(201).json(trade);
 });
 
