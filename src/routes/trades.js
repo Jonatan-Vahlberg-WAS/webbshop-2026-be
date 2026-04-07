@@ -39,9 +39,15 @@ tradeRouter.get("/:id", async (req, res) => {
 // POST /trades
 tradeRouter.post("/", async (req, res) => {
   // TODO Validation for User (ownerId !== requesterId) and Admin
+  const { plantId, requesterId } = req.body;
 
-  const trade = await createTrade(req.body);
+  if (!plantId || !requesterId) {
+    return res.status(400).json({
+      message: "plantId, requesterId are required",
+    });
+  }
 
+  const trade = await createTrade({ plantId, requesterId });
   res.status(201).json(trade);
 });
 
@@ -61,11 +67,13 @@ tradeRouter.put("/:id", async (req, res) => {
       message: "OwnerId, requesterId, plantId and status is required",
     });
   }
+});
+
+tradeRouter.patch("/:id/status", async (req, res) => {
+  const id = req.params.id;
+  const status = req.body.status;
 
   const updatedTrade = await updateTrade(id, {
-    ownerId,
-    requesterId,
-    plantId,
     status,
   });
 
@@ -85,7 +93,7 @@ tradeRouter.delete("/:id", async (req, res) => {
   const id = req.params.id;
 
   const deleted = await deleteTrade(id);
-  
+
   if (!deleted) {
     return res.status(404).json({
       message: "Trade does not exist",

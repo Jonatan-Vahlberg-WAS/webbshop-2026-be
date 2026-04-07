@@ -41,7 +41,7 @@ const tradeSchema = new mongoose.Schema(
   },
 );
 
-tradeSchema.pre("save", async function (next) {
+tradeSchema.pre("validate", async function (next) {
   if (this.isNew || this.isModified("plantId")) {
     const plant = await Plant.findById(this.plantId).select("ownerId");
 
@@ -50,8 +50,13 @@ tradeSchema.pre("save", async function (next) {
     }
   }
 
+  if (this.requesterId?.equals(this.ownerId)) {
+    const error = new Error("Requester and owner cannot be the same user");
+    return next(error);
+  }
+
   next();
-});
+})
 
 /* tradeSchema.post("save", async function (next) {
   if (this.isNew || this.isModified("status")) {
@@ -64,7 +69,16 @@ tradeSchema.pre("save", async function (next) {
 }) */
 
 tradeSchema.post("save", async function () {
-  if (this.status === STATUS_LEVEL.completed) {
+  if (this.status === STATUS_LEVEL.approved || this.status === STATUS_LEVEL.completed) {
+    try {
+      await Plant.findByIdAndUpdate(this.plantId, {
+        available: false
+      })
+    } catch (error) {
+      console.error("Error updating plant availability:", error)
+    }
+  }
+    if (this.status === STATUS_LEVEL.completed){
     try {
       await User.findByIdAndUpdate(this.ownerId, {
         $addToSet: { history: this._id },
