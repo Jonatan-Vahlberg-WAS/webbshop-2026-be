@@ -63,8 +63,12 @@ export async function getUserById(id) {
 export async function getUserBySlug(slug) {
   try {
     return await User.findOne({ slug: slug })
-      .populate("plants")
+      .select("name location")
       .populate({
+        path: "plants",
+        match: { available: true },
+      });
+/*       .populate({
         path: "history",
         match: { status: "completed" },
         populate: [
@@ -76,7 +80,7 @@ export async function getUserBySlug(slug) {
           { path: "requesterId", select: "name email location" },
         ],
         options: { sort: { createdAt: -1 } },
-      });
+      }); */
   } catch (err) {
     console.error("Unable to read from 'Users'", err);
   }
