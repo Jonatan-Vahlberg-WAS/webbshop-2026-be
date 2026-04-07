@@ -35,9 +35,8 @@ plantRouter.get("/:slug", async (req, res) => {
       message: "Plant not found",
     });
   }
-
-  res.json(plant);
-});
+  res.json(foundPlant)
+})
 
 // POST /plants
 plantRouter.post("/", async (req, res) => {
@@ -48,23 +47,6 @@ plantRouter.post("/", async (req, res) => {
 
   res.status(201).json(plant);
 });
-
-// TODO PATCH /plants/:id or :slug
-plantRouter.patch("/:slug", async (req, res) => {
-  // TODO Validation for User (owner) and Admin
-  const slug = req.params.slug
-  const updateData = req.body
-
-  const updatedPlant = await updatePlantBySlug(slug, updateData)
-
-  if (!updatedPlant) {
-    return res.status(404).json({
-      message: "Plant does not exist",
-    })
-  }
-
-  return res.status(200).json(updatedPlant)
-})
 
 // PUT /plants/:slug
 plantRouter.put("/:slug", async (req, res) => {
@@ -97,7 +79,24 @@ plantRouter.put("/:slug", async (req, res) => {
   return res.status(200).json(updatedPlant);
 });
 
-// DELETE /plants/:slug
+
+// TODO PATCH /plants/:slug
+plantRouter.patch("/:slug", async (req, res) => {
+  const slug = req.params.slug
+  const updateData = req.body
+
+  const updatedPlant = await updatePlantBySlug(slug, updateData)
+
+  if (!updatedPlant) {
+    return res.status(404).json({
+      message: "Plant does not exist",
+    })
+  }
+
+  return res.status(200).json(updatedPlant)
+})
+
+//TODO DELETE /plants/:slug
 plantRouter.delete("/:slug", async (req, res) => {
   // TODO Validation for User (owner) and Admin
 

@@ -19,6 +19,15 @@ export async function getPlants(q) {
   }
 }
 
+export async function getPlantById(id) {
+  try {
+    return await Plant.findById(id).populate("ownerId", "name location");
+  } catch (err) {
+    console.error("Unable to read from 'Plants'", err);
+    return null;
+  }
+}
+
 export async function getPlantBySlug(slug) {
   try {
     return await Plant.findOne({ slug: slug }).populate("ownerId", "name location");
@@ -41,7 +50,9 @@ export async function createPlant(plantData) {
 
 export async function updatePlantBySlug(slug, plantData) {
   try {
-    return await Plant.findOneAndUpdate({ slug: slug }, plantData, { new: true });
+    return await Plant.findOneAndUpdate({ slug: slug }, plantData, {
+      new: true,
+    });
   } catch (err) {
     console.error("Error Updating 'Plant':", err);
     throw err;
@@ -57,15 +68,6 @@ export async function deletePlantBySlug(slug) {
   } catch (err) {
     console.error("Unable to delete 'Plant'", err);
     return false;
-  }
-}
-
-export async function getPlantById(id) {
-  try {
-    return await Plant.findById(id).populate("ownerId", "name location");
-  } catch (err) {
-    console.error("Unable to read from 'Plants'", err);
-    return null;
   }
 }
 
