@@ -54,6 +54,26 @@ export async function getUserById(id) {
   }
 }
 
+export async function getUserBySlug(slug){
+  try{
+    return await User.findOne({slug: slug}).populate("plants").populate({
+        path: "history",
+        match: { status: "completed" },
+        populate: [
+          {
+            path: "plantId",
+            select: "name image species meetingTime coordinates available",
+          },
+          { path: "ownerId", select: "name email location" },
+          { path: "requesterId", select: "name email location" },
+        ],
+        options: { sort: { createdAt: -1 } },
+      })
+  }catch(error){
+    console.error("Unable to read from 'Users'", error)
+  }
+}
+
 export async function updateUser(id, userData) {
   try {
     return await User.findByIdAndUpdate(id, userData, {
@@ -66,9 +86,31 @@ export async function updateUser(id, userData) {
   }
 }
 
+export async function updateUserBySlug(slug, userData){
+  try {
+    return await User.findOneAndUpdate({slug: slug}, userData, {new: true})
+  }catch (error) {
+    console.error("Error Updating 'User':", error)
+    throw error
+  }
+}
+
+
 export async function deleteUser(id) {
   try {
     const userToDelete = await User.findById(id)
+    if (!userToDelete) return null
+    await User.deleteOne({ _id: userToDelete._id })
+    return true
+  } catch (error) {
+    console.error("Unable to delete 'User'", error)
+    return false
+  }
+}
+
+export async function deleteUserBySlug(slug) {
+  try {
+    const userToDelete = await User.findOne({ slug: slug })
     if (!userToDelete) return null
     await User.deleteOne({ _id: userToDelete._id })
     return true

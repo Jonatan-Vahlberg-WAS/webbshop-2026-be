@@ -40,6 +40,7 @@ plantRouter.get("/:slug", async (req, res) => {
   }
   res.json(foundPlant)
 })
+
 //TODO PUT /plants/:slug
 plantRouter.put("/:slug", async (req, res) => {
   const slug = req.params.slug
@@ -72,6 +73,22 @@ plantRouter.put("/:slug", async (req, res) => {
       message: "Plant does not exist",
     })
   }
+  return res.status(200).json(updatedPlant)
+})
+
+// TODO PATCH /plants/:slug
+plantRouter.patch("/:slug", async (req, res) => {
+  const slug = req.params.slug
+  const updateData = req.body
+
+  const updatedPlant = await updatePlantBySlug(slug, updateData)
+
+  if (!updatedPlant) {
+    return res.status(404).json({
+      message: "Plant does not exist",
+    })
+  }
+
   return res.status(200).json(updatedPlant)
 })
 
