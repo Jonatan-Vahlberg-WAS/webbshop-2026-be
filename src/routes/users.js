@@ -8,7 +8,7 @@ import {
   getUserBySlug,
   updateUserBySlug,
   deleteUserBySlug,
-} from "../db/user.js";
+} from "../db/users.js";
 
 const userRouter = Router();
 
