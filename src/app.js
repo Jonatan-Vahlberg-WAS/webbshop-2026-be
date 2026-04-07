@@ -11,7 +11,7 @@ const app = express()
 
 app.use(
   cors({
-    origin: "https://backend-checker.vercel.app/",
+    origin: "https://backend-checker.vercel.app",
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   }),
