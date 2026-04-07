@@ -17,7 +17,6 @@ const plantRouter = Router();
 
 // GET /plants with search
 plantRouter.get("/", async (req, res) => {
-  // TODO "available: true" filter
   const { q } = req.query;
 
   const plants = await getPlants(q);
@@ -51,7 +50,21 @@ plantRouter.post("/", async (req, res) => {
 });
 
 // TODO PATCH /plants/:id or :slug
-// TODO Validation for User (owner) and Admin
+plantRouter.patch("/:slug", async (req, res) => {
+  // TODO Validation for User (owner) and Admin
+  const slug = req.params.slug
+  const updateData = req.body
+
+  const updatedPlant = await updatePlantBySlug(slug, updateData)
+
+  if (!updatedPlant) {
+    return res.status(404).json({
+      message: "Plant does not exist",
+    })
+  }
+
+  return res.status(200).json(updatedPlant)
+})
 
 // PUT /plants/:slug
 plantRouter.put("/:slug", async (req, res) => {

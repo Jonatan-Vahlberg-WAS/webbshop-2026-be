@@ -2,7 +2,7 @@ import Plant from "../models/Plant.js";
 import { getFullTextSearch } from "../utils/fullTextSearch.js";
 
 export async function getPlants(q) {
-  let filter = {};
+  let filter = { available: true };
 
   if (q) {
     filter = {

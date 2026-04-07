@@ -48,29 +48,14 @@ tradeRouter.post("/", async (req, res) => {
   }
 
   const trade = await createTrade({ plantId, requesterId });
-  
+
   res.status(201).json(trade);
 });
 
 // TODO PATCH /trades/:id/status
-// TODO Validation for User (owner) and Admin
-
-// PUT /trades/:id
-tradeRouter.put("/:id", async (req, res) => {
-  // TODO Validation for User and Admin
-
-  const id = req.params.id;
-
-  const { ownerId, requesterId, plantId, status } = req.body;
-
-  if (!ownerId || !requesterId || !plantId || !status) {
-    return res.status(400).json({
-      message: "OwnerId, requesterId, plantId and status is required",
-    });
-  }
-});
-
 tradeRouter.patch("/:id/status", async (req, res) => {
+  // TODO Validation for User (owner) and Admin
+
   const id = req.params.id;
   const status = req.body.status;
 
