@@ -19,8 +19,20 @@ async function connectDB() {
   isConnected = true;
 }
 
+// Change to frontend URL when ready
+const allowedOrigins = ['http://127.0.0.1:3000', 'http://localhost:3000'];
+
 // Middleware
-app.use(cors('*'));
+app.use(
+  cors({
+    origin(origin, callback) {
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.includes(origin)) return callback(null, true);
+      return callback(new Error('Not allowed by CORS'));
+    },
+    credentials: true,
+  })
+);
 app.use(async (req, res, next) => {
   try {
     await connectDB();
@@ -29,7 +41,6 @@ app.use(async (req, res, next) => {
     next(err);
   }
 });
-app.use(cors('*'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
