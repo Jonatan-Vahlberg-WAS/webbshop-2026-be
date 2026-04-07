@@ -69,7 +69,16 @@ tradeSchema.pre("validate", async function (next) {
 }) */
 
 tradeSchema.post("save", async function () {
-  if (this.status === STATUS_LEVEL.completed) {
+  if (this.status === STATUS_LEVEL.approved || this.status === STATUS_LEVEL.completed) {
+    try {
+      await Plant.findByIdAndUpdate(this.plantId, {
+        available: false
+      })
+    } catch (error) {
+      console.error("Error updating plant availability:", error)
+    }
+  }
+    if (this.status === STATUS_LEVEL.completed){
     try {
       await User.findByIdAndUpdate(this.ownerId, {
         $addToSet: { history: this._id },
