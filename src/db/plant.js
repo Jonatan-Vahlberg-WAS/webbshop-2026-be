@@ -1,12 +1,25 @@
 import Plant from "../models/Plant.js"
+import { getFullTextSearch } from "../utils/fullTextSearch.js"
 
-export async function getPlants() {
-  return await Plant.find()
+export async function getPlants(q) {
+  let filter = {}
+  if (q) {
+    filter = {
+      ...filter,
+      ...getFullTextSearch(q, true, "name"),
+    }
+  }
+  try {
+    return await Plant.find(filter).populate("ownerId", "name location");
+  } catch (err) {
+    console.error("Unable to find based on query in 'Plants'", err)
+    return []
+  }
 }
 
 export async function getPlantById(id) {
   try {
-    return await Plant.findById(id)
+    return await Plant.findById(id).populate("ownerId", "name location");
   } catch (err) {
     console.error("Unable to read from 'Plants'", err)
     return null
@@ -17,7 +30,7 @@ export async function getPlantBySlug(slug) {
   //   console.log("Slug: ", slug)
   try {
     // console.log("Found plant by slug: ", Plant.findOne({ slug: slug }))
-    return await Plant.findOne({ slug: slug })
+    return await Plant.findOne({ slug: slug }).populate("ownerId", "name location");
   } catch (err) {
     console.error("Unable to read from 'Plants'", err)
     return null

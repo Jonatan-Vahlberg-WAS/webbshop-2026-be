@@ -2,10 +2,21 @@ import "dotenv/config";
 import express from "express";
 import mongoose from "mongoose";
 import plantRouter from "./routes/plants.js";
+import tradeRouter from "./routes/trades.js";
 import authRouter from "./routes/auth.js";
+import userRouter from "./routes/users.js";
 import cors from "cors";
 
 const app = express();
+
+app.use(cors({
+  origin: "http://127.0.0.1:5500",
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 let isConnected = false;
 
@@ -24,9 +35,6 @@ app.use(async (req, res, next) => {
     next(err);
   }
 });
-app.use(cors("*"));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.get("/", (req, res) => {
@@ -38,7 +46,9 @@ app.get("/health", (req, res) => {
 });
 
 app.use("/plants", plantRouter);
+app.use("/trades", tradeRouter);
 app.use("/auth", authRouter);
+app.use("/users", userRouter);
 //TODO: Add more routes as needed
 
 export default app;
