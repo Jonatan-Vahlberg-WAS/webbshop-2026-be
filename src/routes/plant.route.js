@@ -27,6 +27,9 @@ router.get("/:id", async (req, res) => {
 // create a new plant
 router.post("/", protectReq, async (req, res) => {
   const { plantName, light, water } = req.body;
+  if (!plantName || !light || !water) {
+    return res.status(400).json({ message: "Missing required fields" });
+  }
   const ownerId = req.userId;
   const newPlant = new Plant({ plantName, light, water, ownerId });
   await newPlant.save();
@@ -55,6 +58,7 @@ router.put("/:id", protectReq, async (req, res) => {
 // delete a plant
 router.delete("/:id", protectReq, async (req, res) => {
   const plantId = req.params.id;
+  try {
   const plant = await Plant.findById(plantId);
   if (!plant) {
     return res.status(404).json({ message: "Plant not found" });
@@ -62,8 +66,11 @@ router.delete("/:id", protectReq, async (req, res) => {
   if (plant.ownerId.toString() !== req.userId) {
     return res.status(403).json({ message: "Unauthorized" });
   }
-  await plant.remove();
+  await plant.deleteOne();
   res.json({ message: "Plant deleted" });
+  } catch (err) {
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
 });
 
 // get all plants for a user

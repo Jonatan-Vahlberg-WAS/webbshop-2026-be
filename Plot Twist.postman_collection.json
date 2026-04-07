@@ -17,7 +17,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"email\": \"test1@test.com\",\r\n    \"password\": \"123456\"\r\n}",
+              "raw": "{\r\n    \"email\": \"test@test.com\",\r\n    \"password\": \"123456\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -45,7 +45,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"name\" : \"Hei\",\r\n    \"email\": \"test2@test.com\",\r\n    \"password\": \"123456\"\r\n}",
+              "raw": "{\r\n    \"name\" : \"Hei\",\r\n    \"email\": \"test52@test.com\",\r\n    \"password\": \"123456\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -87,7 +87,12 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"email\": \"test@test.com\",\r\n    \"password\": \"123456\"\r\n}"
+              "raw": "{\r\n    \"email\": \"test@test.com\",\r\n    \"password\": \"123456\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
             "url": {
               "raw": "localhost:3000/user/me",
@@ -116,7 +121,12 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"email\": \"test@test.com\",\r\n    \"password\": \"123456\"\r\n}"
+              "raw": "{\r\n    \"email\": \"test@test.com\",\r\n    \"password\": \"123456\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
             "url": {
               "raw": "localhost:3000/user/me",
@@ -168,9 +178,182 @@
       "item": [
         {
           "name": "All plants",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
           "request": {
             "method": "GET",
-            "header": []
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWNjZWU5ZGJjMDI3YzYyNTYxZGFkZTIiLCJpYXQiOjE3NzUwMzkyMDgsImV4cCI6MTc3NTA0MjgwOH0.klB3n82vEbDl6pvJBv4oIZsE0LMxlEL9K2VCa-WPckk",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"test@test.com\",\r\n    \"password\": \"123456\"\r\n}"
+            },
+            "url": {
+              "raw": "localhost:3000/plants/id",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "plants",
+                "id"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create plant",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWNjZWI3ZWU3MzQ4YTA4OTE1YmEzNGEiLCJpYXQiOjE3NzU1NTg4NzEsImV4cCI6MTc3NTU2MjQ3MX0.xbaZCA2_Aymx1PTshOw3RB1f_DQyo4hw1AyqXB9rkL8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"plantName\": \"gcbgb\",\r\n    \"light\": 2,\r\n    \"water\": 2\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:3000/plants",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "plants"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get plant  by id",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWNjZWI3ZWU3MzQ4YTA4OTE1YmEzNGEiLCJpYXQiOjE3NzU1NTg4NzEsImV4cCI6MTc3NTU2MjQ3MX0.xbaZCA2_Aymx1PTshOw3RB1f_DQyo4hw1AyqXB9rkL8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"plantName\": \"gcbgb\",\r\n    \"light\": 2,\r\n    \"water\": 2\r\n}"
+            },
+            "url": {
+              "raw": "localhost:3000/plants/69d4e1cefbb68c833dc55cb0",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "plants",
+                "69d4e1cefbb68c833dc55cb0"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update plant",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWNjZWI3ZWU3MzQ4YTA4OTE1YmEzNGEiLCJpYXQiOjE3NzU1NTg4NzEsImV4cCI6MTc3NTU2MjQ3MX0.xbaZCA2_Aymx1PTshOw3RB1f_DQyo4hw1AyqXB9rkL8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"plantName\": \"wrghjuyhbgdyikuhfgjutfh\",\r\n    \"light\": 2,\r\n    \"water\": 2\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:3000/plants/69d4e1cefbb68c833dc55cb0",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "plants",
+                "69d4e1cefbb68c833dc55cb0"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete plant",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWNjZWI3ZWU3MzQ4YTA4OTE1YmEzNGEiLCJpYXQiOjE3NzU1NTg4NzEsImV4cCI6MTc3NTU2MjQ3MX0.xbaZCA2_Aymx1PTshOw3RB1f_DQyo4hw1AyqXB9rkL8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"plantName\": \"wrghjuyhbgdyikuhfgjutfh\",\r\n    \"light\": 2,\r\n    \"water\": 2\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:3000/plants/69d4e1cefbb68c833dc55cb0",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "plants",
+                "69d4e1cefbb68c833dc55cb0"
+              ]
+            }
           },
           "response": []
         }
