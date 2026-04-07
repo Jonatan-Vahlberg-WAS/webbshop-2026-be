@@ -41,13 +41,20 @@ const tradeSchema = new mongoose.Schema(
   },
 )
 
-tradeSchema.pre("save", async function (next) {
+tradeSchema.pre("validate", async function (next) {
   if (this.isNew || this.isModified("plantId")) {
     const plant = await Plant.findById(this.plantId).select("ownerId")
+
     if (plant) {
       this.ownerId = plant.ownerId
     }
   }
+
+  if(this.requesterId?.equals(this.ownerId)){
+    const error = new Error("Requester and owner cannot be the same user")
+    return next(error)
+  }
+
   next()
 })
 

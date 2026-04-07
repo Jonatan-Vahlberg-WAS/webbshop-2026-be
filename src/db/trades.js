@@ -43,12 +43,9 @@ export async function createTrade(tradeData) {
 export async function updateTrade(id, tradeData){
   try{
     const updatedTrade = await Trade.findById(id)
-    updatedTrade.plantId = tradeData.plantId ?? updatedTrade.plantId
-    updatedTrade.requesterId = tradeData.requesterId ?? updatedTrade.requesterId
-    updatedTrade.ownerId = tradeData.ownerId ?? updatedTrade.ownerId
     updatedTrade.status = tradeData.status ?? updatedTrade.status
     await updatedTrade.save()
-
+    console.log("Dunction: updateTrade:", updateTrade)
     return await Trade.populate(updatedTrade, "plantId requesterId ownerId")
 
   }catch(error){
