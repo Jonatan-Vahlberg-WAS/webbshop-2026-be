@@ -1,11 +1,17 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
+import slugify from "slugify";
 
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
     trim: true,
+  },
+  slug: {
+    type: String,
+    required: true, 
+    unique: true
   },
   email: {
     type: String,
@@ -67,6 +73,15 @@ userSchema.pre("save", async function (next) {
     next(error);
   }
 });
+
+userSchema.pre("validate", function(next){
+  if(this.isModified("name")){
+    this.slug = slugify(this.name, {
+      lower: true
+    })
+  }
+  return next()
+})
 
 // Använder lowercase: true för email istället
 /* userSchema.pre("save", async function (next) {
