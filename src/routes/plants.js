@@ -79,9 +79,9 @@ plantRouter.put("/:slug", async (req, res) => {
   return res.status(200).json(updatedPlant);
 });
 
-
-// TODO PATCH /plants/:slug
+// PATCH /plants/:slug
 plantRouter.patch("/:slug", async (req, res) => {
+  // TODO Validation for User (owner) and Admin
   const slug = req.params.slug
   const updateData = req.body
 
@@ -96,7 +96,7 @@ plantRouter.patch("/:slug", async (req, res) => {
   return res.status(200).json(updatedPlant)
 })
 
-//TODO DELETE /plants/:slug
+// DELETE /plants/:slug
 plantRouter.delete("/:slug", async (req, res) => {
   // TODO Validation for User (owner) and Admin
 

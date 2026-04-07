@@ -60,9 +60,11 @@ export async function getUserById(id) {
   }
 }
 
-export async function getUserBySlug(slug){
-  try{
-    return await User.findOne({slug: slug}).populate("plants").populate({
+export async function getUserBySlug(slug) {
+  try {
+    return await User.findOne({ slug: slug })
+      .populate("plants")
+      .populate({
         path: "history",
         match: { status: "completed" },
         populate: [
@@ -74,9 +76,9 @@ export async function getUserBySlug(slug){
           { path: "requesterId", select: "name email location" },
         ],
         options: { sort: { createdAt: -1 } },
-      })
-  }catch(err){
-    console.error("Unable to read from 'Users'", err)
+      });
+  } catch (err) {
+    console.error("Unable to read from 'Users'", err);
   }
 }
 
@@ -92,44 +94,43 @@ export async function updateUser(id, userData) {
   }
 }
 
-export async function updateUserBySlug(slug, userData){
+export async function updateUserBySlug(slug, userData) {
   try {
-    return await User.findOneAndUpdate({slug: slug}, userData, {new: true})
-  }catch (error) {
-    console.error("Error Updating 'User':", error)
-    throw error
+    return await User.findOneAndUpdate({ slug: slug }, userData, { new: true });
+  } catch (err) {
+    console.error("Error Updating 'User':", err);
+    throw err;
   }
 }
 
-
 export async function deleteUser(id) {
   try {
-    const userToDelete = await User.findById(id)
-    if (!userToDelete) return null
-    await User.deleteOne({ _id: userToDelete._id })
-    return true
-  } catch (error) {
-    console.error("Unable to delete 'User'", error)
-    return false
+    const userToDelete = await User.findById(id);
+    if (!userToDelete) return null;
+    await User.deleteOne({ _id: userToDelete._id });
+    return true;
+  } catch (err) {
+    console.error("Unable to delete 'User'", err);
+    return false;
   }
 }
 
 export async function deleteUserBySlug(slug) {
   try {
-    const userToDelete = await User.findOne({ slug: slug })
-    if (!userToDelete) return null
-    await User.deleteOne({ _id: userToDelete._id })
-    return true
-  } catch (error) {
-    console.error("Unable to delete 'User'", error)
-    return false
+    const userToDelete = await User.findOne({ slug: slug });
+    if (!userToDelete) return null;
+    await User.deleteOne({ _id: userToDelete._id });
+    return true;
+  } catch (err) {
+    console.error("Unable to delete 'User'", err);
+    return false;
   }
 }
 
 export async function createUser(userData) {
-  const user = new User(userData)
-  await user.save()
-  return user
+  const user = new User(userData);
+  await user.save();
+  return user;
 }
 
 export async function findUserByEmail(email) {
