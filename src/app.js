@@ -3,6 +3,7 @@ import express from "express";
 import mongoose from "mongoose";
 import authRouter from "./routes/auth.js";
 import userRouter from "./routes/user.js";
+import plantRouter from "./routes/plant.route.js";
 import cors from "cors";
 
 const app = express();
@@ -39,6 +40,7 @@ app.get("/health", (req, res) => {
 
 app.use("/auth", authRouter);
 app.use("/user", userRouter);
+app.use("/plants", plantRouter);
 //TODO: Add more routes as needed
 
 export default app;

@@ -36,12 +36,6 @@ router.put("/me", protectReq, async (req, res) => {
   await user.save();
   res.json(user);
   
-  /*   const updatedUser = await User.findByIdAndUpdate(userId, { name, email }, { new: true });
-  if (!updatedUser) {
-    return res.status(404).json({ message: "User not found" });
-    }
-    res.json(updatedUser); */
-    
   });
 
 
