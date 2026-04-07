@@ -83,21 +83,19 @@ const jwtService = {
     const accessToken = this.signAccess({ userId });
     const refreshToken = this.signRefresh({ userId });
 
-    const isProd = process.env.NODE_ENV === 'production';
-
     // Access token cookie
     res.cookie('accessToken', accessToken, {
       httpOnly: true,
-      secure: isProd,
-      sameSite: isProd ? 'none' : 'lax',
+      secure: false,
+      sameSite: 'none',
       maxAge: this.getAccessTokenExpiry(), // millisekunder
     });
 
     // Refresh token cookie
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
-      secure: isProd,
-      sameSite: isProd ? 'none' : 'lax',
+      secure: false,
+      sameSite: 'none',
       expires: this.getRefreshTokenExpiry(), // datum
     });
 
