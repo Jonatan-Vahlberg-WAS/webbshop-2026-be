@@ -10,6 +10,7 @@ import {
   deletePlantBySlug,
   updatePlantBySlug,
 } from "../db/plants.js";
+// import { validatePlant, validatePlantResult } from "../middleware/plantValidation.js";
 
 const plantRouter = Router();
 
@@ -37,7 +38,7 @@ plantRouter.get("/:slug", async (req, res) => {
 })
 
 // POST /plants
-plantRouter.post("/", async (req, res) => {
+plantRouter.post("/", validatePlant, validatePlantResult, async (req, res) => {
   // TODO Validation for User and Admin
   // validatePlant, validatePlantResult,
 

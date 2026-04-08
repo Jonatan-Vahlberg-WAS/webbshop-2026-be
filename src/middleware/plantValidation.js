@@ -1,18 +1,30 @@
 import { body, validationResult } from "express-validator";
+import { LIGHT_LEVELS } from "../models/Plant.js";
 
+//Rules that shows error message when data is not valid
 export const validatePlant = [
   body("name").notEmpty().withMessage("Name is required"),
-  body("price").isFloat({ min: 0 }).withMessage("Price must be greater than 0"),
-  body("stock").isInt({ min: 0 }).withMessage("Stock must be greater than 0"),
   body("image").notEmpty().withMessage("Image is required"),
-  body("slug").notEmpty().withMessage("Slug is required"),
   //TODO: Add more validation rules as needed
+  body("species").notEmpty().withMessage("Species is required"),
+  body("lightLevels").notEmpty().isIn([LIGHT_LEVELS.low, LIGHT_LEVELS.partial, LIGHT_LEVELS.bright, LIGHT_LEVELS.directSun]).withMessage("Light Levels must be one of: low, partial, bright, direct Sun"),
+  body("ownerId").notEmpty().withMessage("OwnerId is required"),
+  body("coordinates").isArray({min: 2, max: 2}).withMessage("Array has to contain two elements"),
+  body("meetingTime").notEmpty().withMessage("Meeting time is required"),
 ];
 
-export const validatePlantResult = (req, res, next) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
-  next();
-};
+export function validatePlantResult(req, res, next){
+    const errors = validationResult(req)
+    if(errors.isEmpty()) {
+        return next();
+    }
+    
+    const formattedErrors = errors.array().map(err => ({
+        field: err.path,
+        message: err.msg
+    }))
+
+    return res.status(400).json({
+        errors: formattedErrors
+    })
+}
