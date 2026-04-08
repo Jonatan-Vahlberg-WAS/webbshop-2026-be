@@ -62,12 +62,20 @@ tradeSchema.post("save", async function () {
   if (this.status === STATUS_LEVEL.completed) {
     try {
       await User.findByIdAndUpdate(this.ownerId, {
-        $addToSet: { history: this._id },
+        $addToSet: { history: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Trade"
+      }] },
       })
 
       await User.findByIdAndUpdate(this.requesterId, {
-        $addToSet: { history: this._id },
+        $addToSet: { history: [{
+        type: mongoose.Schema.Types.ObjectId,
+         ref: "Trade"
+      }] },
       })
+
+      
     } catch (error) {
       console.error("Error updating user history:", error)
     }

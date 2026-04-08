@@ -2,6 +2,8 @@
 import express from "express";
 import { protect, adminOnly } from "../middleware/authMiddleware.js";
 import User from "../models/User.js";
+import Plant from "../models/plant.js";
+import Trade from "../models/trade.js";
 
 const router = express.Router();
 
@@ -39,6 +41,30 @@ router.delete("/user/:id", protect, adminOnly, async (req, res) => {
   if (!deleted) return res.status(404).json({ message: "User not found" });
 
   res.json({ message: "User deleted" });
+});
+
+// Get all plants (for admin overview)
+router.get("/plants", protect, adminOnly, async (req, res) => {
+  const plants = await Plant.find().populate("ownerId", "name email");
+  res.json(plants);
+});
+
+// Ta bort en planta (för admin)
+router.delete("/plant/:id", protect, adminOnly, async (req, res) => {
+  const plant = await Plant.findByIdAndDelete(req.params.id);
+  if (!plant) return res.status(404).json({ message: "Plant not found" });
+
+  res.json({ message: "Plant deleted by admin" });
+});
+
+// Get all trades (for admin)
+router.get("/trades", protect, adminOnly, async (req, res) => {
+  const trades = await Trade.find()
+    .populate("plantId")
+    .populate("ownerId", "name email")
+    .populate("requesterId", "name email");
+
+  res.json(trades);
 });
 
 export default router;

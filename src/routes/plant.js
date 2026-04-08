@@ -103,6 +103,21 @@ router.put(
   },
 );
 
+// Filter all plants
+router.get("/", async (req, res) => {
+  const { light, plantName } = req.query;
+
+  const filter = {};
+
+  if (light) filter.light = Number(light);
+  if (plantName) filter.plantName = new RegExp(plantName, "i");
+
+  const plants = await Plant.find(filter);
+  res.json(plants);
+});
+
+
+
 // DELETE plant
 router.delete("/:id", protect, async (req, res) => {
   const plant = await Plant.findById(req.params.id);
@@ -115,6 +130,7 @@ router.delete("/:id", protect, async (req, res) => {
   await plant.deleteOne();
   res.json({ message: "Plant deleted" });
 });
+
 
 
 export default router;

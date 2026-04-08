@@ -29,6 +29,10 @@ const userSchema = new mongoose.Schema({
     required: true,
     default: "user",
   },
+  history: [{
+  type: mongoose.Schema.Types.ObjectId,
+  ref: "Trade"
+}],
 
 }, { timestamps: true });
 

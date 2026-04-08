@@ -82,7 +82,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWQ2Mzk1YjNmZGJiNDg4ZGMzNzcwNGIiLCJpYXQiOjE3NzU2NDcwODEsImV4cCI6MTc3NTY1MDY4MX0.NeM81Dai1H2cEMIsv5wkThRmb4-jbZrhOcj1ly9iOdU",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWQ2Mzk1YjNmZGJiNDg4ZGMzNzcwNGIiLCJpYXQiOjE3NzU2NTcyODIsImV4cCI6MTc3NTY2MDg4Mn0.2qwqg6vdjHEiCCLHL_TCSdTKtJRRj8Y7wX3hsQ3lMlw",
                   "type": "string"
                 }
               ]
@@ -552,6 +552,16 @@
         {
           "name": "SeeAllUsers",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWQ2Mzk1YjNmZGJiNDg4ZGMzNzcwNGIiLCJpYXQiOjE3NzU2NTcyODIsImV4cCI6MTc3NTY2MDg4Mn0.2qwqg6vdjHEiCCLHL_TCSdTKtJRRj8Y7wX3hsQ3lMlw",
+                  "type": "string"
+                }
+              ]
+            },
             "method": "GET",
             "header": [],
             "url": {
@@ -587,7 +597,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": ""
+                  "value": "69d652768d89456b990d8307"
                 }
               ]
             }
@@ -599,8 +609,17 @@
           "request": {
             "method": "PUT",
             "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\" : \"Test\",\r\n    \"email\": \"testa2@test.com\",\r\n    \"password\": \"123456\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
-              "raw": "localhost:3000/admin/user/:id",
+              "raw": "localhost:3000/admin/user/69d652768d89456b990d8307",
               "host": [
                 "localhost"
               ],
@@ -608,13 +627,7 @@
               "path": [
                 "admin",
                 "user",
-                ":id"
-              ],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "69d652768d89456b990d8307"
-                }
+                "69d652768d89456b990d8307"
               ]
             }
           },
@@ -639,8 +652,72 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": ""
+                  "value": "69d652768d89456b990d8307"
                 }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "SeeAllPlants",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:3000/admin/plants",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "admin",
+                "plants"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DeletePlantById",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "localhost:3000/admin/plant/:id",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "admin",
+                "plant",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "69d63c4df7ef054ab71e590c"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "SeeAllTradesAdmin",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:3000/admin/trades",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "admin",
+                "trades"
               ]
             }
           },
@@ -654,7 +731,7 @@
     "bearer": [
       {
         "key": "token",
-        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWQ1N2Y3M2MwYjg0YjUxZjJjMmFjZDIiLCJpYXQiOjE3NzU2MDA5MjksImV4cCI6MTc3NTYwNDUyOX0.Tk84zIcOBrqSGNdHuMPRRPV1breqwe5QfT5k72iBeyQ",
+        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWQ2Mzk1YjNmZGJiNDg4ZGMzNzcwNGIiLCJpYXQiOjE3NzU2NTcyODIsImV4cCI6MTc3NTY2MDg4Mn0.2qwqg6vdjHEiCCLHL_TCSdTKtJRRj8Y7wX3hsQ3lMlw",
         "type": "string"
       }
     ]
