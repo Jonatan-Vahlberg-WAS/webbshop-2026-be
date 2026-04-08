@@ -45,7 +45,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"name\" : \"Test\",\r\n    \"email\": \"test@test.com\",\r\n    \"password\": \"123456\"\r\n}",
+              "raw": "{\r\n    \"name\" : \"Test\",\r\n    \"email\": \"testa@test.com\",\r\n    \"password\": \"123456\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -82,7 +82,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWQ1OTI5MzE0NWI5MTY1MmFiN2I0YTgiLCJpYXQiOjE3NzU2MDQ1MjAsImV4cCI6MTc3NTYwODEyMH0.jCMVQLwOUTjYTD5HgPtPI1pAZcY6HZ8CvIQr1g4Wv3k",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWQ2Mzk1YjNmZGJiNDg4ZGMzNzcwNGIiLCJpYXQiOjE3NzU2NDcwODEsImV4cCI6MTc3NTY1MDY4MX0.NeM81Dai1H2cEMIsv5wkThRmb4-jbZrhOcj1ly9iOdU",
                   "type": "string"
                 }
               ]
@@ -187,38 +187,6 @@
       "name": "Plants",
       "item": [
         {
-          "name": "All plants",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWNjZWU5ZGJjMDI3YzYyNTYxZGFkZTIiLCJpYXQiOjE3NzUwMzkyMDgsImV4cCI6MTc3NTA0MjgwOH0.klB3n82vEbDl6pvJBv4oIZsE0LMxlEL9K2VCa-WPckk",
-                "type": "text"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"email\": \"test@test.com\",\r\n    \"password\": \"123456\"\r\n}"
-            },
-            "url": {
-              "raw": "localhost:3000/plants/id",
-              "host": [
-                "localhost"
-              ],
-              "port": "3000",
-              "path": [
-                "plants",
-                "id"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
           "name": "Create plant",
           "request": {
             "auth": {
@@ -226,7 +194,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWQ1OTI5MzE0NWI5MTY1MmFiN2I0YTgiLCJpYXQiOjE3NzU2MDQ3MjUsImV4cCI6MTc3NTYwODMyNX0.S7FboaOOGiN-bJYxBy8yW0YyqlVcv42_koOWik6S2DI",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWQ2Mzk1YjNmZGJiNDg4ZGMzNzcwNGIiLCJpYXQiOjE3NzU2NDcwODEsImV4cCI6MTc3NTY1MDY4MX0.NeM81Dai1H2cEMIsv5wkThRmb4-jbZrhOcj1ly9iOdU",
                   "type": "string"
                 }
               ]
@@ -256,6 +224,67 @@
           "response": []
         },
         {
+          "name": "All plants",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWQ2Mzk1YjNmZGJiNDg4ZGMzNzcwNGIiLCJpYXQiOjE3NzU2NDcwODEsImV4cCI6MTc3NTY1MDY4MX0.NeM81Dai1H2cEMIsv5wkThRmb4-jbZrhOcj1ly9iOdU",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWNjZWU5ZGJjMDI3YzYyNTYxZGFkZTIiLCJpYXQiOjE3NzUwMzkyMDgsImV4cCI6MTc3NTA0MjgwOH0.klB3n82vEbDl6pvJBv4oIZsE0LMxlEL9K2VCa-WPckk",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"test@test.com\",\r\n    \"password\": \"123456\"\r\n}"
+            },
+            "url": {
+              "raw": "localhost:3000/plants/",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "plants",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "MyPlants",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:3000/plants/myplants",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "plants",
+                "myplants"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
           "name": "Get plant  by id",
           "protocolProfileBehavior": {
             "disableBodyPruning": true
@@ -278,14 +307,14 @@
               "raw": ""
             },
             "url": {
-              "raw": "localhost:3000/plants/69d4e1cefbb68c833dc55cb0",
+              "raw": "localhost:3000/plants/69d63a87f7ef054ab71e58fe",
               "host": [
                 "localhost"
               ],
               "port": "3000",
               "path": [
                 "plants",
-                "69d4e1cefbb68c833dc55cb0"
+                "69d63a87f7ef054ab71e58fe"
               ]
             }
           },
@@ -299,7 +328,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWNjZWI3ZWU3MzQ4YTA4OTE1YmEzNGEiLCJpYXQiOjE3NzU1NTg4NzEsImV4cCI6MTc3NTU2MjQ3MX0.xbaZCA2_Aymx1PTshOw3RB1f_DQyo4hw1AyqXB9rkL8",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWQ2Mzk1YjNmZGJiNDg4ZGMzNzcwNGIiLCJpYXQiOjE3NzU2NDcwODEsImV4cCI6MTc3NTY1MDY4MX0.NeM81Dai1H2cEMIsv5wkThRmb4-jbZrhOcj1ly9iOdU",
                   "type": "string"
                 }
               ]
@@ -308,7 +337,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"plantName\": \"Monstera\",\r\n  \"description\": \"Stor och lättskött växt.\",\r\n  \"light\": 2,\r\n  \"water\": 1,\r\n  \"imageUrl\": \"https://example.com/monstera.jpg\",\r\n  \"coordinates\": [59.3293, 18.0686],\r\n  \"meetingTime\": \"2024-05-01T14:00:00.000Z\",\r\n  \"available\": true\r\n}",
+              "raw": "{\r\n  \"plantName\": \"Aloe\",\r\n  \"description\": \"Stor och lättskött växt.\",\r\n  \"light\": 2,\r\n  \"water\": 1,\r\n  \"imageUrl\": \"https://example.com/monstera.jpg\",\r\n  \"coordinates\": [59.3293, 18.0686],\r\n  \"meetingTime\": \"2024-05-01T14:00:00.000Z\",\r\n  \"available\": true\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -316,20 +345,14 @@
               }
             },
             "url": {
-              "raw": "localhost:3000/plants/:id",
+              "raw": "localhost:3000/plants/69d63a87f7ef054ab71e58fe",
               "host": [
                 "localhost"
               ],
               "port": "3000",
               "path": [
                 "plants",
-                ":id"
-              ],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "69d5702aefe76a2410cc54d2"
-                }
+                "69d63a87f7ef054ab71e58fe"
               ]
             }
           },
@@ -343,7 +366,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWNjZWI3ZWU3MzQ4YTA4OTE1YmEzNGEiLCJpYXQiOjE3NzU1NTg4NzEsImV4cCI6MTc3NTU2MjQ3MX0.xbaZCA2_Aymx1PTshOw3RB1f_DQyo4hw1AyqXB9rkL8",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWQ2Mzk1YjNmZGJiNDg4ZGMzNzcwNGIiLCJpYXQiOjE3NzU2NDcwODEsImV4cCI6MTc3NTY1MDY4MX0.NeM81Dai1H2cEMIsv5wkThRmb4-jbZrhOcj1ly9iOdU",
                   "type": "string"
                 }
               ]
@@ -360,14 +383,14 @@
               }
             },
             "url": {
-              "raw": "localhost:3000/plants/69d4e1cefbb68c833dc55cb0",
+              "raw": "localhost:3000/plants/69d63a87f7ef054ab71e58fe",
               "host": [
                 "localhost"
               ],
               "port": "3000",
               "path": [
                 "plants",
-                "69d4e1cefbb68c833dc55cb0"
+                "69d63a87f7ef054ab71e58fe"
               ]
             }
           },
@@ -381,21 +404,112 @@
         {
           "name": "PostTrade",
           "request": {
-            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWQ2NTI3NjhkODk0NTZiOTkwZDgzMDciLCJpYXQiOjE3NzU2NTM1MDMsImV4cCI6MTc3NTY1NzEwM30.v25Y329JEC8x2feUhkQk5W9i1kWAIvvsSZaGpwsBVNw",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
             "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"plantId\": \"69d63c4df7ef054ab71e590c\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
-              "raw": ""
+              "raw": "localhost:3000/trades/",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "trades",
+                ""
+              ]
             }
           },
           "response": []
         },
         {
           "name": "MinaTrade",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWQ2Mzk1YjNmZGJiNDg4ZGMzNzcwNGIiLCJpYXQiOjE3NzU2NTM2OTIsImV4cCI6MTc3NTY1NzI5Mn0.7Bv7Qcgb3cCMGjS9yCFVTmpgQXvOWcQ0cygGAGG9JGc",
+                  "type": "string"
+                }
+              ]
+            },
             "method": "GET",
             "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
+              "raw": "localhost:3000/trades/me",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "trades",
+                "me"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TradeApprove",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWQ2Mzk1YjNmZGJiNDg4ZGMzNzcwNGIiLCJpYXQiOjE3NzU2NTM2OTIsImV4cCI6MTc3NTY1NzI5Mn0.7Bv7Qcgb3cCMGjS9yCFVTmpgQXvOWcQ0cygGAGG9JGc",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
               "raw": ""
+            },
+            "url": {
+              "raw": "localhost:3000/trades/69d6530aab2a809df325e15a/approve",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "trades",
+                "69d6530aab2a809df325e15a",
+                "approve"
+              ]
             }
           },
           "response": []
@@ -403,21 +517,131 @@
         {
           "name": "TradeComplete",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWQ2Mzk1YjNmZGJiNDg4ZGMzNzcwNGIiLCJpYXQiOjE3NzU2NTM2OTIsImV4cCI6MTc3NTY1NzI5Mn0.7Bv7Qcgb3cCMGjS9yCFVTmpgQXvOWcQ0cygGAGG9JGc",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "localhost:3000/trades/69d6530aab2a809df325e15a/complete",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "trades",
+                "69d6530aab2a809df325e15a",
+                "complete"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "SeeAllUsers",
+          "request": {
             "method": "GET",
             "header": [],
             "url": {
-              "raw": ""
+              "raw": "localhost:3000/admin/users",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "admin",
+                "users"
+              ]
             }
           },
           "response": []
         },
         {
-          "name": "TradeComplete",
+          "name": "SeeUserById",
           "request": {
             "method": "GET",
             "header": [],
             "url": {
-              "raw": ""
+              "raw": "localhost:3000/admin/user/:id",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "admin",
+                "user",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UppdateUserById",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "localhost:3000/admin/user/:id",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "admin",
+                "user",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "69d652768d89456b990d8307"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DeleteUserById",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "localhost:3000/admin/user/:id",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "admin",
+                "user",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
             }
           },
           "response": []
