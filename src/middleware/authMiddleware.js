@@ -35,11 +35,11 @@ export const adminOnly = async (req, res, next) => {
 
 // Validation‑middleware för registrering
 export const validateRegister = [
-  body("name").notEmpty().trim().withMessage("Namn är obligatoriskt"),
-  body("email").isEmail().normalizeEmail().withMessage("En giltig e-postadress är obligatorisk"),
+  body("name").notEmpty().trim().withMessage("Name is required"),
+  body("email").isEmail().normalizeEmail().withMessage("A valid email is required"),
   body("password")
     .isLength({ min: 6 })
-    .withMessage("Lösenord måste vara minst 6 tecken"),
+    .withMessage("Password must be at least 6 characters long"),
 ];
 
 export const validateResult = (req, res, next) => {

@@ -9,7 +9,7 @@ const router = Router();
 router.get("/", async (req, res) => {
   const plants = await Plant.find();
   if (!plants || plants.length === 0) {
-    return res.status(404).json({ message: "Inga växter hittades" });
+    return res.status(404).json({ message: "No plants found" });
   }
   res.json(plants);
 });
@@ -24,7 +24,7 @@ router.get("/myplants", protect, async (req, res) => {
 router.get("/:id", async (req, res) => {
   const plant = await Plant.findById(req.params.id);
   if (!plant) {
-    return res.status(404).json({ message: "Växt hittades inte" });
+    return res.status(404).json({ message: "Plant not found" });
   }
   res.json(plant);
 });
@@ -59,7 +59,7 @@ router.post(
       ownerId: req.userId,
     });
 
-    res.status(201).json({ message: "Växt skapad", plant: newPlant });
+    res.status(201).json({ message: "Plant created", plant: newPlant });
   },
 );
 
@@ -72,7 +72,7 @@ router.put(
   async (req, res) => {
     const plant = await Plant.findById(req.params.id);
     if (!plant) {
-      return res.status(404).json({ message: "Växt hittades inte" });
+      return res.status(404).json({ message: "Plant not found" });
     }
     if (plant.ownerId.toString() !== req.userId) {
       return res.status(403).json({ message: "Unauthorized" });
@@ -99,7 +99,7 @@ router.put(
     plant.available = available ?? plant.available;
 
     await plant.save();
-    res.json({ message: "Växt uppdaterad", plant: plant });
+    res.json({ message: "Plant updated", plant: plant });
   },
 );
 
@@ -107,13 +107,13 @@ router.put(
 router.delete("/:id", protect, async (req, res) => {
   const plant = await Plant.findById(req.params.id);
   if (!plant) {
-    return res.status(404).json({ message: "Växt hittades inte" });
+    return res.status(404).json({ message: "Plant not found" });
   }
   if (plant.ownerId.toString() !== req.userId) {
     return res.status(403).json({ message: "Unauthorized" });
   }
   await plant.deleteOne();
-  res.json({ message: "Växt raderad" });
+  res.json({ message: "Plant deleted" });
 });
 
 

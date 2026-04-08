@@ -13,7 +13,7 @@ router.post("/register", validateRegister, validateResult, async (req, res) => {
 
     const existing = await User.findOne({ email: email.toLowerCase() });
     if (existing) {
-      return res.status(409).json({ error: "Email redan existerar" });
+      return res.status(409).json({ error: "Email is already in use" });
     }
 
     const user = await User.create({ name, email, password });
@@ -23,13 +23,13 @@ router.post("/register", validateRegister, validateResult, async (req, res) => {
     });
 
     res.status(201).json({
-      message: "Registrering lyckades",
+      message: "Registration successful",
       user: { id: user._id, name: user.name, email: user.email },
       token,
     });
   } catch (err) {
     console.error("Registreringsfel:", err);
-    res.status(500).json({ error: "Registrering misslyckades" });
+    res.status(500).json({ error: "Registration failed" });
   }
 });
 
@@ -40,12 +40,12 @@ router.post("/login", async (req, res) => {
 
     const user = await User.findOne({ email: email.toLowerCase() }).select("+password");
     if (!user) {
-      return res.status(401).json({ error: "Ogiltig email eller lösenord" });
+      return res.status(401).json({ error: "Invalid email or password" });
     }
 
     const isMatch = await user.isSamePassword(password);
     if (!isMatch) {
-      return res.status(401).json({ error: "Ogiltig email eller lösenord" });
+      return res.status(401).json({ error: "Invalid email or password" });
     }
 
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
@@ -53,13 +53,13 @@ router.post("/login", async (req, res) => {
     });
 
     res.json({
-      message: "Inloggning lyckades",
+      message: "Login successful",
       user: { id: user._id, name: user.name, email: user.email },
       token,
     });
   } catch (err) {
-    console.error("Login fel:", err);
-    res.status(500).json({ error: "Inloggning misslyckades" });
+    console.error("Login error:", err);
+    res.status(500).json({ error: "Login failed" });
   }
 });
 
