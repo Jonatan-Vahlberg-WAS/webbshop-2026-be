@@ -11,18 +11,19 @@ class AuthController {
   registerPost = [
     async (req, res, next) => {
       try {
-        const { name, email, password } = req.body;
+        const { firstname, lastname, email, password } = req.body;
 
         const existingUser = await findUserByEmail(email);
         if (existingUser) {
           return res.status(409).json({ error: 'Email already registered' });
         }
 
-        const user = await createUser({ name, email, password });
+        const user = await createUser({ firstname, lastname, email, password });
         res.status(201).json({
           id: user._id,
-          name: user.name,
-          email: user.email,
+          firstname,
+          lastname,
+          email,
         });
       } catch (error) {
         next(error);
@@ -46,10 +47,6 @@ class AuthController {
           return next(new AppError('Invalid email or password', 401));
         }
 
-        // if (!user.admin) {
-        //   return res.status(403).json({ error: 'Access denied' });
-        // }
-
         const isMatch = await validatePassword(password, user.password);
         if (!isMatch) {
           return next(new AppError('Invalid email or password', 401));
@@ -67,8 +64,8 @@ class AuthController {
 
   logoutPost = [
     (req, res) => {
-      res.deleteHeader('Authorization');
-      res.deleteHeader('X-Refresh-Token');
+      res.removeHeader('Authorization');
+      res.removeHeader('X-Refresh-Token');
       res.json({ success: true });
     },
   ];
