@@ -1,39 +1,53 @@
-import { Router } from "express"
+import { Router } from "express";
 import {
   validateRegister,
   validateAuthResult,
-} from "../middleware/authValidation.js"
-import { createUser, findUserByEmail } from "../db/user.js"
+} from "../middleware/authValidation.js";
+import { createUser, findUserByEmail } from "../db/users.js";
 
-const authRouter = Router()
+const authRouter = Router();
 
+// POST /auth/register
 authRouter.post(
   "/register",
   validateRegister,
   validateAuthResult,
   async (req, res) => {
     try {
-      const { name, email, password } = req.body
+      const { name, email, password } = req.body;
 
-      const existingUser = await findUserByEmail(email)
+      const existingUser = await findUserByEmail(email);
+
       if (existingUser) {
-        return res.status(409).json({ error: "Email already registered" })
+        return res.status(409).json({ error: "Email already registered" });
       }
 
-      const user = await createUser({ name, email, password })
+      const user = await createUser({ name, email, password });
+
       res.status(201).json({
         id: user._id,
         name: user.name,
         email: user.email,
-      })
-    } catch (error) {
-      console.error("Registration error:", error)
-      res.status(500).json({ error: "Registration failed" })
+      });
+    } catch (err) {
+      console.error("Registration error:", err);
+      res.status(500).json({ error: "Registration failed" });
     }
   },
-)
+);
 
-// isSamePassword - comparison
-// reset password
+// TODO POST /auth/login
 
-export default authRouter
+// TODO GET /auth/me
+// TODO Validation for User
+
+// TODO PATCH /auth/me
+// TODO Validation for User
+
+// TODO PUT /auth/me
+// TODO Validation for User
+
+// TODO isSamePassword - comparison
+// TODO areset password
+
+export default authRouter;

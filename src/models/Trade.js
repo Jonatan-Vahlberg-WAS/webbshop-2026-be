@@ -1,29 +1,29 @@
-import mongoose from "mongoose"
-import Plant from "./Plant.js"
-import User from "./User.js"
+import mongoose from "mongoose";
+import Plant from "./Plant.js";
+import User from "./User.js";
 
 export const STATUS_LEVEL = {
   pending: "pending",
   approved: "approved",
   completed: "completed",
-}
+};
 
 const tradeSchema = new mongoose.Schema(
   {
     plantId: {
       type: mongoose.SchemaTypes.ObjectId,
       ref: "Plant",
-      required: true, //Change to true later
+      required: true, // Change to true later
     },
     requesterId: {
       type: mongoose.SchemaTypes.ObjectId,
       ref: "User",
-      required: true, //Change to true later
+      required: true, // Change to true later
     },
     ownerId: {
       type: mongoose.SchemaTypes.ObjectId,
       ref: "User",
-      required: true, //Change to true later
+      required: true, // Change to true later
     },
     status: {
       type: String,
@@ -39,23 +39,23 @@ const tradeSchema = new mongoose.Schema(
   {
     timestamps: true,
   },
-)
+);
 
 tradeSchema.pre("validate", async function (next) {
   if (this.isNew || this.isModified("plantId")) {
-    const plant = await Plant.findById(this.plantId).select("ownerId")
+    const plant = await Plant.findById(this.plantId).select("ownerId");
 
     if (plant) {
-      this.ownerId = plant.ownerId
+      this.ownerId = plant.ownerId;
     }
   }
 
-  if(this.requesterId?.equals(this.ownerId)){
-    const error = new Error("Requester and owner cannot be the same user")
-    return next(error)
+  if (this.requesterId?.equals(this.ownerId)) {
+    const error = new Error("Requester and owner cannot be the same user");
+    return next(error);
   }
 
-  next()
+  next();
 })
 
 /* tradeSchema.post("save", async function (next) {
@@ -69,21 +69,32 @@ tradeSchema.pre("validate", async function (next) {
 }) */
 
 tradeSchema.post("save", async function () {
-  if (this.status === STATUS_LEVEL.completed) {
+  if (this.status === STATUS_LEVEL.approved || this.status === STATUS_LEVEL.completed) {
+    try {
+      await Plant.findByIdAndUpdate(this.plantId, {
+        available: false
+      })
+    } catch (error) {
+      console.error("Error updating plant availability:", error)
+    }
+  }
+    if (this.status === STATUS_LEVEL.completed){
     try {
       await User.findByIdAndUpdate(this.ownerId, {
         $addToSet: { history: this._id },
-      })
+      });
 
       await User.findByIdAndUpdate(this.requesterId, {
         $addToSet: { history: this._id },
-      })
-    } catch (error) {
-      console.error("Error updating user history:", error)
+      });
+
+      await Plant.findByIdAndUpdate(this.plantId, { available: false });
+    } catch (err) {
+      console.error("Error updating user history:", err);
     }
   }
-})
+});
 
-const Trade = mongoose.model("Trade", tradeSchema)
+const Trade = mongoose.model("Trade", tradeSchema);
 
-export default Trade
+export default Trade;

@@ -1,13 +1,13 @@
-import "dotenv/config"
-import express from "express"
-import mongoose from "mongoose"
-import plantRouter from "./routes/plants.js"
-import tradeRouter from "./routes/trades.js"
-import authRouter from "./routes/auth.js"
-import userRouter from "./routes/users.js"
-import cors from "cors"
+import "dotenv/config";
+import express from "express";
+import mongoose from "mongoose";
+import plantRouter from "./routes/plants.js";
+import tradeRouter from "./routes/trades.js";
+import authRouter from "./routes/auth.js";
+import userRouter from "./routes/users.js";
+import cors from "cors";
 
-const app = express()
+const app = express();
 
 app.use(
   cors({
@@ -15,12 +15,12 @@ app.use(
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   }),
-)
+);
 
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-let isConnected = false
+let isConnected = false;
 
 async function connectDB() {
   if (isConnected) return
@@ -43,17 +43,16 @@ app.get("/", (req, res) => {
   res.json({
     message: "Webbshop API",
     stack: "MEN (MongoDB, Express, Node.js)",
-  })
-})
+  });
+});
 
 app.get("/health", (req, res) => {
   res.json({ status: "ok" })
 })
 
-app.use("/plants", plantRouter)
-app.use("/trades", tradeRouter)
-app.use("/auth", authRouter)
-app.use("/users", userRouter)
-//TODO: Add more routes as needed
+app.use("/auth", authRouter);
+app.use("/plants", plantRouter);
+app.use("/trades", tradeRouter);
+app.use("/users", userRouter);
 
 export default app
