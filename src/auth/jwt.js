@@ -76,32 +76,22 @@ const jwtService = {
   },
 
   /**
-   * Generate access + refresh tokens and set refresh token as cookie
+   * Generate access + refresh tokens and set refresh token in headers
    * No database storage
    */
-  generateTokensAndSetCookie(res, userId) {
+  generateTokensAndSetHeaders(res, userId) {
     const accessToken = this.signAccess({ userId });
     const refreshToken = this.signRefresh({ userId });
 
-    const isProd = process.env.NODE_ENV === 'production';
+    // Sätt tokens i headers
+    res.setHeader('x-access-token', accessToken);
+    res.setHeader('x-refresh-token', refreshToken);
 
-    // Access token cookie
-    res.cookie('accessToken', accessToken, {
-      httpOnly: true,
-      secure: isProd,
-      sameSite: isProd ? 'none' : 'lax',
-      maxAge: this.getAccessTokenExpiry(), // millisekunder
-    });
-
-    // Refresh token cookie
-    res.cookie('refreshToken', refreshToken, {
-      httpOnly: true,
-      secure: isProd,
-      sameSite: isProd ? 'none' : 'lax',
-      expires: this.getRefreshTokenExpiry(), // datum
-    });
-
-    return accessToken; // om du vill returnera den också
+    // Returnera dem också i respons-body
+    return {
+      accessToken,
+      refreshToken,
+    };
   },
 
   /**

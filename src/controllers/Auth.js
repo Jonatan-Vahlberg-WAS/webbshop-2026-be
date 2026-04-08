@@ -56,7 +56,7 @@ class AuthController {
         }
 
         // This sets the refreshToken cookie automatically
-        jwtService.generateTokensAndSetCookie(res, user._id);
+        jwtService.generateTokensAndSetHeaders(res, user._id);
 
         return res.json({ success: true });
       } catch (error) {
