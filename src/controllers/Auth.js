@@ -56,7 +56,7 @@ class AuthController {
         }
 
         // This sets the refreshToken cookie automatically
-        jwtService.generateTokensAndSetCookie(res, user._id);
+        jwtService.generateTokensAndSetHeaders(res, user._id);
 
         return res.status(200).json({ success: true });
       } catch (error) {
@@ -67,8 +67,8 @@ class AuthController {
 
   logoutPost = [
     (req, res) => {
-      res.clearCookie('accessToken');
-      res.clearCookie('refreshToken');
+      res.deleteHeader('Authorization');
+      res.deleteHeader('X-Refresh-Token');
       res.json({ success: true });
     },
   ];
