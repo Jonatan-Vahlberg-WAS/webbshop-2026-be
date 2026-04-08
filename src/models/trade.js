@@ -51,7 +51,7 @@ tradeSchema.pre("validate", async function (next) {
   }
 
   if(this.requesterId?.equals(this.ownerId)){
-    const error = new Error("Accepteraren och ägaren kan inte vara samma person")
+    const error = new Error("You cannot trade your own plant")
     return next(error)
   }
 

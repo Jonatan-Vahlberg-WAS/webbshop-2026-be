@@ -11,10 +11,10 @@ router.post("/", protect, async (req, res) => {
 
   const plant = await Plant.findById(plantId);
   if (!plant) {
-    return res.status(404).json({ message: "Växt hittades inte" });
+    return res.status(404).json({ message: "Plant not found" });
   }
   if (plant.ownerId.toString() === req.userId) {
-    return res.status(400).json({ message: "Du kan inte byta med din egen växt" });
+    return res.status(400).json({ message: "You cannot trade your own plant" });
   }
 
   const trade = await Trade.create({
@@ -23,7 +23,7 @@ router.post("/", protect, async (req, res) => {
     ownerId: plant.ownerId,
   });
 
-  res.status(201).json({ message: "Trade skapad", trade });
+  res.status(201).json({ message: "Trade created", trade });
 });
 
 // Hämta mina trades (som ägare eller requester)
@@ -41,34 +41,34 @@ router.get("/me", protect, async (req, res) => {
 // Ägare godkänner trade
 router.patch("/:id/approve", protect, async (req, res) => {
   const trade = await Trade.findById(req.params.id);
-  if (!trade) return res.status(404).json({ message: "Trade hittades inte" });
+  if (!trade) return res.status(404).json({ message: "Trade not found" });
 
   if (trade.ownerId.toString() !== req.userId) {
-    return res.status(403).json({ message: "Endast ägaren kan godkänna" });
+    return res.status(403).json({ message: "Only the owner can approve" });
   }
 
   trade.status = STATUS_LEVEL.approved;
   await trade.save();
 
-  res.json({ message: "Trade godkänd", trade });
+  res.json({ message: "Trade approved", trade });
 });
 
 // Markera trade som completed
 router.patch("/:id/complete", protect, async (req, res) => {
   const trade = await Trade.findById(req.params.id);
-  if (!trade) return res.status(404).json({ message: "Trade hittades inte" });
+  if (!trade) return res.status(404).json({ message: "Trade not found" });
 
   if (
     trade.ownerId.toString() !== req.userId &&
     trade.requesterId.toString() !== req.userId
   ) {
-    return res.status(403).json({ message: "Endast deltagare kan slutföra" });
+    return res.status(403).json({ message: "Only participants can complete the trade" });
   }
 
   trade.status = STATUS_LEVEL.completed;
   await trade.save();
 
-  res.json({ message: "Trade slutförd", trade });
+  res.json({ message: "Trade completed", trade });
 });
 
 export default router;
