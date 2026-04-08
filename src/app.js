@@ -29,6 +29,7 @@ const allowedOrigins = [
 // Middleware
 app.use(
   cors({
+    exposedHeaders: ['Authorization', 'X-Refresh-Token'],
     origin(origin, callback) {
       if (!origin) return callback(null, true);
       if (allowedOrigins.includes(origin)) return callback(null, true);
