@@ -5,7 +5,6 @@ import eventRouter from './routes/Event.js';
 import authRouter from './routes/auth.js';
 import typesRouter from './routes/types.js';
 import cors from 'cors';
-import cookieParser from 'cookie-parser';
 import mongoose from 'mongoose';
 import errorHandler from './middleware/errorHandler.js';
 
@@ -32,7 +31,6 @@ app.use(async (req, res, next) => {
 app.use(cors('*'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
 
 await connectToDatabase();
 
