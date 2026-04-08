@@ -55,22 +55,23 @@ tradeRouter.post("/", async (req, res) => {
 // TODO PATCH /trades/:id/status
 tradeRouter.patch("/:id/status", async (req, res) => {
   // TODO Validation for User (owner) and Admin
+  try {
+    const id = req.params.id;
+    const status = req.body.status;
 
-  const id = req.params.id;
-  const status = req.body.status;
+    const updatedTrade = await updateTrade(id, { status })
 
-  const updatedTrade = await updateTrade(id, {
-    status,
-  });
+    if (!updatedTrade) {
+      return res.status(404).json({
+        message: "Trade does not exist",
+      });
+    }
 
-  if (!updatedTrade) {
-    return res.status(404).json({
-      message: "Trade does not exist",
-    });
+    return res.status(200).json(updatedTrade)
+  } catch (err) {
+    return res.status(400).json({ message: err.message })
   }
-
-  return res.status(200).json(updatedTrade);
-});
+})
 
 // DELETE /trades/:id
 tradeRouter.delete("/:id", async (req, res) => {

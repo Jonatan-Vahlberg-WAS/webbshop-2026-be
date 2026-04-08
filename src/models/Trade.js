@@ -6,6 +6,7 @@ export const STATUS_LEVEL = {
   pending: "pending",
   approved: "approved",
   completed: "completed",
+  cancelled: "cancelled",
 };
 
 const tradeSchema = new mongoose.Schema(
@@ -32,6 +33,7 @@ const tradeSchema = new mongoose.Schema(
         STATUS_LEVEL.pending,
         STATUS_LEVEL.approved,
         STATUS_LEVEL.completed,
+        STATUS_LEVEL.cancelled,
       ],
       default: STATUS_LEVEL.pending,
     },
@@ -69,7 +71,7 @@ tradeSchema.pre("validate", async function (next) {
 }) */
 
 tradeSchema.post("save", async function () {
-  if (this.status === STATUS_LEVEL.approved || this.status === STATUS_LEVEL.completed) {
+  if (this.status === STATUS_LEVEL.approved || this.status === STATUS_LEVEL.completed || this.status === STATUS_LEVEL.cancelled) {
     try {
       await Plant.findByIdAndUpdate(this.plantId, {
         available: false
@@ -91,6 +93,13 @@ tradeSchema.post("save", async function () {
       await Plant.findByIdAndUpdate(this.plantId, { available: false });
     } catch (err) {
       console.error("Error updating user history:", err);
+    }
+  }
+  if (this.status === STATUS_LEVEL.cancelled) {
+    try {
+      await Plant.findByIdAndUpdate(this.plantId, { available: true });
+    } catch (err) {
+      console.error("Error updating plant availability:", err);
     }
   }
 });
