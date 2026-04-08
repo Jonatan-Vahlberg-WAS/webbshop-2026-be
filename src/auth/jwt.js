@@ -84,10 +84,10 @@ const jwtService = {
     const refreshToken = this.signRefresh({ userId });
 
     // Sätt tokens i headers
-    res.setHeader('x-access-token', accessToken);
-    res.setHeader('x-refresh-token', refreshToken);
+    res.setHeader('Authorization', `Bearer ${accessToken}`);
+    res.setHeader('X-Refresh-Token', refreshToken);
 
-    // Returnera dem också i respons-body
+    // Returnera tokens i respons-body
     return {
       accessToken,
       refreshToken,

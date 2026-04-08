@@ -67,8 +67,8 @@ class AuthController {
 
   logoutPost = [
     (req, res) => {
-      res.clearCookie('accessToken');
-      res.clearCookie('refreshToken');
+      res.deleteHeader('Authorization');
+      res.deleteHeader('X-Refresh-Token');
       res.json({ success: true });
     },
   ];
@@ -82,7 +82,7 @@ class AuthController {
         }
 
         const user = await findUserById(userId);
-        res.json(user);
+        res.status(200).json(user);
       } catch (error) {
         next(new AppError('Invalid token', 401));
       }
