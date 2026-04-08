@@ -6,6 +6,7 @@ import {
 } from '../db/users.js';
 import jwtService from '../auth/jwt.js';
 import AppError from '../utils/AppError.js';
+import { changeUserRole } from '../db/roles.js';
 
 class AuthController {
   registerPost = [
@@ -88,6 +89,18 @@ class AuthController {
       }
     },
   ];
+
+  updateUserRole = async (req, res, next) => {
+    try {
+      const { id } = req.params; // användarens id från URL
+      const { role } = req.body; // nya rollen från request
+
+      await changeUserRole(id, role);
+      res.json({ success: true, message: `Role updated to ${role}` });
+    } catch (error) {
+      next(new AppError('Could not update role', 400));
+    }
+  };
 }
 
 export default new AuthController();

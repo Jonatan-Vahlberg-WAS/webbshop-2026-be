@@ -15,3 +15,16 @@ export async function assignRoleToUser(userId, roleSlug) {
     throw error;
   }
 }
+
+export async function changeUserRole(userId, roleSlug) {
+  const role = await Roles.findOne({ slug: roleSlug });
+  if (!role) {
+    throw new Error('Role not found');
+  }
+
+  await RolesUser.findOneAndUpdate(
+    { userId },
+    { roleId: role._id },
+    { new: true }
+  );
+}
