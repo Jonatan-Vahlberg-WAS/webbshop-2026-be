@@ -1,4 +1,4 @@
-import { Router } from "express"
+import { Router } from "express";
 import {
   getUsers,
   getUserById,
@@ -8,68 +8,138 @@ import {
   getUserBySlug,
   updateUserBySlug,
   deleteUserBySlug,
-} from "../db/user.js"
+} from "../db/users.js";
 
-const userRouter = Router()
+const userRouter = Router();
 
 userRouter.get("/", async (req, res) => {
-  const { q } = req.query
-  const users = await getUsers(q)
-  res.json(users)
-})
+  // TODO Validation for Admin
 
-// userRouter.get("/:id", async (req, res) => {
-//   const user = await getUserById(req.params.id)
-//   if (!user) return res.status(404).json({ message: "User not found" })
-//   res.json(user)
-// })
+  const { q } = req.query;
 
-userRouter.get("/:slug", async (req, res) => {
-  const user = await getUserBySlug(req.params.slug)
+  const users = await getUsers(q);
 
-  if(!user){
-    return res.status(404).json({
-      message: "User not found"
-    })
+  res.json(users);
+});
+
+/* // GET /users/:id
+userRouter.get("/:id", async (req, res) => {
+  // TODO Validation for User and Admin
+  const user = await getUserById(req.params.id);
+
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
   }
 
-  res.json(user)
-})
+  res.json(user);
+});
+ */
 
+// GET /users/:slug
+userRouter.get("/:slug", async (req, res) => {
+  const user = await getUserBySlug(req.params.slug);
+
+  if (!user) {
+    return res.status(404).json({
+      message: "User not found",
+    });
+  }
+
+  res.json(user);
+});
+
+// POST /users
 userRouter.post("/", async (req, res) => {
-  const user = await createUser(req.body)
-  res.status(201).json(user)
-})
+  const user = await createUser(req.body);
+  res.status(201).json(user);
+});
 
+/* // PUT /users/:id
+userRouter.put("/:id", async (req, res) => {
+  // TODO Validation for User
+
+  const user = await updateUser(req.params.id, req.body);
+
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
+
+  res.json(user);
+}); */
+
+// PUT /users/:slug
 userRouter.put("/:slug", async (req, res) => {
   //kommer ha validering för user och admin
-  const slug = req.params.slug
-  const { name, email, password, location } =
-    req.body
 
-  if (
-    !name ||
-    !email ||
-    !location 
-  ) {
+  const slug = req.params.slug;
+  const { name, email, password, location } = req.body;
+
+  if (!name || !email || !location) {
     return res.status(400).json({
-      message:
-        "All fields (name, email, location) are required",
-    })
+      message: "All fields (name, email, location) are required",
+    });
   }
+
   const updatedUser = await updateUserBySlug(slug, {
-    name, 
-    email, 
-    password, 
-    location
-  })
+    name,
+    email,
+    password,
+    location,
+  });
+
   if (!updatedUser) {
     return res.status(404).json({
       message: "User",
-    })
+    });
   }
-  return res.status(200).json(updatedUser)
-})
+
+  return res.status(200).json(updatedUser);
+});
+
+//PATCH /users/:slug
+userRouter.patch("/:slug", async (req, res) => {
+  //kommer ha validering för user och admin
+  // TODO Validation for User
+
+  const slug = req.params.slug;
+  const { email, name, location } = req.body;
+
+  const updatedUser = await updateUserBySlug(slug, { email, name, location });
+
+  if (!updatedUser) {
+    return res.status(404).json({
+      message: "User does not exist",
+    });
+  }
+
+  return res.status(200).json(updatedUser);
+});
+
+/* // DELETE /users/:id
+userRouter.delete("/:id", async (req, res) => {
+  // TODO Validation for Admin
+
+  const user = await deleteUser(req.params.id);
+
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
+
+  res.status(204).json();
+}); */
+
+// DELETE /users/:slug
+userRouter.delete("/:slug", async (req, res) => {
+  //kommer ha validering för user och admin
+  const slug = req.params.slug;
+  const user = await deleteUserBySlug(slug);
+  if (!user) {
+    return res.status(400).json({
+      message: "user does not exist",
+    });
+  }
+  return res.status(204).json();
+});
 
 // userRouter.put("/:id", async (req, res) => {
 //   const user = await updateUser(req.params.id, req.body)
@@ -92,40 +162,10 @@ userRouter.put("/:slug", async (req, res) => {
 //   return res.status(200).json(updatedUser)
 // })
 
-
-//PATCH /plants/:slug
-userRouter.patch("/:slug", async (req, res) => {
-  //kommer ha validering för user och admin
-  const slug = req.params.slug
-  const {email, name, location} = req.body
-  
-  const updatedUser = await updateUserBySlug(slug, {email, name, location})
-  
-  if (!updatedUser) {
-    return res.status(404).json({
-      message: "User does not exist",
-    })
-  }
-  
-  return res.status(200).json(updatedUser)
-})
-
-userRouter.delete("/:slug", async (req, res) => {
-  //kommer ha validering för user och admin
-  const slug = req.params.slug
-  const user = await deleteUserBySlug(slug)
-  if (!user) {
-    return res.status(400).json({
-      message: "user does not exist",
-    })
-  }
-  return res.status(204).json()
-})
-
 // userRouter.delete("/:id", async (req, res) => {
 //   const user = await deleteUser(req.params.id)
 //   if (!user) return res.status(404).json({ message: "User not found" })
 //   res.status(204).json()
 // })
 
-export default userRouter
+export default userRouter;

@@ -1,14 +1,16 @@
-import User from "../models/User.js"
-import { getFullTextSearch } from "../utils/fullTextSearch.js"
+import User from "../models/User.js";
+import { getFullTextSearch } from "../utils/fullTextSearch.js";
 
 export async function getUsers(q) {
-  let filter = {}
+  let filter = {};
+
   if (q) {
     filter = {
       ...filter,
       ...getFullTextSearch(q, true, "name"),
-    }
+    };
   }
+
   try {
     return await User.find(filter)
       .populate("plants", "name")
@@ -24,18 +26,22 @@ export async function getUsers(q) {
           { path: "requesterId", select: "name email location" },
         ],
         options: { sort: { createdAt: -1 } },
-      }) /*.populate("history") Frontend får ett helt plant objekt istället för bara ett ID - undviker extra request*/
+      });
   } catch (err) {
-    console.error("Unable to find based on query in 'Users'", err)
-    return []
+    console.error("Unable to find based on query in 'Users'", err);
+    return [];
   }
 }
 
 export async function getUserById(id) {
   try {
     return await User.findById(id)
-      .populate("plants")
+      .select("name location")
       .populate({
+        path: "plants",
+        match: { available: true },
+      });
+    /* .populate({
         path: "history",
         match: { status: "completed" },
         populate: [
@@ -47,16 +53,22 @@ export async function getUserById(id) {
           { path: "requesterId", select: "name email location" },
         ],
         options: { sort: { createdAt: -1 } },
-      }) /* .populate("history") */
+      }); */
   } catch (err) {
-    console.error("Unable to read from 'Users'", err)
-    return null
+    console.error("Unable to read from 'Users'", err);
+    return null;
   }
 }
 
-export async function getUserBySlug(slug){
-  try{
-    return await User.findOne({slug: slug}).populate("plants").populate({
+export async function getUserBySlug(slug) {
+  try {
+    return await User.findOne({ slug: slug })
+      .select("name location")
+      .populate({
+        path: "plants",
+        match: { available: true },
+      });
+/*       .populate({
         path: "history",
         match: { status: "completed" },
         populate: [
@@ -68,9 +80,9 @@ export async function getUserBySlug(slug){
           { path: "requesterId", select: "name email location" },
         ],
         options: { sort: { createdAt: -1 } },
-      })
-  }catch(error){
-    console.error("Unable to read from 'Users'", error)
+      }); */
+  } catch (err) {
+    console.error("Unable to read from 'Users'", err);
   }
 }
 
@@ -79,53 +91,52 @@ export async function updateUser(id, userData) {
     return await User.findByIdAndUpdate(id, userData, {
       new: true, // returnera den uppdaterade användaren
       runValidators: true, // kontrollera att uppdateringen följer schemat
-    })
-  } catch (error) {
-    console.error("Error updating 'User':", error)
-    throw error
+    });
+  } catch (err) {
+    console.error("Error updating 'User':", err);
+    throw err;
   }
 }
 
-export async function updateUserBySlug(slug, userData){
+export async function updateUserBySlug(slug, userData) {
   try {
-    return await User.findOneAndUpdate({slug: slug}, userData, {new: true})
-  }catch (error) {
-    console.error("Error Updating 'User':", error)
-    throw error
+    return await User.findOneAndUpdate({ slug: slug }, userData, { new: true });
+  } catch (err) {
+    console.error("Error Updating 'User':", err);
+    throw err;
   }
 }
-
 
 export async function deleteUser(id) {
   try {
-    const userToDelete = await User.findById(id)
-    if (!userToDelete) return null
-    await User.deleteOne({ _id: userToDelete._id })
-    return true
-  } catch (error) {
-    console.error("Unable to delete 'User'", error)
-    return false
+    const userToDelete = await User.findById(id);
+    if (!userToDelete) return null;
+    await User.deleteOne({ _id: userToDelete._id });
+    return true;
+  } catch (err) {
+    console.error("Unable to delete 'User'", err);
+    return false;
   }
 }
 
 export async function deleteUserBySlug(slug) {
   try {
-    const userToDelete = await User.findOne({ slug: slug })
-    if (!userToDelete) return null
-    await User.deleteOne({ _id: userToDelete._id })
-    return true
-  } catch (error) {
-    console.error("Unable to delete 'User'", error)
-    return false
+    const userToDelete = await User.findOne({ slug: slug });
+    if (!userToDelete) return null;
+    await User.deleteOne({ _id: userToDelete._id });
+    return true;
+  } catch (err) {
+    console.error("Unable to delete 'User'", err);
+    return false;
   }
 }
 
 export async function createUser(userData) {
-  const user = new User(userData)
-  await user.save()
-  return user
+  const user = new User(userData);
+  await user.save();
+  return user;
 }
 
 export async function findUserByEmail(email) {
-  return await User.findOne({ email })
+  return await User.findOne({ email });
 }
