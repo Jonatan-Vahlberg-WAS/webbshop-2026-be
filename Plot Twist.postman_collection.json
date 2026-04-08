@@ -1,10 +1,10 @@
 {
   "info": {
-    "_postman_id": "bdd25ba9-0fff-4e83-829b-e63358080944",
+    "_postman_id": "7898f31b-33dc-4eb5-a47b-f729acb746d4",
     "name": "Plot Twist",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "51932560",
-    "_collection_link": "https://go.postman.co/collection/51932560-bdd25ba9-0fff-4e83-829b-e63358080944?source=collection_link"
+    "_exporter_id": "52724870",
+    "_collection_link": "https://go.postman.co/collection/52724870-7898f31b-33dc-4eb5-a47b-f729acb746d4?source=collection_link"
   },
   "item": [
     {
@@ -45,7 +45,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"name\" : \"Hei\",\r\n    \"email\": \"test52@test.com\",\r\n    \"password\": \"123456\"\r\n}",
+              "raw": "{\r\n    \"name\" : \"Test\",\r\n    \"email\": \"test@test.com\",\r\n    \"password\": \"123456\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -77,6 +77,16 @@
             "disableBodyPruning": true
           },
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWQ1OTI5MzE0NWI5MTY1MmFiN2I0YTgiLCJpYXQiOjE3NzU2MDQ1MjAsImV4cCI6MTc3NTYwODEyMH0.jCMVQLwOUTjYTD5HgPtPI1pAZcY6HZ8CvIQr1g4Wv3k",
+                  "type": "string"
+                }
+              ]
+            },
             "method": "GET",
             "header": [
               {
@@ -216,7 +226,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWNjZWI3ZWU3MzQ4YTA4OTE1YmEzNGEiLCJpYXQiOjE3NzU1NTg4NzEsImV4cCI6MTc3NTU2MjQ3MX0.xbaZCA2_Aymx1PTshOw3RB1f_DQyo4hw1AyqXB9rkL8",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWQ1OTI5MzE0NWI5MTY1MmFiN2I0YTgiLCJpYXQiOjE3NzU2MDQ3MjUsImV4cCI6MTc3NTYwODMyNX0.S7FboaOOGiN-bJYxBy8yW0YyqlVcv42_koOWik6S2DI",
                   "type": "string"
                 }
               ]
@@ -225,7 +235,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"plantName\": \"gcbgb\",\r\n    \"light\": 2,\r\n    \"water\": 2\r\n}",
+              "raw": "{\r\n  \"plantName\": \"Monstera\",\r\n  \"description\": \"Stor och lättskött växt.\",\r\n  \"light\": 2,\r\n  \"water\": 1,\r\n  \"imageUrl\": \"https://example.com/monstera.jpg\",\r\n  \"coordinates\": [59.3293, 18.0686],\r\n  \"meetingTime\": \"2024-05-01T14:00:00.000Z\",\r\n  \"available\": true\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -265,7 +275,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"plantName\": \"gcbgb\",\r\n    \"light\": 2,\r\n    \"water\": 2\r\n}"
+              "raw": ""
             },
             "url": {
               "raw": "localhost:3000/plants/69d4e1cefbb68c833dc55cb0",
@@ -298,7 +308,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"plantName\": \"wrghjuyhbgdyikuhfgjutfh\",\r\n    \"light\": 2,\r\n    \"water\": 2\r\n}",
+              "raw": "{\r\n  \"plantName\": \"Monstera\",\r\n  \"description\": \"Stor och lättskött växt.\",\r\n  \"light\": 2,\r\n  \"water\": 1,\r\n  \"imageUrl\": \"https://example.com/monstera.jpg\",\r\n  \"coordinates\": [59.3293, 18.0686],\r\n  \"meetingTime\": \"2024-05-01T14:00:00.000Z\",\r\n  \"available\": true\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -306,14 +316,20 @@
               }
             },
             "url": {
-              "raw": "localhost:3000/plants/69d4e1cefbb68c833dc55cb0",
+              "raw": "localhost:3000/plants/:id",
               "host": [
                 "localhost"
               ],
               "port": "3000",
               "path": [
                 "plants",
-                "69d4e1cefbb68c833dc55cb0"
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "69d5702aefe76a2410cc54d2"
+                }
               ]
             }
           },
@@ -336,7 +352,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"plantName\": \"wrghjuyhbgdyikuhfgjutfh\",\r\n    \"light\": 2,\r\n    \"water\": 2\r\n}",
+              "raw": "{\r\n  \"plantName\": \"Monstera\",\r\n  \"description\": \"Stor och lättskött växt.\",\r\n  \"light\": 2,\r\n  \"water\": 1,\r\n  \"imageUrl\": \"https://example.com/monstera.jpg\",\r\n  \"coordinates\": [59.3293, 18.0686],\r\n  \"meetingTime\": \"2024-05-01T14:00:00.000Z\",\r\n  \"available\": true\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -358,6 +374,89 @@
           "response": []
         }
       ]
+    },
+    {
+      "name": "Trades",
+      "item": [
+        {
+          "name": "PostTrade",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": ""
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "MinaTrade",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": ""
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TradeComplete",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": ""
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TradeComplete",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": ""
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWQ1N2Y3M2MwYjg0YjUxZjJjMmFjZDIiLCJpYXQiOjE3NzU2MDA5MjksImV4cCI6MTc3NTYwNDUyOX0.Tk84zIcOBrqSGNdHuMPRRPV1breqwe5QfT5k72iBeyQ",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
     }
   ]
 }
