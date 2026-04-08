@@ -8,12 +8,6 @@ const plantSchema = new mongoose.Schema(
       trim: true,
     },
 
-    species: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-
     description: {
       type: String,
       trim: true,
@@ -38,10 +32,6 @@ const plantSchema = new mongoose.Schema(
     // address     → Nominatim reverse geocodes the coordinates into this,
     //               the UI displays it as a readable street name/address
     location: {
-      coordinates: {
-        lat: { type: Number, required: true },
-        lng: { type: Number, required: true },
-      },
       address: {
         type: String, // e.g. "Drottninggatan 10, Stockholm"
         trim: true,
@@ -57,7 +47,7 @@ const plantSchema = new mongoose.Schema(
     owner: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: true,
+      required: false
     },
 
     // Whether the plant is still available for trading.
