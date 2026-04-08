@@ -6,8 +6,6 @@ import {
 import {
   createPlant,
   getPlants,
-  // getPlantById,
-  // deletePlant,
   getPlantBySlug,
   deletePlantBySlug,
   updatePlantBySlug,
@@ -112,28 +110,5 @@ plantRouter.delete("/:slug", async (req, res) => {
   
   return res.status(204).json();
 });
-
-// plantRouter.get("/:id", async (req, res) => {
-//   const id = req.params.id
-//   const foundPlant = await getPlantById(id)
-//   if (!foundPlant) {
-//     return res.status(404).json({
-//       message: "Plant not found",
-//     })
-//   }
-//   res.json(foundPlant)
-// })
-
-// plantRouter.delete("/:id", async (req, res) => {
-//   //kommer ha validering för user och admin
-//   const id = req.params.id
-//   const plant = await deletePlant(id)
-//   if (!plant) {
-//     return res.status(400).json({
-//       message: "Plant does not exist",
-//     })
-//   }
-//   return res.status(204).json()
-// })
 
 export default plantRouter;

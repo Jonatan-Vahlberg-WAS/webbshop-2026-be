@@ -19,15 +19,6 @@ export async function getPlants(q) {
   }
 }
 
-export async function getPlantById(id) {
-  try {
-    return await Plant.findById(id).populate("ownerId", "name location");
-  } catch (err) {
-    console.error("Unable to read from 'Plants'", err);
-    return null;
-  }
-}
-
 export async function getPlantBySlug(slug) {
   try {
     return await Plant.findOne({ slug: slug }).populate("ownerId", "name location");
@@ -70,15 +61,3 @@ export async function deletePlantBySlug(slug) {
     return false;
   }
 }
-
-// export async function deletePlant(id) {
-//   try {
-//     const plantToDelete = await Plant.findById(id)
-//     if (!plantToDelete) return null
-//     await Plant.deleteOne({ _id: plantToDelete._id })
-//     return true
-//   } catch (err) {
-//     console.error("Unable to delete 'Plant'", err)
-//     return false
-//   }
-// }
