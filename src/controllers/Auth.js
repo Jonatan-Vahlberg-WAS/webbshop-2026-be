@@ -6,6 +6,7 @@ import {
 } from '../db/users.js';
 import jwtService from '../auth/jwt.js';
 import AppError from '../utils/AppError.js';
+import { getUserRoles } from '../db/roles.js';
 
 class AuthController {
   registerPost = [
@@ -62,7 +63,13 @@ class AuthController {
         // This sets the refreshToken cookie automatically
         jwtService.generateTokensAndSetHeaders(res, user._id);
 
-        return res.status(200).json({ success: true });
+        // Check if user is admin
+
+        const isAdmin = await getUserRoles(user._id).then((roles) =>
+          roles.includes('admin')
+        );
+
+        return res.status(200).json({ success: true, isAdmin });
       } catch (error) {
         next(error);
       }
@@ -78,7 +85,14 @@ class AuthController {
         }
 
         const user = await findUserById(userId);
-        res.status(200).json(user);
+
+        if (!user) {
+          return res.status(404).json({ error: 'User not found' });
+        }
+
+        const roles = await getUserRoles(userId);
+
+        res.status(200).json({ ...user.toObject(), roles });
       } catch (error) {
         next(new AppError('Invalid token', 401));
       }
