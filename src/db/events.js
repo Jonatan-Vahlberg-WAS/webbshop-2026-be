@@ -97,7 +97,7 @@ async function findEventByName(eventName) {
 async function findEventById(eventId) {
   try {
     if (eventId.length != 24) throw new AppError('Bad Request', 400);
-    const event = await Event.findById(eventId);
+    const event = await Event.findById(eventId).populate('trainerid');
 
     if (!event) throw new AppError('No event found', 404);
 

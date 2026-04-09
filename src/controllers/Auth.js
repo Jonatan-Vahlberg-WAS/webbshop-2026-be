@@ -62,19 +62,11 @@ class AuthController {
     },
   ];
 
-  logoutPost = [
-    (req, res) => {
-      res.removeHeader('Authorization');
-      res.removeHeader('X-Refresh-Token');
-      res.json({ success: true });
-    },
-  ];
-
   meGet = [
-    async (req, res) => {
+    async (req, res, next) => {
       const { id: userId } = req.user;
       try {
-        if (req.user?.userId) {
+        if (!userId) {
           return res.status(401).json({ loggedIn: false });
         }
 
