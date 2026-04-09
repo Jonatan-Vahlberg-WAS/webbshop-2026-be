@@ -1,4 +1,5 @@
-import Trade, { STATUS_LEVEL } from "../models/Trade.js";
+import Trade, { STATUS_LEVEL } from "../models/Trade.js"
+import Plant from "../models/Plant.js";
 
 export async function getAllTrades() {
   try {
@@ -40,9 +41,10 @@ export async function updateTrade(id, tradeData) {
 
     if (!updatedTrade) return null
        if (tradeData.status === STATUS_LEVEL.cancelled) {
-        if (updatedTrade.status !== STATUS_LEVEL.pending) {
+        if (updatedTrade.status !== STATUS_LEVEL.pending && updatedTrade.status !== STATUS_LEVEL.approved) {
           throw new Error("Trade can only be cancelled if status is pending")
         }
+        await Plant.findByIdAndUpdate(updatedTrade.plantId, { available: true })
         await Trade.findByIdAndDelete(id)
         return { cancelled:true }
        }

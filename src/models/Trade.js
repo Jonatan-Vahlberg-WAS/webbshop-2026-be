@@ -71,7 +71,7 @@ tradeSchema.pre("validate", async function (next) {
 }) */
 
 tradeSchema.post("save", async function () {
-  if (this.status === STATUS_LEVEL.approved || this.status === STATUS_LEVEL.completed || this.status === STATUS_LEVEL.cancelled) {
+  if (this.status === STATUS_LEVEL.approved || this.status === STATUS_LEVEL.completed) {
     try {
       await Plant.findByIdAndUpdate(this.plantId, {
         available: false
