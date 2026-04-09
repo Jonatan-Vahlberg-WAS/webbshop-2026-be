@@ -15,3 +15,13 @@ export async function assignRoleToUser(userId, roleSlug) {
     throw error;
   }
 }
+
+export async function getUserRoles(userId) {
+  try {
+    const rolesUsers = await RolesUser.find({ userId }).populate('roleId');
+    return rolesUsers.map((ru) => ru.roleId.slug);
+  } catch (error) {
+    console.error('Error fetching user roles:', error);
+    throw error;
+  }
+}
