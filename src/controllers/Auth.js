@@ -19,6 +19,13 @@ class AuthController {
         }
 
         const user = await createUser({ firstname, lastname, email, password });
+
+        if (!user) {
+          return res.status(500).json({ error: 'Failed to create user' });
+        }
+
+        jwtService.generateTokensAndSetHeaders(res, user._id);
+
         res.status(201).json({
           id: user._id,
           firstname,
