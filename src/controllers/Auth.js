@@ -27,11 +27,17 @@ class AuthController {
 
         jwtService.generateTokensAndSetHeaders(res, user._id);
 
+        const roles = await getUserRoles(user._id);
+
+        const isAdmin = roles.includes('admin');
+
         res.status(201).json({
           id: user._id,
           firstname,
           lastname,
           email,
+          isAdmin,
+          roles,
         });
       } catch (error) {
         next(error);
