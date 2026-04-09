@@ -5,7 +5,6 @@ import eventRouter from './routes/Event.js';
 import authRouter from './routes/auth.js';
 import typesRouter from './routes/types.js';
 import cors from 'cors';
-import cookieParser from 'cookie-parser';
 import mongoose from 'mongoose';
 import errorHandler from './middleware/errorHandler.js';
 
@@ -30,6 +29,7 @@ const allowedOrigins = [
 // Middleware
 app.use(
   cors({
+    exposedHeaders: ['Authorization', 'X-Refresh-Token'],
     origin(origin, callback) {
       if (!origin) return callback(null, true);
       if (allowedOrigins.includes(origin)) return callback(null, true);
@@ -48,7 +48,6 @@ app.use(async (req, res, next) => {
 });
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
 
 await connectToDatabase();
 
