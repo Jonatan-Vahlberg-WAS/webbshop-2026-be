@@ -22,3 +22,26 @@ export async function registerUser(name, email, password, location){
 
   return { user: userObject, accessToken, refreshToken}
 }
+
+export async function logInUser(email, password){
+    const user = await User.findOne({email: email.toLowerCase()}).select(
+      "+password" //gör så att man ska kunna få password
+    )
+  
+    const response = "Invalid credentials"
+  
+    if(!user){
+      throw new Error(response)
+    }
+  
+    const isSamePassword = await user.isSamePassword(password)
+  
+    if(!isSamePassword){
+      throw new Error(response)
+    }
+  
+    const {accessToken, refreshToken} = _generateTokens(user)
+    const userObject = _getUserObject(user)
+
+    return {user: userObject, accessToken, refreshToken}
+}

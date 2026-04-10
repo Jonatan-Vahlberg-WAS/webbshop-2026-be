@@ -4,7 +4,7 @@ import {
   validateAuthResult,
 } from "../middleware/authValidation.js";
 import { findUserByEmail } from "../db/users.js";
-import { registerUser } from "../db/auth.js";
+import { logInUser, registerUser } from "../db/auth.js";
 
 const authRouter = Router();
 
@@ -38,7 +38,25 @@ authRouter.post("/register",
 );
 
 // TODO POST /auth/login
+authRouter.post("/login", async (req, res) => {
+  const {email, password} = req.body
 
+  try{
+    //Sending email and password to logInUser function and getting back user, accessToken and refreshToken
+    const {user, accessToken, refreshToken} = await logInUser(email, password)
+
+    return res.json({
+      user,
+      accessToken,
+      refreshToken
+    })
+  }catch(error){
+    console.log("Error in login", error)
+    return res.status(401).json({
+      message: "Invalid credentials"
+    })
+  }
+}) 
 // TODO GET /auth/me
 // TODO Validation for User
 
