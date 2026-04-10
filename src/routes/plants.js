@@ -35,7 +35,7 @@ plantRouter.get("/:slug", async (req, res) => {
       message: "Plant not found",
     });
   }
-  res.json(foundPlant)
+  res.json(plant)
 })
 
 // POST /plants
