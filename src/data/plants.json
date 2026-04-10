@@ -21,7 +21,7 @@
     "ownerId": "65f1a2b3c4d5e6f7a8b9c002",
     "coordinates": [59.3185, 18.0760],
     "meetingTime": "2026-04-10T18:30:00.000Z",
-    "available": true
+    "available": false
   },
   {
     "_id": "65f1a2b3c4d5e6f7a8b9c103",
@@ -33,7 +33,7 @@
     "ownerId": "65f1a2b3c4d5e6f7a8b9c003",
     "coordinates": [59.3225, 18.0590],
     "meetingTime": "2026-04-12T09:00:00.000Z",
-    "available": true
+    "available": false
   },
   {
     "_id": "65f1a2b3c4d5e6f7a8b9c104",
@@ -57,6 +57,66 @@
     "ownerId": "65f1a2b3c4d5e6f7a8b9c003",
     "coordinates": [59.3200, 18.0550],
     "meetingTime": "2026-05-01T15:00:00.000Z",
+    "available": true
+  },
+  {
+    "_id": "65f1a2b3c4d5e6f7a8b9c106",
+    "name": "Mönsterblad (Calathea)",
+    "image": "https://www.blomsterlandet.se/contentassets/9277ed5dd2b9490490f0b4133c0acc3d/20240429_bl_gronavaxter_361.jpg",
+    "slug": "monsterblad-calathea",
+    "species": "Calathea makoyana",
+    "lightLevels": "partial",
+    "ownerId": "65f1a2b3c4d5e6f7a8b9c004",
+    "coordinates": [59.3450, 18.0320],
+    "meetingTime": "2026-05-05T10:00:00.000Z",
+    "available": true
+  },
+  {
+    "_id": "65f1a2b3c4d5e6f7a8b9c107",
+    "name": "Svärmorstunga",
+    "image": "https://images.unsplash.com/photo-1593482892290-f54927ae1bb6?w=900&auto=format&fit=crop&q=60",
+    "slug": "svarmorstunga",
+    "species": "Sansevieria trifasciata",
+    "lightLevels": "low",
+    "ownerId": "65f1a2b3c4d5e6f7a8b9c002",
+    "coordinates": [59.3120, 18.0850],
+    "meetingTime": "2026-05-12T17:00:00.000Z",
+    "available": true
+  },
+  {
+    "_id": "65f1a2b3c4d5e6f7a8b9c108",
+    "name": "Aloe Vera Vera",
+    "image": "https://images.unsplash.com/photo-1596547609652-9cf5d8d76921?w=900&auto=format&fit=crop&q=60",
+    "slug": "aloe-vera",
+    "species": "Aloe barbadensis miller",
+    "lightLevels": "directSun",
+    "ownerId": "65f1a2b3c4d5e6f7a8b9c005",
+    "coordinates": [59.3380, 18.0720],
+    "meetingTime": "2026-05-15T12:00:00.000Z",
+    "available": true
+  },
+  {
+    "_id": "65f1a2b3c4d5e6f7a8b9c109",
+    "name": "Monstera Deliciosa",
+    "image": "https://images.unsplash.com/photo-1614594975525-e45190c55d0b?w=900&auto=format&fit=crop&q=60",
+    "slug": "monstera-deliciosa",
+    "species": "Monstera deliciosa",
+    "lightLevels": "bright",
+    "ownerId": "65f1a2b3c4d5e6f7a8b9c001",
+    "coordinates": [59.3250, 18.0450],
+    "meetingTime": "2026-05-20T14:30:00.000Z",
+    "available": true
+  },
+  {
+    "_id": "65f1a2b3c4d5e6f7a8b9c110",
+    "name": "Porslinsblomma",
+    "image": "https://plantagen.se/_next/image?url=https%3A%2F%2Fmedia.crystallize.com%2Fpltn%2F25%2F8%2F18%2F23%2F%401024%2Fporselensplantemain.webp&w=1920&q=85",
+    "slug": "porslinsblomma-hoya",
+    "species": "Hoya carnosa",
+    "lightLevels": "bright",
+    "ownerId": "65f1a2b3c4d5e6f7a8b9c004",
+    "coordinates": [59.3510, 18.0610],
+    "meetingTime": "2026-05-25T09:00:00.000Z",
     "available": true
   }
 ]
