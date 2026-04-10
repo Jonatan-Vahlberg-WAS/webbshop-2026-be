@@ -1,5 +1,6 @@
 import User from "../models/User.js"
 import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from "../utils/tokens.js"
+import { getUserById } from "./users.js"
 
 function _generateTokens(user){
   const accessToken = generateAccessToken(user)
@@ -44,4 +45,22 @@ export async function logInUser(email, password){
     const userObject = _getUserObject(user)
 
     return {user: userObject, accessToken, refreshToken}
+}
+
+export async function refreshAccessToken(refreshToken) {
+  
+  const decodedToken = verifyRefreshToken(refreshToken)
+
+
+  const userId = decodedToken?.userId
+  if(!userId){
+    throw new Error("Invalid refresh token")
+  }
+
+  const user = await getUserById(userId)
+  if(!user){
+    throw new Error("User not found")
+  }
+  const accessToken = generateAccessToken(user)
+  return{accessToken}
 }

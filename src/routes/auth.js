@@ -4,7 +4,8 @@ import {
   validateAuthResult,
 } from "../middleware/authValidation.js";
 import { findUserByEmail } from "../db/users.js";
-import { logInUser, registerUser } from "../db/auth.js";
+import { logInUser, refreshAccessToken, registerUser } from "../db/auth.js";
+import { verifyRefreshToken } from "../utils/tokens.js";
 
 const authRouter = Router();
 
@@ -57,16 +58,32 @@ authRouter.post("/login", async (req, res) => {
     })
   }
 }) 
-// TODO GET /auth/me
-// TODO Validation for User
 
-// TODO PATCH /auth/me
-// TODO Validation for User
+//TODO POST /auth/refresh
+authRouter.post("/refresh", async (req, res) => {
+  const {refreshToken} = req.body
 
-// TODO PUT /auth/me
-// TODO Validation for User
+  if(!refreshToken)
+    return res.status(401).json({
+      message: "Refresh token is required"
+    })
 
-// TODO isSamePassword - comparison
-// TODO areset password
+    try{
+      const decodedToken = verifyRefreshToken(refreshToken)
+      const userId = decodedToken?.userId
+
+      if(!userId){
+        throw new Error()
+      }
+      const {accessToken} = await refreshAccessToken(refreshToken)
+      return res.json({
+        accessToken
+      })
+    }catch(error){
+      return res.status(401).json({
+        message: "Unauthorized"
+      })
+    }
+})
 
 export default authRouter;
