@@ -12,3 +12,13 @@ function _getUserObject(user){
   delete userObject.password
   return userObject
 }
+
+export async function registerUser(name, email, password, location){
+  const newUser = new User({name, email, password, location})
+  await newUser.save()
+  const {accessToken, refreshToken} = _generateTokens(newUser)
+
+  const userObject = _getUserObject(newUser)
+
+  return { user: userObject, accessToken, refreshToken}
+}
