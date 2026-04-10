@@ -102,6 +102,19 @@ tradeSchema.post("save", async function () {
       console.error("Error updating plant availability:", err);
     }
   }
+
+  //Deletes all other trades with the same plant id if one trade is completed
+  if(this.status === STATUS_LEVEL.completed){
+    try{
+      await this.constructor.deleteMany({
+        plantId: this.plantId,
+        _id: {$ne: this._id},                 //makes sure not to delete the current trade
+        status:{$ne: STATUS_LEVEL.completed}  //makes sure not to delete trades with the status completed
+      })
+    }
+   catch (error) {
+    console.error("Could not clean up old trades for plantId " + this.plantId)
+  }}
 });
 
 const Trade = mongoose.model("Trade", tradeSchema);
