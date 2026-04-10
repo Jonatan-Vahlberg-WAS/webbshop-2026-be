@@ -4,7 +4,6 @@ import {
   getUserById,
   updateUser,
   deleteUser,
-  createUser,
   getUserBySlug,
   updateUserBySlug,
   deleteUserBySlug,
@@ -46,12 +45,6 @@ userRouter.get("/:slug", async (req, res) => {
   }
 
   res.json(user);
-});
-
-// POST /users
-userRouter.post("/", async (req, res) => {
-  const user = await createUser(req.body);
-  res.status(201).json(user);
 });
 
 /* // PUT /users/:id
