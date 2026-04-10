@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { validateUpdateUser } from "../middleware/userValidation.js";
 import {
   getUsers,
   getUserById,
@@ -8,6 +9,7 @@ import {
   updateUserBySlug,
   deleteUserBySlug,
 } from "../db/users.js";
+
 
 const userRouter = Router();
 
@@ -61,28 +63,17 @@ userRouter.put("/:id", async (req, res) => {
 }); */
 
 // PUT /users/:slug
-userRouter.put("/:slug", async (req, res) => {
+userRouter.put("/:slug", validateUpdateUser, async (req, res) => {
   //kommer ha validering för user och admin
 
   const slug = req.params.slug;
-  const { name, email, password, location } = req.body;
+  const { name, email, location } = req.body;
 
-  if (!name || !email || !location) {
-    return res.status(400).json({
-      message: "All fields (name, email, location) are required",
-    });
-  }
-
-  const updatedUser = await updateUserBySlug(slug, {
-    name,
-    email,
-    password,
-    location,
-  });
+  const updatedUser = await updateUserBySlug(slug, { name, email, location })
 
   if (!updatedUser) {
     return res.status(404).json({
-      message: "User",
+      message: "User not found",
     });
   }
 
@@ -90,9 +81,9 @@ userRouter.put("/:slug", async (req, res) => {
 });
 
 //PATCH /users/:slug
-userRouter.patch("/:slug", async (req, res) => {
+userRouter.patch("/:slug", validateUpdateUser, async (req, res) => {
   //kommer ha validering för user och admin
-  // TODO Validation for User
+  
 
   const slug = req.params.slug;
   const { email, name, location } = req.body;
