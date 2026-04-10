@@ -23,8 +23,8 @@ userRouter.get("/", async (req, res) => {
   res.json(users);
 });
 
-/* // GET /users/:id
-userRouter.get("/:id", async (req, res) => {
+// GET /users/id/:id
+userRouter.get("/id/:id", async (req, res) => {
   // TODO Validation for User and Admin
   const user = await getUserById(req.params.id);
 
@@ -34,7 +34,6 @@ userRouter.get("/:id", async (req, res) => {
 
   res.json(user);
 });
- */
 
 // GET /users/:slug
 userRouter.get("/:slug", async (req, res) => {
@@ -49,8 +48,14 @@ userRouter.get("/:slug", async (req, res) => {
   res.json(user);
 });
 
-/* // PUT /users/:id
-userRouter.put("/:id", async (req, res) => {
+// POST /users
+userRouter.post("/", async (req, res) => {
+  const user = await createUser(req.body);
+  res.status(201).json(user);
+});
+
+// PUT /users/id/:id
+userRouter.put("/id/:id", async (req, res) => {
   // TODO Validation for User
 
   const user = await updateUser(req.params.id, req.body);
@@ -60,7 +65,7 @@ userRouter.put("/:id", async (req, res) => {
   }
 
   res.json(user);
-}); */
+}); 
 
 // PUT /users/:slug
 userRouter.put("/:slug", validateUpdateUser, async (req, res) => {
@@ -99,8 +104,8 @@ userRouter.patch("/:slug", validateUpdateUser, async (req, res) => {
   return res.status(200).json(updatedUser);
 });
 
-/* // DELETE /users/:id
-userRouter.delete("/:id", async (req, res) => {
+// DELETE /users/id/:id
+userRouter.delete("/id/:id", async (req, res) => {
   // TODO Validation for Admin
 
   const user = await deleteUser(req.params.id);
@@ -110,7 +115,7 @@ userRouter.delete("/:id", async (req, res) => {
   }
 
   res.status(204).json();
-}); */
+});
 
 // DELETE /users/:slug
 userRouter.delete("/:slug", async (req, res) => {
