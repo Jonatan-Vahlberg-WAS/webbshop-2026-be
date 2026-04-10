@@ -3,37 +3,38 @@ import {
   validateRegister,
   validateAuthResult,
 } from "../middleware/authValidation.js";
-import { createUser, findUserByEmail } from "../db/users.js";
+import { findUserByEmail } from "../db/users.js";
+import { registerUser } from "../db/auth.js";
 
 const authRouter = Router();
 
 // POST /auth/register
-authRouter.post(
-  "/register",
+authRouter.post("/register",
   validateRegister,
   validateAuthResult,
   async (req, res) => {
-    try {
-      const { name, email, password } = req.body;
+    try{
+      const {name, email, password, location} = req.body
 
-      const existingUser = await findUserByEmail(email);
-
-      if (existingUser) {
-        return res.status(409).json({ error: "Email already registered" });
+      //Checking if email is already registerd
+      const existingUser = await findUserByEmail(email)
+      if(existingUser){
+        return res.status(409).json({error: "Email already registerd"})
       }
 
-      const user = await createUser({ name, email, password });
+      //Sending name, email, password and location to registerUser function and getting back user, accessToken and refreshToken
+      const { user, accessToken, refreshToken } = await registerUser(name, email, password, location)
 
-      res.status(201).json({
-        id: user._id,
-        name: user.name,
-        email: user.email,
-      });
-    } catch (err) {
-      console.error("Registration error:", err);
-      res.status(500).json({ error: "Registration failed" });
+      return res.status(201).json({
+        user, 
+        accessToken,
+        refreshToken
+      })
+    } catch(error){
+      console.log("Failed to register user", error) 
+      return res.status(400).json("User was not registerd")
     }
-  },
+  }
 );
 
 // TODO POST /auth/login
