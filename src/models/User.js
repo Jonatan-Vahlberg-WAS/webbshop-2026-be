@@ -123,12 +123,27 @@ userSchema.pre("save", async function (next) {
   }
 });
 
-userSchema.pre("validate", function (next) {
+userSchema.pre("validate", async function (next) {
   if (this.isModified("name")) {
-    this.slug = slugify(this.name, {
+
+    const baseSlug = slugify(this.name, {
       lower: true,
     });
+
+    console.log("baseSlug: ", baseSlug)
+    let slug = baseSlug
+    //Kolla om slug redan finns
+    const Plant = this.constructor     // means const Plant = mongoose.model("Plant");
+    let counter = 1;
+    //while slug exists in Plants, run this code
+    while(await Plant.exists({slug})){
+      slug = `${baseSlug}-${counter}`
+      counter++
+    }
+    //change the value of slug, makes while-loop stop if new value does not exist
+    this.slug = slug
   }
+
   return next();
 });
 
