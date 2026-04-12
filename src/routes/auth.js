@@ -4,7 +4,7 @@ import {
   validateAuthResult,
 } from "../middleware/authValidation.js";
 import { findUserByEmail } from "../db/users.js";
-import { logInUser, refreshAccessToken, registerUser, requestPassword } from "../db/auth.js";
+import { confirmPasswordReset, logInUser, refreshAccessToken, registerUser, requestPassword } from "../db/auth.js";
 import { verifyRefreshToken } from "../utils/tokens.js";
 
 const authRouter = Router();
@@ -96,6 +96,32 @@ authRouter.post("/reset-password/request", async (req, res) => {
 
   const result = await requestPassword(email)
   return res.json(result)
+})
+
+authRouter.patch("/reset-password/confirm", async (req, res) => {
+  const {email, code} = req.query
+  if(!email || !code){
+    return res.status(400).json({
+      message: "Email and Code query params is required"
+    })
+  }
+
+  const {password} = req.body
+  if(!password){
+    return res.status(400).json({
+      message: "Password is required"
+    })
+  }
+  
+  try {
+    const result = await confirmPasswordReset(email, code, password)
+    return res.json(result)
+  } catch (error) {
+      return res.status(401).json({
+        message: "Unable to reset password"
+    })
+  }
+
 })
 
 export default authRouter;

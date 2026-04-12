@@ -79,3 +79,22 @@ export async function requestPassword(email = ""){
     message: "If the email exists, a reset code has been sent"
   }
 }
+
+export async function confirmPasswordReset( email, code, newPassword){
+  const user = await User.findOne({
+    email: email.toLowerCase(),
+    resetPasswordCode: code,
+  })
+
+  if(!user){
+    throw new Error("Unauthorized")
+  }
+
+  user.password = newPassword
+  user.resetPasswordCode = null
+  await user.save()
+
+  return{
+    message: "Password has been reset"
+  }
+}
