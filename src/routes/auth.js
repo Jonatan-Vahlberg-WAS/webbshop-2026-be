@@ -4,7 +4,7 @@ import {
   validateAuthResult,
 } from "../middleware/authValidation.js";
 import { findUserByEmail } from "../db/users.js";
-import { logInUser, refreshAccessToken, registerUser } from "../db/auth.js";
+import { logInUser, refreshAccessToken, registerUser, requestPassword } from "../db/auth.js";
 import { verifyRefreshToken } from "../utils/tokens.js";
 
 const authRouter = Router();
@@ -84,6 +84,18 @@ authRouter.post("/refresh", async (req, res) => {
         message: "Unauthorized"
       })
     }
+})
+
+authRouter.post("/reset-password/request", async (req, res) => {
+  const {email} = req.body
+  if(!email){
+    return res.status(400).json({
+      message: "Email is required"
+    })
+  }
+
+  const result = await requestPassword(email)
+  return res.json(result)
 })
 
 export default authRouter;

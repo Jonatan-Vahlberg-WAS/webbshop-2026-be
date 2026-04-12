@@ -64,3 +64,18 @@ export async function refreshAccessToken(refreshToken) {
   const accessToken = generateAccessToken(user)
   return{accessToken}
 }
+
+export async function requestPassword(email = ""){
+  await User.findOneAndUpdate(
+    {
+      email: email.toLowerCase()
+    },
+    {
+      resetPasswordCode: `${Math.floor(Math.random() * 100000)}`
+    }
+  )
+
+  return {
+    message: "If the email exists, a reset code has been sent"
+  }
+}
