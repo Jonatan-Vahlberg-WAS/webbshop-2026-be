@@ -2,10 +2,10 @@ import mongoose from "mongoose";
 import slugify from "slugify";
 
 export const LIGHT_LEVELS = {
-  directSun: "Direct Sun",
-  bright: "Bright",
-  partial: "Partial",
-  low: "Low",
+  directSun: "direct sun",
+  bright: "bright",
+  partial: "partial",
+  low: "low",
 };
 
 const plantSchema = new mongoose.Schema(
