@@ -1,26 +1,20 @@
 import mongoose from "mongoose";
-import dotenv from "dotenv";
-dotenv.config();
 
-const MONGODB_URI = process.env.MONGODB_URI;
+let cached = global.mongoose;
 
-export async function connectToDatabase() {
-  if (!MONGODB_URI) {
-    throw new Error("MONGODB_URI is not defined");
-  }
-  try {
-    await mongoose.connect(MONGODB_URI);
-    console.log("Connected to MongoDB");
-  } catch (err) {
-    console.error("MongoDB connection error", err);
-    throw err;
-  }
+if (!cached) {
+  cached = global.mongoose = { conn: null, promise: null };
 }
 
-mongoose.connection.on("error", (err) => {
-  console.error("MongoDB error:", err);
-});
+export async function connectToDatabase() {
+  if (cached.conn) return cached.conn;
 
-mongoose.connection.on("disconnected", () => {
-  console.log("Disconnected from MongoDB");
-});
+  if (!cached.promise) {
+    cached.promise = mongoose
+      .connect(process.env.MONGODB_URI)
+      .then((mongoose) => mongoose);
+  }
+
+  cached.conn = await cached.promise;
+  return cached.conn;
+}

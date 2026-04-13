@@ -2,7 +2,7 @@
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
-import mongoose from "mongoose";
+import { connectToDatabase } from "./config/database.js";
 
 import authRouter from "./routes/auth.js";
 import userRouter from "./routes/user.js";
@@ -12,18 +12,12 @@ import tradeRouter from "./routes/trade.js";
 
 const app = express();
 
-let isConnected = false;
 
-async function connectDB() {
-  if (isConnected) return;
-  await mongoose.connect(process.env.MONGODB_URI);
-  isConnected = true;
-}
 
 // Middleware
 app.use(async (req, res, next) => {
   try {
-    await connectDB();
+    await connectToDatabase();
     next();
   } catch (err) {
     next(err);
