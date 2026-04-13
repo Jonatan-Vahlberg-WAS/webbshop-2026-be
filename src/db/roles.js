@@ -16,15 +16,12 @@ export async function assignRoleToUser(userId, roleSlug) {
   }
 }
 
-export async function changeUserRole(userId, roleSlug) {
-  const role = await Roles.findOne({ slug: roleSlug });
-  if (!role) {
-    throw new Error('Role not found');
+export async function getUserRoles(userId) {
+  try {
+    const rolesUsers = await RolesUser.find({ userId }).populate('roleId');
+    return rolesUsers.map((ru) => ru.roleId.slug);
+  } catch (error) {
+    console.error('Error fetching user roles:', error);
+    throw error;
   }
-
-  await RolesUser.findOneAndUpdate(
-    { userId },
-    { roleId: role._id },
-    { new: true }
-  );
 }

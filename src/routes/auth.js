@@ -18,8 +18,6 @@ router.post(
 
 router.post('/login', AuthController.loginPost);
 
-router.post('/logout', AuthController.logoutPost);
-
 router.get('/me', isAuth, AuthController.meGet);
 
 router.put(
