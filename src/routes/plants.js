@@ -68,10 +68,21 @@ router.get('/owner/:ownerId', async (req, res) => {
 
 router.put('/:id', protect, async (req, res) => {
   try {
-    const updatedPlant = await updatePlant(req.params.id, req.body);
-    if (!updatedPlant) {
+    const plant = await getPlantById(req.params.id);
+
+    if (!plant) {
       return res.status(404).json({ error: "Plant not found" });
     }
+
+    if (
+      plant.owner.toString() !== req.user.userId &&
+      req.user.role !== "admin"
+    ) {
+      return res.status(403).json({ error: "Not allowed" });
+    }
+
+    const updatedPlant = await updatePlant(req.params.id, req.body);
+
     res.json(updatedPlant);
   } catch (error) {
     res.status(500).json({ error: "Failed to update plant" });

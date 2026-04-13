@@ -12,11 +12,10 @@ let isConnected = false;
 
 async function connectDB() {
   if (isConnected) return;
-  await mongoose.connect(process.env.MONGODB_URI); // ✅ FIXAD
+  await mongoose.connect(process.env.MONGODB_URI);
   isConnected = true;
 }
 
-// Middleware
 app.use(async (req, res, next) => {
   try {
     await connectDB();
@@ -30,7 +29,6 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Routes
 app.get("/", (req, res) => {
   res.json({ message: "Webbshop API", stack: "MEN (MongoDB, Express, Node.js)" });
 });
