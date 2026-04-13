@@ -5,12 +5,12 @@ import {
 } from "../middleware/plantValidation.js";
 import {
   createPlant,
-  getPlants,
   getPlantBySlug,
   deletePlantBySlug,
   updatePlantBySlug,
+  getAvailablePlants,
+  getAllPlants,
 } from "../db/plants.js";
-// import { validatePlant, validatePlantResult } from "../middleware/plantValidation.js";
 
 const plantRouter = Router();
 
@@ -18,7 +18,16 @@ const plantRouter = Router();
 plantRouter.get("/", async (req, res) => {
   const { q } = req.query;
 
-  const plants = await getPlants(q);
+  const plants = await getAvailablePlants(q);
+
+  res.json(plants);
+});
+
+// GET /plants/all with search
+plantRouter.get("/all", async (req, res) => {
+  const { q } = req.query;
+
+  const plants = await getAllPlants(q);
 
   res.json(plants);
 });
