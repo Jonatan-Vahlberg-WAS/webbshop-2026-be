@@ -12,7 +12,7 @@ let isConnected = false;
 
 async function connectDB() {
   if (isConnected) return;
-  await mongoose.connect(process.env.MONGODB_URI);
+  await mongoose.connect(process.env.MONGODB_URI); // ✅ FIXAD
   isConnected = true;
 }
 
@@ -25,7 +25,8 @@ app.use(async (req, res, next) => {
     next(err);
   }
 });
-app.use(cors("*"));
+
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -38,8 +39,8 @@ app.get("/health", (req, res) => {
   res.json({ status: "ok" });
 });
 
+app.use("/auth", authRouter);
 app.use("/plants", plantsRouter);
 app.use("/trades", tradesRouter);
-app.use("/auth", authRouter);
 
 export default app;
