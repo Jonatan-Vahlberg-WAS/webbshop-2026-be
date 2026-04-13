@@ -3,20 +3,28 @@ import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from ".
 import { getUserById } from "./users.js"
 
 function _generateTokens(user){
-  const accessToken = generateAccessToken(user)
-  const refreshToken = generateRefreshToken(user)
+  const payload = { 
+    userId: user._id, 
+    role: user.role,
+    email: user.email 
+  };
+
+  const accessToken = generateAccessToken(payload)
+  const refreshToken = generateRefreshToken(payload)
   return {accessToken, refreshToken}
 }
 
 function _getUserObject(user){
-  const userObject = user.toObject()
+/*   const userObject = user.toObject()
   delete userObject.password
-  return userObject
+  return userObject */
+  return user.toJSON();
 }
 
 export async function registerUser(name, email, password, location){
   const newUser = new User({name, email, password, location})
   await newUser.save()
+  
   const {accessToken, refreshToken} = _generateTokens(newUser)
 
   const userObject = _getUserObject(newUser)
@@ -48,20 +56,26 @@ export async function logInUser(email, password){
 }
 
 export async function refreshAccessToken(refreshToken) {
-  
   const decodedToken = verifyRefreshToken(refreshToken)
-
-
   const userId = decodedToken?.userId
+
   if(!userId){
     throw new Error("Invalid refresh token")
   }
 
   const user = await getUserById(userId)
+
   if(!user){
     throw new Error("User not found")
   }
-  const accessToken = generateAccessToken(user)
+
+    const payload = { 
+    userId: user._id, 
+    role: user.role,
+    email: user.email 
+  };
+
+  const accessToken = generateAccessToken(payload)
   return{accessToken}
 }
 
