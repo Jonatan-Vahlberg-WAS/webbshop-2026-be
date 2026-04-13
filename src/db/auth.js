@@ -64,3 +64,37 @@ export async function refreshAccessToken(refreshToken) {
   const accessToken = generateAccessToken(user)
   return{accessToken}
 }
+
+export async function requestPassword(email = ""){
+  await User.findOneAndUpdate(
+    {
+      email: email.toLowerCase()
+    },
+    {
+      resetPasswordCode: `${Math.floor(Math.random() * 100000)}`
+    }
+  )
+
+  return {
+    message: "If the email exists, a reset code has been sent"
+  }
+}
+
+export async function confirmPasswordReset( email, code, newPassword){
+  const user = await User.findOne({
+    email: email.toLowerCase(),
+    resetPasswordCode: code,
+  })
+
+  if(!user){
+    throw new Error("Unauthorized")
+  }
+
+  user.password = newPassword
+  user.resetPasswordCode = null
+  await user.save()
+
+  return{
+    message: "Password has been reset"
+  }
+}
