@@ -61,6 +61,7 @@ export async function updatePlantBySlug(slug, plantData) {
   try {
     return await Plant.findOneAndUpdate({ slug: slug }, plantData, {
       new: true,
+      runValidators: true,
     });
   } catch (err) {
     console.error("Error Updating 'Plant':", err);
