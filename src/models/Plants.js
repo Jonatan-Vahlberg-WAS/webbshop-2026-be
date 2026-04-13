@@ -7,11 +7,14 @@ const plantSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+feature/admin
     species: {
       type: String,
       required: true,
       trim: true,
     },
+
+Development
     description: {
       type: String,
       trim: true,
@@ -27,10 +30,6 @@ const plantSchema = new mongoose.Schema(
       enum: [1, 2, 3],
     },
     location: {
-      coordinates: {
-        lat: { type: Number, required: true },
-        lng: { type: Number, required: true },
-      },
       address: {
         type: String,
         trim: true,
@@ -39,7 +38,7 @@ const plantSchema = new mongoose.Schema(
     owner: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: true,
+      required: false
     },
     isAvailable: {
       type: Boolean,
