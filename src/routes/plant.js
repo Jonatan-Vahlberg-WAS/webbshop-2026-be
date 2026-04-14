@@ -1,33 +1,44 @@
 import { Router } from "express";
 import { protect } from "../middleware/authMiddleware.js";
-import { validatePlant, validatePlantResult } from "../middleware/plantValidation.js";
+import { validatePlant, validatePlantUpdate , validatePlantResult } from "../middleware/plantValidation.js";
 import Plant from "../models/plant.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
 
 const router = Router();
 
 // GET all plants
-router.get("/", async (req, res) => {
-  const plants = await Plant.find();
+router.get("/", asyncHandler(async (req, res) => {
+  const { light, plantName } = req.query;
+
+  const filter = {};
+
+  // Filtrering om den finns
+  if (light) filter.light = Number(light);
+  if (plantName) filter.plantName = new RegExp(plantName, "i");
+
+  const plants = await Plant.find(filter);
+
   if (!plants || plants.length === 0) {
     return res.status(404).json({ message: "No plants found" });
   }
+
   res.json(plants);
-});
+}));
 
 // GET my plants  <-- måste ligga före /:id
-router.get("/myplants", protect, async (req, res) => {
+router.get("/myplants", protect, asyncHandler(async (req, res) => {
   const plants = await Plant.find({ ownerId: req.userId });
   res.json({ plants });
-});
+}));
 
 // GET plant by id
-router.get("/:id", async (req, res) => {
+router.get("/:id", asyncHandler(async (req, res) => {
   const plant = await Plant.findById(req.params.id);
   if (!plant) {
     return res.status(404).json({ message: "Plant not found" });
   }
   res.json(plant);
-});
+}));
 
 // CREATE plant
 router.post(
@@ -35,7 +46,7 @@ router.post(
   protect,
   validatePlant,
   validatePlantResult,
-  async (req, res) => {
+  asyncHandler(async (req, res) => {
     const {
       plantName,
       description,
@@ -61,15 +72,15 @@ router.post(
 
     res.status(201).json({ message: "Plant created", plant: newPlant });
   },
-);
+));
 
 // UPDATE plant
 router.put(
   "/:id",
   protect,
-  validatePlant,
+  validatePlantUpdate,
   validatePlantResult,
-  async (req, res) => {
+  asyncHandler(async (req, res) => {
     const plant = await Plant.findById(req.params.id);
     if (!plant) {
       return res.status(404).json({ message: "Plant not found" });
@@ -101,25 +112,10 @@ router.put(
     await plant.save();
     res.json({ message: "Plant updated", plant: plant });
   },
-);
-
-// Filter all plants
-router.get("/", async (req, res) => {
-  const { light, plantName } = req.query;
-
-  const filter = {};
-
-  if (light) filter.light = Number(light);
-  if (plantName) filter.plantName = new RegExp(plantName, "i");
-
-  const plants = await Plant.find(filter);
-  res.json(plants);
-});
-
-
+));
 
 // DELETE plant
-router.delete("/:id", protect, async (req, res) => {
+router.delete("/:id", protect, asyncHandler(async (req, res) => {
   const plant = await Plant.findById(req.params.id);
   if (!plant) {
     return res.status(404).json({ message: "Plant not found" });
@@ -129,7 +125,7 @@ router.delete("/:id", protect, async (req, res) => {
   }
   await plant.deleteOne();
   res.json({ message: "Plant deleted" });
-});
+}));
 
 
 

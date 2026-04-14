@@ -42,37 +42,35 @@ const tradeSchema = new mongoose.Schema(
 )
 
 tradeSchema.pre("validate", async function (next) {
-  if (this.isNew || this.isModified("plantId")) {
-    const plant = await Plant.findById(this.plantId).select("ownerId")
+  try {
+    if (this.isNew || this.isModified("plantId")) {
+      const plant = await Plant.findById(this.plantId).select("ownerId");
 
-    if (plant) {
-      this.ownerId = plant.ownerId
+      if (plant) {
+        this.ownerId = plant.ownerId;
+      }
     }
-  }
 
-  if(this.requesterId?.equals(this.ownerId)){
-    const error = new Error("You cannot trade your own plant")
-    return next(error)
-  }
+    if (this.requesterId?.equals(this.ownerId)) {
+      const error = new Error("You cannot trade your own plant");
+      return next(error);
+    }
 
-  next()
-})
+    next();
+  } catch (err) {
+    next(err);
+  }
+});
 
 tradeSchema.post("save", async function () {
   if (this.status === STATUS_LEVEL.completed) {
     try {
       await User.findByIdAndUpdate(this.ownerId, {
-        $addToSet: { history: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Trade"
-      }] },
+        $addToSet: { history: this._id  },
       })
 
       await User.findByIdAndUpdate(this.requesterId, {
-        $addToSet: { history: [{
-        type: mongoose.Schema.Types.ObjectId,
-         ref: "Trade"
-      }] },
+        $addToSet: { history: this._id  },
       })
 
       

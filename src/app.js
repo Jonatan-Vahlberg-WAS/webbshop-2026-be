@@ -15,14 +15,6 @@ const app = express();
 
 
 // Middleware
-app.use(async (req, res, next) => {
-  try {
-    await connectToDatabase();
-    next();
-  } catch (err) {
-    next(err);
-  }
-});
 
 app.use(cors());
 app.use(express.json());

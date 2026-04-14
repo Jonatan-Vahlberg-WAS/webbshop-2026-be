@@ -1,58 +1,79 @@
 import { Router } from "express";
 import { protect } from "../middleware/authMiddleware.js";
 import User from "../models/User.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
 
 const router = Router();
 
-// get my profile
-router.get("/me", protect, async (req, res) => {
-  const userId = req.userId;
-  const user = await User.findById(userId);
-  if (!user) {
-    return res.status(404).json({ message: "User not found" });
-  }
-
-  res.json({
-  id: user._id,
-  name: user.name,
-  email: user.email,
-  role: user.role
-});
-});
-
-
-// update my profile
-router.put("/me", protect, async (req, res) => {
-  const userId = req.userId;
-  const { name, email } = req.body;
-
-  // @läsa
-  const user = await User.findById(userId);
-  if (!user) {
-    return res.status(404).json({ message: "User not found" });
-  }
-  if (email) {
-    const existingUser = await User.findOne({ email });
-    if (existingUser && existingUser._id.toString() !== userId) {
-      return res.status(400).json({ message: "Email is already in use" });
+// GET my profile
+router.get(
+  "/me",
+  protect,
+  asyncHandler(async (req, res) => {
+    const userId = req.userId;
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
     }
-  }
-  user.name = name || user.name;
-  user.email = email || user.email;
-  await user.save();
-  res.json({ name: user.name, email: user.email, role: user.role, message: "Profile updated" });
-});
 
+    res.json({
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+    });
+  }),
+);
 
-  // DELETE my profile
-  router.delete("/me", protect, async (req, res) => {
+// UPDATE my profile
+router.put(
+  "/me",
+  protect,
+  asyncHandler(async (req, res) => {
+    const userId = req.userId;
+    const { name, email } = req.body;
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    let normalizedEmail = user.email;
+
+    if (email) {
+      normalizedEmail = email.toLowerCase();
+      const existingUser = await User.findOne({ email: normalizedEmail });
+      if (existingUser && existingUser._id.toString() !== userId) {
+        return res.status(400).json({ message: "Email is already in use" });
+      }
+    }
+
+    if (name) user.name = name;
+    if (email) user.email = normalizedEmail;
+
+    await user.save();
+
+    res.json({
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      message: "Profile updated",
+    });
+  }),
+);
+
+// DELETE my profile
+router.delete(
+  "/me",
+  protect,
+  asyncHandler(async (req, res) => {
     const userId = req.userId;
     const deletedUser = await User.findByIdAndDelete(userId);
     if (!deletedUser) {
       return res.status(404).json({ message: "User not found" });
     }
     res.json({ message: "User deleted" });
-  });
-
+  }),
+);
 
 export default router;

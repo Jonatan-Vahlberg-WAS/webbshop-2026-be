@@ -3,11 +3,12 @@ import { Router } from "express";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 import { validateRegister, validateResult } from "../middleware/authMiddleware.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
 
 const router = Router();
 
 // REGISTER
-router.post("/register", validateRegister, validateResult, async (req, res) => {
+router.post("/register", validateRegister, validateResult, asyncHandler(async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
@@ -31,10 +32,10 @@ router.post("/register", validateRegister, validateResult, async (req, res) => {
     console.error("Registreringsfel:", err);
     res.status(500).json({ error: "Registration failed" });
   }
-});
+}));
 
 // LOGIN
-router.post("/login", async (req, res) => {
+router.post("/login", asyncHandler(async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -61,6 +62,6 @@ router.post("/login", async (req, res) => {
     console.error("Login error:", err);
     res.status(500).json({ error: "Login failed" });
   }
-});
+}));
 
 export default router;

@@ -2,11 +2,12 @@ import { Router } from "express";
 import { protect } from "../middleware/authMiddleware.js";
 import Trade, { STATUS_LEVEL } from "../models/trade.js";
 import Plant from "../models/plant.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
 
 const router = Router();
 
 // Skapa trade‑request
-router.post("/", protect, async (req, res) => {
+router.post("/", protect, asyncHandler(async (req, res) => {
   const { plantId } = req.body;
 
   const plant = await Plant.findById(plantId);
@@ -24,10 +25,10 @@ router.post("/", protect, async (req, res) => {
   });
 
   res.status(201).json({ message: "Trade created", trade });
-});
+}));
 
 // Hämta mina trades (som ägare eller requester)
-router.get("/me", protect, async (req, res) => {
+router.get("/me", protect, asyncHandler(async (req, res) => {
   const trades = await Trade.find({
     $or: [{ ownerId: req.userId }, { requesterId: req.userId }],
   })
@@ -36,10 +37,10 @@ router.get("/me", protect, async (req, res) => {
     .populate("requesterId", "name email");
 
   res.json(trades);
-});
+}));
 
 // Ägare godkänner trade
-router.patch("/:id/approve", protect, async (req, res) => {
+router.patch("/:id/approve", protect, asyncHandler(async (req, res) => {
   const trade = await Trade.findById(req.params.id);
   if (!trade) return res.status(404).json({ message: "Trade not found" });
 
@@ -51,10 +52,10 @@ router.patch("/:id/approve", protect, async (req, res) => {
   await trade.save();
 
   res.json({ message: "Trade approved", trade });
-});
+}));
 
 // Markera trade som completed
-router.patch("/:id/complete", protect, async (req, res) => {
+router.patch("/:id/complete", protect, asyncHandler(async (req, res) => {
   const trade = await Trade.findById(req.params.id);
   if (!trade) return res.status(404).json({ message: "Trade not found" });
 
@@ -69,6 +70,6 @@ router.patch("/:id/complete", protect, async (req, res) => {
   await trade.save();
 
   res.json({ message: "Trade completed", trade });
-});
+}));
 
 export default router;
