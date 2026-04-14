@@ -26,7 +26,8 @@ plantRouter.get("/", async (req, res) => {
 });
 
 // GET /plants/all with search
-plantRouter.get("/all", async (req, res) => {
+//requireAuth
+plantRouter.get("/all", requireAuth, async (req, res) => {
   const { q } = req.query;
 
   const plants = await getAllPlants(q);
@@ -51,7 +52,13 @@ plantRouter.get("/:slug", requireAuth, async (req, res) => {
 
 // POST /plants
 plantRouter.post("/", requireAuth, validatePlant, validatePlantResult, async (req, res) => {
-  const plant = await createPlant(req.body);
+  const plantData = {
+    ...req.body,
+    ownerId: req.userId 
+  };
+
+  const plant = await createPlant(plantData);
+
   res.status(201).json(plant);
 });
 
