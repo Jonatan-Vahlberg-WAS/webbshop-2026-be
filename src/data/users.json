@@ -11,8 +11,8 @@
   {
     "_id": "65f1a2b3c4d5e6f7a8b9c002",
     "name": "Kim Nguyen",
-    "slug": "kim-nguyen",
     "email": "kim.n@gardenmail.com",
+    "slug": "kim-nguyen",
     "password": "GreenThumb2024",
     "role": "user",
     "location": [59.3168, 18.0741]
@@ -20,10 +20,28 @@
   {
     "_id": "65f1a2b3c4d5e6f7a8b9c003",
     "name": "Mateo Rossi",
-    "slug": "mateo-rossi",
     "email": "mateo.rossi@provider.se",
+    "slug": "mateo-rossi",
     "password": "CactusLife456",
     "role": "user",
     "location": [59.3210, 18.0585]
+  },
+  {
+    "_id": "65f1a2b3c4d5e6f7a8b9c004",
+    "name": "Linnéa Björk",
+    "email": "linnea.b@vaxtpost.se",
+    "slug": "linnea-bjork",
+    "password": "PasswordLeaf123!",
+    "role": "user",
+    "location": [59.3412, 18.0210]
+  },
+  {
+    "_id": "65f1a2b3c4d5e6f7a8b9c005",
+    "name": "Erik Sandqvist",
+    "email": "erik.sand@hmail.com",
+    "slug": "erik-sandqvist",
+    "password": "DesertCactus99",
+    "role": "user",
+    "location": [59.3350, 18.0820]
   }
 ]
