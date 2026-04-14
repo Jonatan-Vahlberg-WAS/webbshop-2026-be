@@ -1,10 +1,10 @@
 {
   "info": {
-    "_postman_id": "478a5e4b-946d-47ca-844f-26a8e929a948",
-    "name": "Plot Twist",
+    "_postman_id": "c6650efe-bf4c-4cc7-8588-66af7639b648",
+    "name": "Plot Twist Vercel",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "52724870",
-    "_collection_link": "https://go.postman.co/collection/52724870-478a5e4b-946d-47ca-844f-26a8e929a948?source=collection_link"
+    "_collection_link": "https://go.postman.co/collection/52724870-c6650efe-bf4c-4cc7-8588-66af7639b648?source=collection_link"
   },
   "item": [
     {
@@ -47,7 +47,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"name\" : \"Vincent\",\r\n    \"email\": \"vincent@test.com\",\r\n    \"password\": \"123456\"\r\n}",
+              "raw": "{\r\n    \"name\" : \"Vincent\",\r\n    \"email\": \"text@test.com\",\r\n    \"password\": \"123456\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -86,7 +86,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWRjZDA0ZjlhZTAzZGRjMWNiNWRlYTQiLCJpYXQiOjE3NzYxNjA5NTEsImV4cCI6MTc3NjE2NDU1MX0.GNtT-LWkTu0apnwTGn03O_GUoiDny6GpmykUVX8RXJg",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWRjZDA0ZjlhZTAzZGRjMWNiNWRlYTQiLCJpYXQiOjE3NzYxNzA2NjQsImV4cCI6MTc3NjE3NDI2NH0.7jVR9NNyHJblsOet527iYliNspqW2xXmIF7ZoP-2G58",
                   "type": "string"
                 }
               ]
@@ -246,7 +246,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWQ2Mzk1YjNmZGJiNDg4ZGMzNzcwNGIiLCJpYXQiOjE3NzU2NDcwODEsImV4cCI6MTc3NTY1MDY4MX0.NeM81Dai1H2cEMIsv5wkThRmb4-jbZrhOcj1ly9iOdU",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWRjZDA0ZjlhZTAzZGRjMWNiNWRlYTQiLCJpYXQiOjE3NzYxNzA2NjQsImV4cCI6MTc3NjE3NDI2NH0.7jVR9NNyHJblsOet527iYliNspqW2xXmIF7ZoP-2G58",
                   "type": "string"
                 }
               ]
@@ -282,10 +282,20 @@
         {
           "name": "MyPlants",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWRjZDA0ZjlhZTAzZGRjMWNiNWRlYTQiLCJpYXQiOjE3NzYxNzA2NjQsImV4cCI6MTc3NjE3NDI2NH0.7jVR9NNyHJblsOet527iYliNspqW2xXmIF7ZoP-2G58",
+                  "type": "string"
+                }
+              ]
+            },
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://plottwistgrupp11.vercel.app/myplants",
+              "raw": "https://plottwistgrupp11.vercel.app/plants/myplants",
               "protocol": "https",
               "host": [
                 "plottwistgrupp11",
@@ -293,6 +303,7 @@
                 "app"
               ],
               "path": [
+                "plants",
                 "myplants"
               ]
             }
@@ -473,7 +484,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWQ2Mzk1YjNmZGJiNDg4ZGMzNzcwNGIiLCJpYXQiOjE3NzU2NTM2OTIsImV4cCI6MTc3NTY1NzI5Mn0.7Bv7Qcgb3cCMGjS9yCFVTmpgQXvOWcQ0cygGAGG9JGc",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWRjZDA0ZjlhZTAzZGRjMWNiNWRlYTQiLCJpYXQiOjE3NzYxNzA2NjQsImV4cCI6MTc3NjE3NDI2NH0.7jVR9NNyHJblsOet527iYliNspqW2xXmIF7ZoP-2G58",
                   "type": "string"
                 }
               ]
@@ -586,7 +597,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWRjZDA0ZjlhZTAzZGRjMWNiNWRlYTQiLCJpYXQiOjE3NzYxNjA5NTEsImV4cCI6MTc3NjE2NDU1MX0.GNtT-LWkTu0apnwTGn03O_GUoiDny6GpmykUVX8RXJg",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWRjZDA0ZjlhZTAzZGRjMWNiNWRlYTQiLCJpYXQiOjE3NzYxNzA2NjQsImV4cCI6MTc3NjE3NDI2NH0.7jVR9NNyHJblsOet527iYliNspqW2xXmIF7ZoP-2G58",
                   "type": "string"
                 }
               ]
@@ -671,10 +682,20 @@
         {
           "name": "DeleteUserById",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWRjZDA0ZjlhZTAzZGRjMWNiNWRlYTQiLCJpYXQiOjE3NzYxNzA2NjQsImV4cCI6MTc3NjE3NDI2NH0.7jVR9NNyHJblsOet527iYliNspqW2xXmIF7ZoP-2G58",
+                  "type": "string"
+                }
+              ]
+            },
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "https://plottwistgrupp11.vercel.app/admin/user/:id",
+              "raw": "https://plottwistgrupp11.vercel.app/admin/user/69de369afdaeb3312f258d19",
               "protocol": "https",
               "host": [
                 "plottwistgrupp11",
@@ -684,13 +705,7 @@
               "path": [
                 "admin",
                 "user",
-                ":id"
-              ],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "69d652768d89456b990d8307"
-                }
+                "69de369afdaeb3312f258d19"
               ]
             }
           },

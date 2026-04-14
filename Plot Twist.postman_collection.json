@@ -1,10 +1,10 @@
 {
   "info": {
-    "_postman_id": "7898f31b-33dc-4eb5-a47b-f729acb746d4",
+    "_postman_id": "c4428ac4-d45e-42b1-a2d3-7a5d8803a40e",
     "name": "Plot Twist",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "52724870",
-    "_collection_link": "https://go.postman.co/collection/52724870-7898f31b-33dc-4eb5-a47b-f729acb746d4?source=collection_link"
+    "_collection_link": "https://go.postman.co/collection/52724870-c4428ac4-d45e-42b1-a2d3-7a5d8803a40e?source=collection_link"
   },
   "item": [
     {
@@ -17,7 +17,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"email\": \"test@test.com\",\r\n    \"password\": \"123456\"\r\n}",
+              "raw": "{\r\n    \"email\": \"Vincent2@test.com\",\r\n    \"password\": \"123456\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -45,7 +45,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"name\" : \"Test\",\r\n    \"email\": \"testa@test.com\",\r\n    \"password\": \"123456\"\r\n}",
+              "raw": "{\r\n    \"name\" : \"Test\",\r\n    \"email\": \"test@test.com\",\r\n    \"password\": \"123456\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -82,7 +82,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWQ2Mzk1YjNmZGJiNDg4ZGMzNzcwNGIiLCJpYXQiOjE3NzU2NTcyODIsImV4cCI6MTc3NTY2MDg4Mn0.2qwqg6vdjHEiCCLHL_TCSdTKtJRRj8Y7wX3hsQ3lMlw",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWRlMzI5YTM3NDNiZWQxMmE5NGM0ZWEiLCJpYXQiOjE3NzYxNzAwNDMsImV4cCI6MTc3NjE3MzY0M30.gFyng4hJ3fWnb46X95hxOMWMnzuQkHjHagblhozulfk",
                   "type": "string"
                 }
               ]
@@ -97,7 +97,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"email\": \"test@test.com\",\r\n    \"password\": \"123456\"\r\n}",
+              "raw": "{\r\n    \"email\": \"vincent2@test.com\",\r\n    \"password\": \"123456\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
