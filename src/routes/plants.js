@@ -134,7 +134,7 @@ plantRouter.delete("/:slug", requireAuth, async (req, res) => {
   }
   
   // Kontrollera att användaren äger plantan
-  if (plant.ownerId._id.toString() !== req.userId) {
+  if (findPlant.ownerId._id.toString() !== req.userId) {
     return res.status(403).json({ message: "Not allowed to delete this plant" })
   }
   const plant = await deletePlantBySlug(slug);
