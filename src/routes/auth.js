@@ -19,23 +19,20 @@ router.post(
       if (existingUser) {
         return res.status(409).json({ error: "Email already registered" });
       }
-
-      const hashedPassword = await bcrypt.hash(password, 10);
-
       const user = await createUser({
         name,
         email,
-        password: hashedPassword,
+        password,
       });
-
       res.status(201).json({
         id: user._id,
         name: user.name,
         email: user.email,
       });
     } catch (error) {
-      res.status(500).json({ error: "Registration failed" });
-    }
+  console.error("REGISTER ERROR:", error);
+  res.status(500).json({ error: error.message });
+}
   }
 );
 
@@ -68,8 +65,9 @@ router.post("/login", async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(500).json({ error: "Login failed" });
-  }
+  console.error("LOGIN ERROR:", error);
+  res.status(500).json({ error: error.message });
+}
 });
 
 router.get("/me", protect, (req, res) => {
