@@ -6,7 +6,7 @@ import {
 } from '../db/users.js';
 import jwtService from '../auth/jwt.js';
 import AppError from '../utils/AppError.js';
-import { getUserRoles } from '../db/roles.js';
+import { getAllRoles, getUserRoles } from '../db/roles.js';
 
 class AuthController {
   registerPost = [
@@ -101,6 +101,17 @@ class AuthController {
         res.status(200).json({ ...user.toObject(), roles });
       } catch (error) {
         next(new AppError('Invalid token', 401));
+      }
+    },
+  ];
+
+  rolesGet = [
+    async (req, res, next) => {
+      try {
+        const roles = await getAllRoles();
+        res.status(200).json(roles);
+      } catch (err) {
+        next(err);
       }
     },
   ];
