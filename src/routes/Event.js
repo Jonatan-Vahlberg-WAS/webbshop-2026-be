@@ -26,7 +26,7 @@ router.delete(
 
 router.post(
   '/:id/bookings',
-  capacityMiddleware,
+  isAuth,
   requiredRole('customer'),
   BookingController.bookingPost
 );
@@ -41,7 +41,7 @@ router.get(
 router.delete(
   '/:id/bookings',
   isAuth,
-  requiredRole('admin'),
+  requiredRole('customer'),
   BookingController.bookingDelete
 );
 
