@@ -25,3 +25,13 @@ export async function getUserRoles(userId) {
     throw error;
   }
 }
+
+export async function getAllRoles() {
+  try {
+    const roles = await Roles.find();
+    return roles;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}

@@ -19,4 +19,6 @@ router.post('/login', AuthController.loginPost);
 
 router.get('/me', isAuth, AuthController.meGet);
 
+router.get('/roles', AuthController.rolesGet);
+
 export default router;
