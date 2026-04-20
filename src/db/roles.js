@@ -35,3 +35,16 @@ export async function getAllRoles() {
     throw error;
   }
 }
+
+export async function GetRolesByUser(user) {
+  const users = Array.isArray(user) ? user : [user];
+
+  for (const user of users) {
+    const rolesUsers = await RolesUser.find({ userId: user._id }).populate(
+      'roleId'
+    );
+    user.roles = rolesUsers.map((ru) => ru.roleId.slug);
+  }
+
+  return users;
+}
