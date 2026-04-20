@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { getAllUsers } from '../db/users.js';
 import { GetRolesByUser } from '../db/roles.js';
-import { requiredRole } from '../middleware/roleMiddleware.js';
+import requiredRole from '../middleware/roleMiddleware.js';
 import { isAuth } from '../middleware/authMiddleware.js';
 
 const Userrouter = Router();
