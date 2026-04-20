@@ -116,6 +116,30 @@ class BookingController {
       }
     },
   ];
+
+  myBookingsGet = [
+    async (req, res) => {
+      const { id: userId } = req.user;
+      try {
+        if (!userId) {
+          return res.status(400).json({ error: 'User ID is required' });
+        }
+        const user = await findUserById(userId);
+        if (!user) {
+          return res.status(404).json({ error: 'User not found' });
+        }
+        const bookings = await EventUser.find({ userId }).populate(
+          'eventId',
+          'title date time location'
+        );
+        const structuredBookings = { events: bookings.map((b) => b.eventId) };
+        res.status(200).json(structuredBookings);
+      } catch (error) {
+        console.error('Error fetching user bookings:', error);
+        res.status(500).json({ error: 'Failed to fetch user bookings' });
+      }
+    },
+  ];
 }
 
 export default new BookingController();
