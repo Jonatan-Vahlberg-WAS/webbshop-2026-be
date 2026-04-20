@@ -7,6 +7,7 @@ import typesRouter from './routes/types.js';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import errorHandler from './middleware/errorHandler.js';
+import Userrouter from './routes/user.js';
 
 const app = express();
 
@@ -66,6 +67,7 @@ app.get('/health', (req, res) => {
 app.use('/api/auth', authRouter);
 app.use('/api/events', eventRouter);
 app.use('/api/types', typesRouter);
+app.use('/api/users', Userrouter);
 app.use(errorHandler);
 
 export default app;
