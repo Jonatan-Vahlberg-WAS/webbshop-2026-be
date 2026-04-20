@@ -13,6 +13,13 @@ router.post('/', isAuth, requiredRole('admin'), EventController.eventPost);
 
 router.get('/archive', EventController.getArchivedEvents);
 
+router.get(
+  '/my/bookings',
+  isAuth,
+  requiredRole('customer'),
+  BookingController.myBookingsGet
+);
+
 router.get('/:id', EventController.eventGet);
 
 router.put('/:id', isAuth, requiredRole('admin'), EventController.editEventPut);
