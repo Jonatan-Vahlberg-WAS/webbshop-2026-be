@@ -21,7 +21,7 @@ export async function getUserRoles(userId) {
     const rolesUsers = await RolesUser.find({ userId }).populate('roleId');
     return rolesUsers.map((ru) => ru.roleId.slug);
   } catch (error) {
-    console.error('Error fetching user roles:', error);
+    console.error('Error fetching usesr roles:', error);
     throw error;
   }
 }
@@ -47,4 +47,13 @@ export async function GetRolesByUser(user) {
   }
 
   return users;
+}
+
+export async function getTrainers() {
+  const trainerRole = await Roles.findOne({ slug: 'trainer' });
+  let trainers = await RolesUser.find({
+    roleId: trainerRole._id,
+  }).populate('userId');
+  trainers = trainers.map((t) => t.userId);
+  return trainers;
 }

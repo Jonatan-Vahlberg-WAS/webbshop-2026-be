@@ -4,16 +4,15 @@ import { isAuth } from '../middleware/authMiddleware.js';
 import requiredRole from '../middleware/roleMiddleware.js';
 
 const router = Router();
-const typesController = new TypesController();
 
-router.get('/', typesController.typesGet);
-router.post('/', isAuth, requiredRole('admin'), typesController.typesPost);
-router.put('/:id', isAuth, requiredRole('admin'), typesController.editTypePut);
+router.get('/', TypesController.typesGet);
+router.post('/', isAuth, requiredRole('admin'), TypesController.typesPost);
+router.put('/:id', isAuth, requiredRole('admin'), TypesController.editTypePut);
 router.delete(
   '/:id',
   isAuth,
   requiredRole('admin'),
-  typesController.typesDelete
+  TypesController.typesDelete
 );
 
 export default router;
