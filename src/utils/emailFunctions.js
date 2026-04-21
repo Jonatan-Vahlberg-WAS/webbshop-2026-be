@@ -16,7 +16,7 @@ async function bookingConfirmationMail(event, reciver) {
       text: `${event?.title} booked for ${event?.time?.date} at ${event?.time?.startTime} `,
     });
 
-    console.log('Message sent: %s', info.messageId);
+    console.log('Message sent: ', info.messageId);
   } catch (error) {
     throw error;
   }
