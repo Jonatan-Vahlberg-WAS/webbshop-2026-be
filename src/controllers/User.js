@@ -2,7 +2,7 @@ import { getAllUsers } from '../db/users.js';
 import { GetRolesByUser, getTrainers } from '../db/roles.js';
 
 class UserController {
-  getAllUserRolls = [
+  getAllUsersWithRoles = [
     async (req, res, next) => {
       try {
         const users = await getAllUsers();
