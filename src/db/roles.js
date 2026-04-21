@@ -1,4 +1,5 @@
 import Roles from '../models/Roles.js';
+import User from '../models/User.js';
 import RolesUser from '../models/connecting/rolesUsers.js';
 
 export async function assignRoleToUser(userId, roleSlug) {
@@ -56,4 +57,13 @@ export async function getTrainers() {
   }).populate('userId');
   trainers = trainers.map((t) => t.userId);
   return trainers;
+}
+
+export async function checkTrainer(trainerId) {
+  const userExists = await User.findOne({ _id: trainerId });
+  if (!userExists) return false;
+  const roles = await getUserRoles(trainerId);
+  const isTrainer = roles.find((slug) => slug === 'trainer');
+  if (!isTrainer) return false;
+  return userExists;
 }

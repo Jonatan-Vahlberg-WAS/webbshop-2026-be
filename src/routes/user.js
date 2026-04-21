@@ -9,7 +9,7 @@ Userrouter.get(
   '/all',
   isAuth,
   requiredRole('admin'),
-  UserController.getAllUserRolls
+  UserController.getAllUsersWithRoles
 );
 
 Userrouter.get(
