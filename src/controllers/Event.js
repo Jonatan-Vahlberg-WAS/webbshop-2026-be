@@ -6,6 +6,7 @@ import {
   findEventByName,
   findEventById,
 } from '../db/events.js';
+import { checkTrainer } from '../db/roles.js';
 import { findEventtype, addEventtypeToEvent } from '../db/types.js';
 import mongoose from 'mongoose';
 
@@ -67,9 +68,31 @@ class EventController {
 
   eventPost = [
     async (req, res) => {
-      const { title, description, date, type, maxseats, location } = req.body;
+      const {
+        title,
+        description,
+        date,
+        startTime,
+        endTime,
+        type,
+        maxseats,
+        location,
+        trainerId,
+        price,
+      } = req.body;
 
-      if (!title || !description || !date || !type || !maxseats || !location) {
+      if (
+        !title ||
+        !description ||
+        !date ||
+        !startTime ||
+        !endTime ||
+        !type ||
+        !maxseats ||
+        !location ||
+        !trainerId ||
+        !price
+      ) {
         return res.status(400).json({ error: 'All fields are required' });
       }
 
@@ -79,6 +102,18 @@ class EventController {
 
       if (typeof date !== 'string' || isNaN(Date.parse(date))) {
         return res.status(400).json({ error: 'Invalid date format' });
+      }
+      // checks so date hasnt passed yet
+      if (Date.parse(date) < Date.now()) {
+        return res.status(400).json({ error: 'Date has past' });
+      }
+
+      // /(^([0-1][0-9]|2[0-3]):[0-5][0-9]$)/ regex for checking hh:mm
+      if (
+        !/(^([0-1][0-9]|2[0-3]):[0-5][0-9]$)/.test(startTime) ||
+        !/(^([0-1][0-9]|2[0-3]):[0-5][0-9]$)/.test(endTime)
+      ) {
+        return res.status(400).json({ error: 'StartTime or EndTime invalid' });
       }
 
       const session = await mongoose.startSession();
@@ -99,8 +134,27 @@ class EventController {
           return res.status(400).json({ error: 'Invalid event type' });
         }
 
+        //checks if trainerId is a user and is a trainer
+        const trainer = await checkTrainer(trainerId);
+        if (!trainer) {
+          await session.abortTransaction();
+          return res.status(400).json({ error: 'Invalid trainer' });
+        }
+
         const newEvent = await createEvent(
-          { title, description, date, maxseats, location },
+          {
+            title,
+            description,
+            time: {
+              date,
+              startTime,
+              endTime,
+            },
+            maxseats,
+            location,
+            trainerid: trainer.id,
+            price,
+          },
           { session }
         );
 

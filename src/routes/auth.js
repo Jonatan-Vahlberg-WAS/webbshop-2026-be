@@ -26,5 +26,6 @@ router.put(
   requiredRole('admin'),
   AuthController.updateUserRole
 );
+router.get('/roles', AuthController.rolesGet);
 
 export default router;

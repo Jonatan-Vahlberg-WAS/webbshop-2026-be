@@ -75,7 +75,9 @@ async function createEvent(eventData, options = {}) {
   const { session } = options;
 
   try {
+    console.log(eventData);
     const newEvent = new Event(eventData);
+    console.log(newEvent);
     const savedEvent = await newEvent.save({ session });
     return savedEvent;
   } catch (error) {

@@ -6,7 +6,7 @@ import {
 } from '../db/users.js';
 import jwtService from '../auth/jwt.js';
 import AppError from '../utils/AppError.js';
-import { getUserRoles } from '../db/roles.js';
+import { getAllRoles, getUserRoles } from '../db/roles.js';
 
 class AuthController {
   registerPost = [
@@ -116,6 +116,16 @@ class AuthController {
       next(new AppError('Could not update role', 400));
     }
   };
+  rolesGet = [
+    async (req, res, next) => {
+      try {
+        const roles = await getAllRoles();
+        res.status(200).json(roles);
+      } catch (err) {
+        next(err);
+      }
+    },
+  ];
 }
 
 export default new AuthController();
