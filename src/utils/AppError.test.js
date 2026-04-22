@@ -1,4 +1,4 @@
-import AppError from '../src/utils/AppError.js';
+import AppError from './AppError.js';
 
 describe('AppError', () => {
   test('should create an error with message and statusCode', () => {
