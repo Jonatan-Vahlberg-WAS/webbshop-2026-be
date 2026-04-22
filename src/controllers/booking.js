@@ -1,6 +1,10 @@
 import { findEventById } from '../db/events.js';
 import { addUserToEvent, findUserByEmail, findUserById } from '../db/users.js';
 import EventUser from '../models/connecting/EventUser.js';
+import {
+  bookingCancelationConfirmationMail,
+  bookingConfirmationMail,
+} from '../utils/emailFunctions.js';
 
 class BookingController {
   bookingPost = [
@@ -35,6 +39,8 @@ class BookingController {
         if (result instanceof Error) {
           return res.status(400).json({ error: result.message });
         }
+
+        bookingConfirmationMail(event, user.email);
 
         res.status(201).json({ message: 'Booking successful' });
       } catch (error) {
@@ -108,6 +114,8 @@ class BookingController {
         }
 
         await EventUser.deleteOne({ eventId: id, userId: user._id });
+
+        bookingCancelationConfirmationMail(event, user.email);
 
         res.status(200).json({ message: 'Booking cancelled successfully' });
       } catch (error) {

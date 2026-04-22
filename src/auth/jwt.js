@@ -59,7 +59,7 @@ const jwtService = {
   },
 
   getAccessTokenExpiry() {
-    const expiresIn = process.env.JWT_ACCESS_EXPIRES || '60m';
+    const expiresIn = process.env.JWT_ACCESS_EXPIRES || '15m';
     const unit = expiresIn.slice(-1);
     const value = parseInt(expiresIn);
 
