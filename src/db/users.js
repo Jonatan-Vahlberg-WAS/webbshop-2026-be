@@ -54,3 +54,7 @@ export async function getAllUsers() {
   });
   return filteredUsers;
 }
+
+export async function getUserBookings(userId) {
+  return await EventUser.find({ userId }).populate('eventId');
+}

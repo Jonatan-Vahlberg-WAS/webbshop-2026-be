@@ -2,6 +2,7 @@ import {
   createUser,
   findUserByEmail,
   findUserById,
+  getUserBookings,
   validatePassword,
 } from '../db/users.js';
 import jwtService from '../auth/jwt.js';
@@ -122,6 +123,19 @@ class AuthController {
         const roles = await getAllRoles();
         res.status(200).json(roles);
       } catch (err) {
+        next(err);
+      }
+    },
+  ];
+
+  bookingsGet = [
+    async (req, res, next) => {
+      const { id: UserId } = req.user;
+      try {
+        const bookings = await getUserBookings(UserId);
+        res.status(200).json(bookings);
+      } catch (err) {
+        console.log(err);
         next(err);
       }
     },
