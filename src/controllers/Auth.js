@@ -105,6 +105,17 @@ class AuthController {
     },
   ];
 
+  updateUserRole = async (req, res, next) => {
+    try {
+      const { id } = req.params; // användarens id från URL
+      const { role } = req.body; // nya rollen från request
+
+      await changeUserRole(id, role);
+      res.json({ success: true, message: `Role updated to ${role}` });
+    } catch (error) {
+      next(new AppError('Could not update role', 400));
+    }
+  };
   rolesGet = [
     async (req, res, next) => {
       try {
