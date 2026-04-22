@@ -107,4 +107,4 @@ class TypesController {
   };
 }
 
-export default TypesController;
+export default new TypesController();

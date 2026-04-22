@@ -1,4 +1,6 @@
 import jwtService from '../auth/jwt.js';
+import RolesUser from '../models/connecting/rolesUsers.js';
+import AppError from '../utils/AppError.js';
 
 export function isAuth(req, res, next) {
   const authHeader = req.headers.authorization;
@@ -40,4 +42,22 @@ export function isAuth(req, res, next) {
   } catch (error) {
     next(error);
   }
+}
+
+export function requiredRole(role) {
+  return async (req, res, next) => {
+    try {
+      const userId = req.user.id;
+
+      const userRole = await RolesUser.findOne({ userId }).populate('roleId');
+
+      if (!userRole || userRole.roleId.slug !== role) {
+        return next(new AppError('Access denied', 403));
+      }
+
+      next();
+    } catch (error) {
+      next(error);
+    }
+  };
 }

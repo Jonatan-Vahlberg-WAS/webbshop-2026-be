@@ -7,6 +7,7 @@ import typesRouter from './routes/types.js';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import errorHandler from './middleware/errorHandler.js';
+import Userrouter from './routes/user.js';
 
 const app = express();
 
@@ -24,6 +25,7 @@ const allowedOrigins = [
   'http://localhost:3000',
   'http://127.0.0.1:5500',
   'http://localhost:5500',
+  'https://avdrxxa.github.io',
 ];
 
 // Middleware
@@ -66,6 +68,7 @@ app.get('/health', (req, res) => {
 app.use('/api/auth', authRouter);
 app.use('/api/events', eventRouter);
 app.use('/api/types', typesRouter);
+app.use('/api/users', Userrouter);
 app.use(errorHandler);
 
 export default app;

@@ -45,3 +45,16 @@ export async function addUserToEvent(userId, eventId) {
     throw error;
   }
 }
+
+export async function getAllUsers() {
+  const users = await User.find();
+  const filteredUsers = users.map((user) => {
+    const { password, ...filteredUser } = user.toObject();
+    return filteredUser;
+  });
+  return filteredUsers;
+}
+
+export async function getUserBookings(userId) {
+  return await EventUser.find({ userId }).populate('eventId');
+}

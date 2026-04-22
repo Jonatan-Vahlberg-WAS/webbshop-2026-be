@@ -2,11 +2,12 @@ import {
   createUser,
   findUserByEmail,
   findUserById,
+  getUserBookings,
   validatePassword,
 } from '../db/users.js';
 import jwtService from '../auth/jwt.js';
 import AppError from '../utils/AppError.js';
-import { getUserRoles } from '../db/roles.js';
+import { getAllRoles, getUserRoles } from '../db/roles.js';
 
 class AuthController {
   registerPost = [
@@ -101,6 +102,41 @@ class AuthController {
         res.status(200).json({ ...user.toObject(), roles });
       } catch (error) {
         next(new AppError('Invalid token', 401));
+      }
+    },
+  ];
+
+  updateUserRole = async (req, res, next) => {
+    try {
+      const { id } = req.params; // användarens id från URL
+      const { role } = req.body; // nya rollen från request
+
+      await changeUserRole(id, role);
+      res.json({ success: true, message: `Role updated to ${role}` });
+    } catch (error) {
+      next(new AppError('Could not update role', 400));
+    }
+  };
+  rolesGet = [
+    async (req, res, next) => {
+      try {
+        const roles = await getAllRoles();
+        res.status(200).json(roles);
+      } catch (err) {
+        next(err);
+      }
+    },
+  ];
+
+  bookingsGet = [
+    async (req, res, next) => {
+      const { id: UserId } = req.user;
+      try {
+        const bookings = await getUserBookings(UserId);
+        res.status(200).json(bookings);
+      } catch (err) {
+        console.log(err);
+        next(err);
       }
     },
   ];

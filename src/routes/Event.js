@@ -13,6 +13,13 @@ router.post('/', isAuth, requiredRole('admin'), EventController.eventPost);
 
 router.get('/archive', EventController.getArchivedEvents);
 
+router.get(
+  '/my/bookings',
+  isAuth,
+  requiredRole('customer'),
+  BookingController.myBookingsGet
+);
+
 router.get('/:id', EventController.eventGet);
 
 router.put('/:id', isAuth, requiredRole('admin'), EventController.editEventPut);
@@ -26,7 +33,7 @@ router.delete(
 
 router.post(
   '/:id/bookings',
-  capacityMiddleware,
+  isAuth,
   requiredRole('customer'),
   BookingController.bookingPost
 );
@@ -41,7 +48,7 @@ router.get(
 router.delete(
   '/:id/bookings',
   isAuth,
-  requiredRole('admin'),
+  requiredRole('customer'),
   BookingController.bookingDelete
 );
 
