@@ -32,7 +32,7 @@ router.get("/me", protect, asyncHandler(async (req, res) => {
   const trades = await Trade.find({
     $or: [{ ownerId: req.userId }, { requesterId: req.userId }],
   })
-    .populate("plantId")
+    .populate("plantId", "plantName imageUrl coordinates")
     .populate("ownerId", "name email")
     .populate("requesterId", "name email");
 
@@ -71,5 +71,21 @@ router.patch("/:id/complete", protect, asyncHandler(async (req, res) => {
 
   res.json({ message: "Trade completed", trade });
 }));
+
+//Ägare avbryter trade
+router.patch("/:id/decline", protect, asyncHandler(async (req, res) => {
+  const trade = await Trade.findById(req.params.id);
+  if (!trade) return res.status(404).json({ message: "Trade not found" });
+
+  if (trade.ownerId.toString() !== req.userId) {
+    return res.status(403).json({ message: "Only the owner can cancel the trade" });
+  }
+  
+  trade.status = STATUS_LEVEL.declined;
+  await trade.save();
+
+  res.json({ message: "Trade declined", trade });
+}));
+
 
 export default router;

@@ -6,6 +6,7 @@ export const STATUS_LEVEL = {
   pending: "pending",
   approved: "approved",
   completed: "completed",
+  declined: "declined"
 }
 
 const tradeSchema = new mongoose.Schema(
@@ -32,6 +33,7 @@ const tradeSchema = new mongoose.Schema(
         STATUS_LEVEL.pending,
         STATUS_LEVEL.approved,
         STATUS_LEVEL.completed,
+        STATUS_LEVEL.declined,
       ],
       default: STATUS_LEVEL.pending,
     },
