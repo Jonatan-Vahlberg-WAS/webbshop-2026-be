@@ -28,4 +28,6 @@ router.put(
 );
 router.get('/roles', AuthController.rolesGet);
 
+router.get('/bookings', isAuth, AuthController.bookingsGet);
+
 export default router;
