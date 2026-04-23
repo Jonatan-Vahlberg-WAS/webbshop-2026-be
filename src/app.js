@@ -1,4 +1,4 @@
-// src/app.js
+
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
@@ -9,6 +9,7 @@ import userRouter from "./routes/user.js";
 import adminRouter from "./routes/admin.js";
 import plantRouter from "./routes/plant.js";
 import tradeRouter from "./routes/trade.js";
+import notificationRouter from "./routes/notification.js";
 
 const app = express();
 
@@ -96,6 +97,7 @@ app.use("/user", userRouter);
 app.use("/admin", adminRouter);
 app.use("/plants", plantRouter);
 app.use("/trades", tradeRouter);
+app.use("/notifications", notificationRouter);
 
 // Global error handler
 app.use((err, req, res, next) => {
