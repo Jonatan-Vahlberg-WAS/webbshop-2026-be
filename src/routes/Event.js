@@ -48,7 +48,7 @@ router.get(
 router.delete(
   '/:id/bookings',
   isAuth,
-  requiredRole('customer'),
+  requiredRole(['customer', 'admin']),
   BookingController.bookingDelete
 );
 

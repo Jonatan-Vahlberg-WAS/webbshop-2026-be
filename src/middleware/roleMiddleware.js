@@ -3,10 +3,13 @@ import RolesUsers from '../models/connecting/rolesUsers.js';
 const requiredRole = (requiredRole) => {
   return async (req, res, next) => {
     try {
+      const rolesArray = Array.isArray(requiredRole)
+        ? requiredRole
+        : [requiredRole];
       const userId = req.user.id;
       const userRoles = await RolesUsers.find({ userId }).populate('roleId');
-      const hasRequiredRole = userRoles.some(
-        (roleUser) => roleUser.roleId.slug === requiredRole
+      const hasRequiredRole = userRoles.some((roleUser) =>
+        rolesArray.includes(roleUser.roleId.slug)
       );
 
       if (!hasRequiredRole) {
