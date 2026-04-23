@@ -1,5 +1,8 @@
+import dotenv from "dotenv";
 import app from "./app.js";
 import { connectToDatabase } from "./config/database.js";
+
+dotenv.config();
 
 const PORT = process.env.PORT ?? 3000;
 
@@ -16,3 +19,11 @@ const startServer = async () => {
 };
 
 startServer();
+
+process.on("unhandledRejection", (reason, promise) => {
+  console.error("Unhandled Rejection:", reason);
+});
+
+process.on("uncaughtException", (err) => {
+  console.error("Uncaught Exception:", err);
+});
