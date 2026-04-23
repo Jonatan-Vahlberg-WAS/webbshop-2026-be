@@ -82,6 +82,7 @@ class BookingController {
     async (req, res) => {
       const { id } = req.params;
       const { id: userId } = req.user;
+      const { email } = req.body;
 
       try {
         if (!id) {
@@ -97,9 +98,19 @@ class BookingController {
           return res.status(404).json({ error: 'Event not found' });
         }
 
-        const user = await findUserById(userId);
-        if (!user) {
-          return res.status(404).json({ error: 'User not found' });
+        let user;
+        if (email) {
+          user = await findUserByEmail(email);
+          if (!user) {
+            return res
+              .status(404)
+              .json({ error: 'User not found with provided email' });
+          }
+        } else {
+          user = await findUserById(userId);
+          if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+          }
         }
 
         const existingBooking = await EventUser.findOne({
