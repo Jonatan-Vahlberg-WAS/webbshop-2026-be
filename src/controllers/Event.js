@@ -297,7 +297,7 @@ class EventController {
           return res.status(404).json({ message: 'No events found' });
         }
         const archivedEvents = events.filter((event) => {
-          const eventDate = new Date(event.date);
+          const eventDate = new Date(event.time.date);
           const now = new Date();
           return eventDate < now;
         });
